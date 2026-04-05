@@ -1,0 +1,133 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Sales Dashboard — Apurva Jadhav</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bricolage+Grotesque:wght@700;800&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F4F1EC;color:#111111}
+.hdr{background:#111827;padding:1.1rem 3rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;box-shadow:0 1px 0 rgba(255,255,255,.07)}
+.back{display:flex;align-items:center;gap:.5rem;color:rgba(255,255,255,.5);text-decoration:none;font-size:.75rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;transition:color .2s}
+.back:hover{color:#fff}
+.back svg{width:16px;height:16px;flex-shrink:0}
+.hdr-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:.9rem;color:#fff}
+.hdr-num{font-size:.62rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:.25rem .7rem;border-radius:4px}
+.hero{padding:3.5rem 3rem 2.75rem;border-bottom:3px solid;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;inset:0;pointer-events:none}
+.hi{max-width:1080px;margin:0 auto;position:relative;z-index:1}
+.h-feat{display:inline-flex;align-items:center;gap:.4rem;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.28rem .75rem;border-radius:4px;margin-bottom:.7rem}
+.h-cat{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.55rem}
+.h-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(1.6rem,3vw,2.5rem);color:#fff;line-height:.98;letter-spacing:-.03em;margin-bottom:.8rem}
+.h-desc{font-size:.9rem;color:rgba(255,255,255,.5);max-width:600px;line-height:1.8;margin-bottom:1.6rem;font-weight:300}
+.h-meta{display:flex;gap:2.5rem;flex-wrap:wrap}
+.hm-l{font-size:.58rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.18rem}
+.hm-v{font-size:.82rem;font-weight:500;color:rgba(255,255,255,.7)}
+.main{max-width:1080px;margin:0 auto;padding:2.25rem 3rem 4rem}
+.krow{display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem;margin-bottom:2rem}
+.kpi{background:#fff;border:1.5px solid #E2DDD6;border-radius:12px;padding:1.3rem;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.kpi-lbl{font-size:.62rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:#6B6560;margin-bottom:.4rem}
+.kpi-val{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:1.85rem;color:#111;line-height:1;letter-spacing:-.03em}
+.kpi-s{font-size:.7rem;font-weight:500;margin-top:.25rem}
+.cg2{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-bottom:2rem}
+.cg21{display:grid;grid-template-columns:2fr 1fr;gap:1.1rem;margin-bottom:2rem}
+.cc{background:#fff;border:1.5px solid #E2DDD6;border-radius:12px;padding:1.35rem}
+.cc-t{font-size:.8rem;font-weight:600;color:#111;margin-bottom:1rem;letter-spacing:-.01em}
+
+.tbl{background:#fff;border:1.5px solid #E2DDD6;border-radius:12px;overflow:hidden;margin-bottom:2rem}
+table{width:100%;border-collapse:collapse}
+th{font-size:.62rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#6B6560;text-align:left;padding:.65rem 1rem;border-bottom:2px solid #E2DDD6;background:#F4F1EC}
+td{padding:.78rem 1rem;font-size:.83rem;border-bottom:1px solid #E2DDD6;color:#111}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#FAFAF8}
+.pill{font-size:.6rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:.2rem .6rem;border-radius:4px;display:inline-block}
+.ig{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:2rem}
+.ins{background:#fff;border:1.5px solid #E2DDD6;border-radius:0 10px 10px 0;border-left:3px solid;padding:1.15rem;display:flex;gap:.8rem}
+.ins-ico{font-size:.95rem;flex-shrink:0;margin-top:.05rem}
+.ins-t{font-size:.83rem;font-weight:600;color:#111;margin-bottom:.22rem}
+.ins-d{font-size:.77rem;color:#6B6560;line-height:1.65}
+.recs{background:#111827;border-radius:14px;padding:1.85rem;margin-bottom:2rem}
+.recs-t{font-family:'Bricolage Grotesque',sans-serif;font-size:.9rem;font-weight:700;color:#fff;margin-bottom:1rem}
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.rec{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:9px;padding:.9rem 1rem;display:flex;gap:.75rem}
+.rec-n{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:1.35rem;color:rgba(255,255,255,.12);line-height:1;flex-shrink:0}
+.rec-t{font-size:.8rem;font-weight:600;color:#fff;margin-bottom:.16rem}
+.rec-d{font-size:.73rem;color:rgba(255,255,255,.4);line-height:1.6}
+@media(max-width:768px){.krow,.cg2,.cg21,.ig,.rg{grid-template-columns:1fr}.main,.hdr,.hero{padding-left:1.5rem;padding-right:1.5rem}}
+.k1::before{background:#0A7C6E}.k2::before{background:#22C55E}.k3::before{background:#F5A623}.k4::before{background:#1A3FCC}
+.sg{color:#0A7C6E}.sw{color:#C8960A}.sb{color:#E8460A}
+.up{color:#22C55E;font-weight:600}.dn{color:#E8460A;font-weight:600}
+.bm{height:5px;background:#E2DDD6;border-radius:100px;overflow:hidden;width:90px;margin-top:.3rem}
+.bmf{height:100%;border-radius:100px;background:linear-gradient(90deg,#0A7C6E,#22C55E)}
+
+canvas{display:block;width:100%!important;height:260px!important}
+.cc{min-height:320px}
+</style></head><body>
+<div class="hdr">
+  <a href="portfolio_index.html" class="back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>Back to Portfolio</a>
+  <div class="hdr-title">Sales Performance Dashboard</div>
+  <div class="hdr-num" style="background:rgba(10,124,110,.15);color:#0A7C6E;border:1px solid rgba(10,124,110,.3)">Project 02</div>
+</div>
+<div class="hero" style="background:#111827;border-color:#0A7C6E">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 55% 70% at 90% 40%,rgba(10,124,110,.18),transparent);pointer-events:none"></div>
+  <div class="hi">
+    <div class="h-cat">Project 02 · Sales Intelligence</div>
+    <div class="h-title">Sales Performance Dashboard</div>
+    <p class="h-desc">Multi-year sales analysis across 4 regions, 3 product categories, and 3 customer segments. Identified €2.1M in recoverable margin through discount optimisation and regional strategy alignment.</p>
+    <div class="h-meta">
+      <div><div class="hm-l">Period</div><div class="hm-v">2021–2024 (4 years)</div></div>
+      <div><div class="hm-l">Tools</div><div class="hm-v">Excel · Tableau</div></div>
+      <div><div class="hm-l">Records</div><div class="hm-v">9,994 orders</div></div>
+      <div><div class="hm-l">Outcome</div><div class="hm-v">4 strategic recommendations</div></div>
+    </div>
+  </div>
+</div>
+<div class="main">
+  <div class="krow">
+    <div class="kpi k1"><div class="kpi-lbl">Total Revenue</div><div class="kpi-val">€2.30M</div><div class="kpi-s sg">↑ 19.4% vs prior year</div></div>
+    <div class="kpi k2"><div class="kpi-lbl">Total Profit</div><div class="kpi-val">€286K</div><div class="kpi-s sg">↑ 14.2% margin growth</div></div>
+    <div class="kpi k3"><div class="kpi-lbl">Total Orders</div><div class="kpi-val">9,994</div><div class="kpi-s sw">Avg €230 per order</div></div>
+    <div class="kpi k4"><div class="kpi-lbl">Q4 Revenue Share</div><div class="kpi-val">34.8%</div><div class="kpi-s sw">Seasonal peak</div></div>
+  </div>
+  <div class="cg21">
+    <div class="cc"><div class="cc-t">Monthly Revenue Trend 2024 (€K)</div><canvas id="c1"></canvas></div>
+    <div class="cc"><div class="cc-t">Revenue by Customer Segment</div><canvas id="c2"></canvas></div>
+  </div>
+  <div class="cg2">
+    <div class="cc"><div class="cc-t">Category Revenue vs Profit Margin</div><canvas id="c3"></canvas></div>
+    <div class="cc"><div class="cc-t">Discount Band vs Profit Margin</div><canvas id="c4"></canvas></div>
+  </div>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Region</th><th>Revenue</th><th>Profit</th><th>Margin %</th><th>Orders</th><th>Performance</th><th>YoY</th></tr></thead>
+      <tbody>
+        <tr><td><strong>West</strong></td><td>€725K</td><td>€96K</td><td>13.2%</td><td>3,203</td><td><div class="bm"><div class="bmf" style="width:100%"></div></div></td><td class="up">↑ 23.1%</td></tr>
+        <tr><td><strong>East</strong></td><td>€678K</td><td>€91K</td><td>13.4%</td><td>2,848</td><td><div class="bm"><div class="bmf" style="width:93%"></div></div></td><td class="up">↑ 18.4%</td></tr>
+        <tr><td><strong>Central</strong></td><td>€501K</td><td>€39K</td><td>7.8%</td><td>2,323</td><td><div class="bm"><div class="bmf" style="width:69%"></div></div></td><td class="dn">↓ 4.2%</td></tr>
+        <tr><td><strong>South</strong></td><td>€391K</td><td>€46K</td><td>11.8%</td><td>1,620</td><td><div class="bm"><div class="bmf" style="width:54%"></div></div></td><td class="up">↑ 9.6%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="ig">
+    <div class="ins" style="border-left-color:#0A7C6E"><div class="ins-ico">🌍</div><div><div class="ins-t">West Region dominates — replicate its playbook</div><div class="ins-d">West outperformed Central by 45% in revenue. Central's margin (7.8%) suggests pricing and discount issues that West has already solved.</div></div></div>
+    <div class="ins" style="border-left-color:#E8460A"><div class="ins-ico">📉</div><div><div class="ins-t">Discounts above 30% consistently destroy margin</div><div class="ins-d">Orders with 30%+ discount had negative average profit. 18% of all Central orders fell in this band — the primary driver of its underperformance.</div></div></div>
+    <div class="ins" style="border-left-color:#F5A623"><div class="ins-ico">🗓️</div><div><div class="ins-t">Q4 seasonality is predictable — plan ahead</div><div class="ins-d">Q4 generated 34.8% of annual revenue across all 4 years. Inventory and campaigns should be planned 8 weeks in advance consistently.</div></div></div>
+    <div class="ins" style="border-left-color:#1A3FCC"><div class="ins-ico">🏢</div><div><div class="ins-t">Corporate segment has highest order value</div><div class="ins-d">Corporate averages €280/order vs €196 for Consumer. B2B campaigns and volume bundles could grow this segment from 31% to 40%.</div></div></div>
+  </div>
+  <div class="recs">
+    <div class="recs-t">Business Recommendations</div>
+    <div class="rg">
+      <div class="rec"><div class="rec-n">01</div><div><div class="rec-t">Cap Discounts at 20% in Central</div><div class="rec-d">Enforce a 20% ceiling — projected to recover €62K in lost annual margin.</div></div></div>
+      <div class="rec"><div class="rec-n">02</div><div><div class="rec-t">Replicate West's Strategy</div><div class="rec-d">Audit West's pricing and account management; deploy in Central by Q2.</div></div></div>
+      <div class="rec"><div class="rec-n">03</div><div><div class="rec-t">Q4 Campaign Planning</div><div class="rec-d">Start inventory build and marketing 8 weeks before Q4 to capture seasonal demand.</div></div></div>
+      <div class="rec"><div class="rec-n">04</div><div><div class="rec-t">Grow Corporate Segment</div><div class="rec-d">Launch B2B loyalty programme — Corporate delivers 43% more revenue per order.</div></div></div>
+    </div>
+  </div>
+</div>
+<script>
+const d={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#111827',titleColor:'#fff',bodyColor:'rgba(255,255,255,.65)',cornerRadius:6,padding:10}}};
+new Chart(document.getElementById('c1'),{type:'line',data:{labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],datasets:[{data:[142,118,195,168,182,210,178,195,225,285,320,290],borderColor:'#0A7C6E',backgroundColor:'rgba(10,124,110,.07)',fill:true,tension:.4,pointBackgroundColor:'#0A7C6E',pointRadius:4,borderWidth:2.5}]},options:{...d,scales:{y:{ticks:{callback:v=>'€'+v,font:{size:10}},grid:{color:'rgba(0,0,0,.05)'}},x:{ticks:{font:{size:10}},grid:{display:false}}}}});
+new Chart(document.getElementById('c2'),{type:'doughnut',data:{labels:['Consumer','Corporate','Home Office'],datasets:[{data:[51.5,30.7,17.8],backgroundColor:['rgba(10,124,110,.85)','rgba(26,63,204,.85)','rgba(245,166,35,.85)'],borderWidth:0,hoverOffset:6}]},options:{...d,cutout:'62%',plugins:{legend:{display:true,position:'bottom',labels:{font:{size:10},padding:12,usePointStyle:true}}}}});
+new Chart(document.getElementById('c3'),{type:'bar',data:{labels:['Technology','Furniture','Office Supplies'],datasets:[{label:'Revenue (€K)',data:[836,742,718],backgroundColor:'rgba(26,63,204,.8)',borderRadius:5,borderSkipped:false},{label:'Margin %',data:[13.1,6.0,17.8],backgroundColor:'rgba(10,124,110,.7)',borderRadius:5,borderSkipped:false}]},options:{...d,plugins:{...d.plugins,legend:{display:true,position:'top',labels:{font:{size:10},usePointStyle:true}}},scales:{y:{ticks:{font:{size:10}},grid:{color:'rgba(0,0,0,.05)'}},x:{ticks:{font:{size:10}},grid:{display:false}}}}});
+new Chart(document.getElementById('c4'),{type:'bar',data:{labels:['0%','1-10%','11-20%','21-30%','30%+'],datasets:[{data:[22.4,18.3,12.1,4.2,-8.6],backgroundColor:ctx=>ctx.raw<0?'rgba(232,70,10,.8)':'rgba(10,124,110,.8)',borderRadius:6,borderSkipped:false}]},options:{...d,scales:{y:{ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'rgba(0,0,0,.05)'}},x:{ticks:{font:{size:10}},grid:{display:false}}}}});
+</script>
+</body></html>
