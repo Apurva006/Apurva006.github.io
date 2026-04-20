@@ -1,421 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hospital Waiting Lists — Apurva Jadhav</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bricolage+Grotesque:wght@700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',sans-serif;background:#F4F1EC;color:#111}
-.hdr{background:#111827;padding:1.1rem 2.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
-.back{color:rgba(255,255,255,.55);text-decoration:none;font-size:.78rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;transition:color .2s}
-.back:hover{color:#fff}
-.hdr-t{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:.9rem;color:#fff}
-.hdr-tag{font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(232,70,10,.2);color:#E8460A;border:1px solid rgba(232,70,10,.3);padding:.25rem .7rem;border-radius:4px}
-
-.hero{background:#111827;padding:3rem 2.5rem;border-bottom:3px solid #E8460A;position:relative}
-.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 70% at 90% 40%,rgba(232,70,10,.15),transparent);pointer-events:none}
-.hi{max-width:1080px;margin:0 auto;position:relative;z-index:1}
-.feat{display:inline-block;background:rgba(232,70,10,.15);color:#E8460A;border:1px solid rgba(232,70,10,.25);font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.28rem .75rem;border-radius:4px;margin-bottom:.65rem}
-.h-cat{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.5rem}
-.h-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(1.5rem,3vw,2.4rem);color:#fff;line-height:1;letter-spacing:-.03em;margin-bottom:.75rem}
-.h-desc{font-size:.88rem;color:rgba(255,255,255,.5);max-width:620px;line-height:1.8;margin-bottom:1.5rem}
-.h-meta{display:flex;gap:2rem;flex-wrap:wrap}
-.hm-l{font-size:.58rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.18rem}
-.hm-v{font-size:.8rem;font-weight:500;color:rgba(255,255,255,.7)}
-
-.main{max-width:1080px;margin:0 auto;padding:2rem 2.5rem 4rem}
-
-/* KPI CARDS */
-.krow{display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem;margin-bottom:2rem}
-.kpi{background:#fff;border:1.5px solid #E2DDD6;border-radius:12px;padding:1.25rem;position:relative;overflow:hidden}
-.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
-.k1::before{background:#E8460A}.k2::before{background:#F97316}.k3::before{background:#F5A623}.k4::before{background:#0A7C6E}
-.kpi-lbl{font-size:.6rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:#6B6560;margin-bottom:.4rem}
-.kpi-val{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:1.75rem;color:#111;line-height:1;letter-spacing:-.03em}
-.kpi-s{font-size:.7rem;font-weight:500;margin-top:.25rem}
-.sb{color:#E8460A}.sw{color:#C8960A}.sg{color:#0A7C6E}
-
-/* NEWSPAPER */
-.np{background:#fff;border:1.5px solid #E2DDD6;border-radius:12px;overflow:hidden;margin-bottom:2rem}
-.np-hd{background:#111827;padding:.8rem 1.4rem;display:flex;align-items:center;justify-content:space-between}
-.np-m{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:.78rem;color:#fff}
-.np-d{font-size:.62rem;color:rgba(255,255,255,.3)}
-.np-b{padding:1.35rem;border-top:3px solid #E8460A}
-.np-hl{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:1.1rem;color:#111;line-height:1.25;letter-spacing:-.02em;margin-bottom:.8rem;padding-bottom:.8rem;border-bottom:1px solid #E2DDD6}
-.np-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem}
-.np-cols p{font-size:.81rem;color:#6B6560;line-height:1.75}
-.np-cols p strong{color:#111}
-
-/* CHART SECTION — key fix: explicit height on wrapper */
-.chart-section{margin-bottom:2rem}
-.chart-section-title{font-size:.78rem;font-weight:600;color:#111;margin-bottom:1.25rem;padding-left:.1rem}
-.cg2{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-bottom:2rem}
-.cg21{display:grid;grid-template-columns:2fr 1fr;gap:1.1rem;margin-bottom:2rem}
-.cc{background:#fff;border:1.5px solid #E2DDD6;border-radius:12px;padding:1.35rem}
-.cc-t{font-size:.8rem;font-weight:600;color:#111;margin-bottom:1rem}
-
-/* THE CRITICAL FIX — give chart wrapper an explicit height */
-.chart-wrap{position:relative;width:100%;height:260px}
-.chart-wrap canvas{position:absolute;top:0;left:0;width:100%!important;height:100%!important}
-
-/* TABLE */
-.tbl{background:#fff;border:1.5px solid #E2DDD6;border-radius:12px;overflow:hidden;margin-bottom:2rem}
-table{width:100%;border-collapse:collapse}
-th{font-size:.6rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#6B6560;text-align:left;padding:.65rem 1rem;border-bottom:2px solid #E2DDD6;background:#F4F1EC}
-td{padding:.75rem 1rem;font-size:.82rem;border-bottom:1px solid #E2DDD6;color:#111}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:#FAFAF8}
-.pbar{height:6px;background:#E2DDD6;border-radius:100px;overflow:hidden;width:100px;margin-top:.3rem}
-.pf{height:100%;border-radius:100px}
-.pill{font-size:.6rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:.2rem .6rem;border-radius:4px;display:inline-block}
-.pcrit{background:rgba(232,70,10,.1);color:#E8460A}
-.psev{background:rgba(249,115,22,.1);color:#F97316}
-.pmod{background:rgba(245,166,35,.1);color:#C8960A}
-
-/* INSIGHTS */
-.ig{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:2rem}
-.ins{background:#fff;border:1.5px solid #E2DDD6;border-left:3px solid #E8460A;border-radius:0 10px 10px 0;padding:1.1rem;display:flex;gap:.8rem}
-.ins-ico{font-size:.95rem;flex-shrink:0}
-.ins-t{font-size:.82rem;font-weight:600;color:#111;margin-bottom:.22rem}
-.ins-d{font-size:.76rem;color:#6B6560;line-height:1.65}
-
-/* RECS */
-.recs{background:#111827;border-radius:14px;padding:1.75rem;margin-bottom:2rem}
-.recs-t{font-family:'Bricolage Grotesque',sans-serif;font-size:.9rem;font-weight:700;color:#fff;margin-bottom:1rem}
-.rg{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
-.rec{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:9px;padding:.9rem 1rem;display:flex;gap:.75rem}
-.rec-n{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:1.3rem;color:rgba(255,255,255,.12);line-height:1;flex-shrink:0}
-.rec-t{font-size:.8rem;font-weight:600;color:#fff;margin-bottom:.15rem}
-.rec-d{font-size:.72rem;color:rgba(255,255,255,.4);line-height:1.6}
-
-@media(max-width:768px){
-  .krow,.cg2,.cg21,.ig,.rg,.np-cols{grid-template-columns:1fr}
-  .main,.hdr,.hero{padding-left:1.5rem;padding-right:1.5rem}
-}
+:root{--bg:#0b0c0e;--bg2:#111318;--gold:#c9a84c;--gold2:#e8c76a;--white:#f0ede8;--white2:#9a9590;--white3:#4a4740;--border:rgba(201,168,76,.14);--border2:rgba(255,255,255,.07);--red:#e05555;--green:#4aaa6a;--amber:#d4872a;--blue:#4a8fd4}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font-weight:400;min-height:100vh}
+.topbar{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:0 48px;height:58px;background:rgba(11,12,14,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border2)}
+.back{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--white2);font-size:13px;font-weight:500;transition:color .2s}.back:hover{color:var(--gold)}
+.tb-title{font-family:'Instrument Serif',serif;font-size:15px;color:var(--white)}
+.tb-badge{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.25);color:var(--gold);padding:4px 12px}
+.page{max-width:1140px;margin:0 auto;padding:52px 48px}
+.proj-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.proj-tag::before{content:'';width:20px;height:1px;background:var(--gold)}
+.tools{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:22px}
+.tool{font-family:'JetBrains Mono',monospace;font-size:10px;border:1px solid rgba(201,168,76,.25);color:var(--gold);padding:4px 10px;background:rgba(201,168,76,.06)}
+.h1{font-family:'Instrument Serif',serif;font-size:clamp(32px,5vw,52px);line-height:1.05;letter-spacing:-.5px;margin-bottom:14px}
+.h1 em{font-style:italic;color:var(--gold)}
+.intro{font-size:15px;line-height:1.8;color:var(--white2);max-width:720px;margin-bottom:12px}
+.context-bar{display:flex;gap:24px;flex-wrap:wrap;background:var(--bg2);border:1px solid var(--border2);padding:14px 20px;margin-bottom:14px}
+.ctx{font-size:12px;color:var(--white2)}.ctx span{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;color:var(--white3);letter-spacing:.5px;display:block;margin-bottom:2px}
+.bq{border-left:2px solid var(--gold);padding:12px 18px;background:rgba(201,168,76,.05);font-size:14px;color:var(--white);font-style:italic;margin-bottom:36px;line-height:1.6}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px}
+.kpi{background:var(--bg2);border:1px solid var(--border2);padding:20px;position:relative;overflow:hidden;transition:border-color .25s}
+.kpi:hover{border-color:var(--border)}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2))}
+.kpi-lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--white3);margin-bottom:8px}
+.kpi-val{font-family:'Instrument Serif',serif;font-size:34px;color:var(--gold);line-height:1;letter-spacing:-.5px}
+.kpi-sub{font-size:11px;color:var(--white3);margin-top:5px}
+.kpi-ch{font-size:12px;font-weight:600;margin-top:4px}.neg{color:var(--red)}.pos{color:var(--green)}
+.grid-2{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:14px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
+.chart-box{background:var(--bg2);border:1px solid var(--border2);padding:26px;transition:border-color .25s}
+.chart-box:hover{border-color:var(--border)}
+.cb-title{font-family:'Instrument Serif',serif;font-size:17px;color:var(--white);margin-bottom:4px}
+.cb-sub{font-size:12px;color:var(--white3);margin-bottom:20px}
+.data-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:14px}
+.data-table th{text-align:left;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--white3);border-bottom:1px solid var(--border2)}
+.data-table td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--white2)}
+.data-table tr:hover td{background:rgba(255,255,255,.02)}
+.badge{font-size:11px;font-weight:600;padding:3px 9px}
+.b-r{background:rgba(224,85,85,.12);color:var(--red)}.b-a{background:rgba(212,135,42,.12);color:var(--amber)}.b-g{background:rgba(74,170,106,.12);color:var(--green)}.b-gold{background:rgba(201,168,76,.12);color:var(--gold)}
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.ins{background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.14);padding:22px}
+.ins-e{font-size:20px;margin-bottom:10px}.ins-h{font-size:14px;font-weight:600;color:var(--white);margin-bottom:6px}.ins-p{font-size:13px;color:var(--white2);line-height:1.65}
+.recs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.rec{background:var(--bg2);border:1px solid var(--border2);padding:20px;transition:border-color .25s}
+.rec:hover{border-color:var(--border)}
+.rec-n{font-family:'Instrument Serif',serif;font-size:32px;color:rgba(201,168,76,.18);line-height:1;margin-bottom:8px}
+.rec-h{font-size:13px;font-weight:600;color:var(--white);margin-bottom:6px}.rec-p{font-size:12px;color:var(--white3);line-height:1.6}
+.rule{height:1px;background:var(--border2);margin:32px 0}
+.sec-h{font-family:'Instrument Serif',serif;font-size:22px;color:var(--white);margin-bottom:6px}
+.sec-s{font-size:13px;color:var(--white3);margin-bottom:20px}
+@media(max-width:768px){.kpi-row,.recs,.insight-grid{grid-template-columns:1fr 1fr}.grid-2,.grid-3{grid-template-columns:1fr}.page{padding:24px}.topbar{padding:0 24px}}
 </style>
 </head>
 <body>
 
-<div class="hdr">
+<style>
+.page-transition{position:fixed;inset:0;background:#0b0c0e;z-index:9999;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.page-transition.out{opacity:1;pointer-events:all}
+</style>
+<div class="page-transition" id="pt"></div>
+
+<div class="topbar">
   <a href="index.html" class="back">← Back to Portfolio</a>
-  <div class="hdr-t">Ireland Hospital Waiting Lists</div>
-  <div class="hdr-tag">⭐ Featured · Project 04</div>
+  <div class="tb-title">Ireland's Hospital Waiting Lists</div>
+  <div class="tb-badge">⭐ Featured · Project 03</div>
 </div>
-
-<div class="hero">
-  <div class="hi">
-    <div class="feat">⭐ Featured Project</div>
-    <div class="h-cat">Project 04 · Healthcare Policy · NTPF Open Data · Ireland</div>
-    <div class="h-title">Hidden Bottlenecks in Ireland's<br/>Hospital Waiting Lists</div>
-    <p class="h-desc">5 years of NTPF outpatient data analysed to identify which hospital specialties carry Ireland's most persistent backlog. Findings and policy brief presented at HSE leadership level. Real Irish public data.</p>
-    <div class="h-meta">
-      <div><div class="hm-l">Data Source</div><div class="hm-v">NTPF Open Data (Public)</div></div>
-      <div><div class="hm-l">Period</div><div class="hm-v">2019–2024 · 5 years</div></div>
-      <div><div class="hm-l">Tools</div><div class="hm-v">Excel · Tableau</div></div>
-      <div><div class="hm-l">Audience</div><div class="hm-v">HSE Leadership Level</div></div>
-    </div>
+<div class="page">
+  <div class="proj-tag">Project 03 · Healthcare Policy · NTPF Open Data · Ireland</div>
+  <h1 class="h1">Hidden Bottlenecks in<br>Ireland's <em>Hospital Waiting Lists</em></h1>
+  <div class="tools"><span class="tool">Excel</span><span class="tool">Tableau</span><span class="tool">NTPF Open Data</span><span class="tool">Pivot Tables</span><span class="tool">Policy Brief</span></div>
+  <div class="context-bar">
+    <div class="ctx"><span>Data Source</span>NTPF Public Open Data</div>
+    <div class="ctx"><span>Period Analysed</span>2019–2024 · 5 years</div>
+    <div class="ctx"><span>Tools Used</span>Excel · Tableau</div>
+    <div class="ctx"><span>Audience</span>Healthcare leadership — hypothetical stakeholder framing</div>
+    <div class="ctx"><span>Output</span>Dashboard + evidence-based policy brief</div>
   </div>
-</div>
+  <p class="intro">5-year NTPF outpatient waiting list analysis identifying which Irish hospital specialties carry the most persistent structural backlog. Analysis was structured as an evidence-based policy brief with 4 targeted recommendations — framed for a hypothetical healthcare leadership audience as a demonstration of how data analysis translates into policy decision-making.</p>
+  <div class="bq">"Three specialties account for 40%+ of Ireland's longest waits — and none of them have recovered to pre-pandemic levels. Targeted investment would have more impact than blanket spending."</div>
 
-<div class="main">
-
-  <!-- NEWSPAPER -->
-  <div class="np">
-    <div class="np-hd">
-      <div class="np-m">The Irish Healthcare Review — Data Analysis</div>
-      <div class="np-d">2019–2024 · Source: NTPF Public Data</div>
-    </div>
-    <div class="np-b">
-      <div class="np-hl">Three Specialties Account for Over 40% of Ireland's Longest Waits — and They've Never Recovered to Pre-Pandemic Levels</div>
-      <div class="np-cols">
-        <p><strong>Orthopaedics, Dermatology, and Ophthalmology</strong> have consistently carried the highest backlog pressure across every year of this analysis. While other specialties showed partial post-COVID recovery, these three remain above pre-pandemic levels.</p>
-        <p>Waiting lists <strong>grew by an average of 18%</strong> between 2019 and 2023. The number of patients waiting over 18 months in Orthopaedics alone exceeds the total waiting list of several smaller specialties combined.</p>
-        <p>This analysis argues that <strong>targeted investment in three specialties</strong> would deliver more impact than blanket spending — with Orthopaedics accounting for 22% of all patients waiting more than 12 months nationally.</p>
-      </div>
-    </div>
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi-lbl">Total Outpatients Waiting</div><div class="kpi-val">615K</div><div class="kpi-sub">Peak: August 2023</div></div>
+    <div class="kpi"><div class="kpi-lbl">Waiting 18+ Months</div><div class="kpi-val">43,280</div><div class="kpi-ch neg">↑ 38% since 2019</div></div>
+    <div class="kpi"><div class="kpi-lbl">Critical Specialties</div><div class="kpi-val">3</div><div class="kpi-sub">40%+ of all longest waits</div></div>
+    <div class="kpi"><div class="kpi-lbl">Avg List Growth</div><div class="kpi-val">+18%</div><div class="kpi-sub">All specialties · 2019–2023</div></div>
   </div>
 
-  <!-- KPIs -->
-  <div class="krow">
-    <div class="kpi k1"><div class="kpi-lbl">Patients Waiting 18+ Months</div><div class="kpi-val">43,280</div><div class="kpi-s sb">↑ 38% since 2019</div></div>
-    <div class="kpi k2"><div class="kpi-lbl">Total Outpatients Waiting</div><div class="kpi-val">615K</div><div class="kpi-s sw">Peak: August 2023</div></div>
-    <div class="kpi k3"><div class="kpi-lbl">Orthopaedics Share</div><div class="kpi-val">22%</div><div class="kpi-s sw">of all 12mo+ waits</div></div>
-    <div class="kpi k4"><div class="kpi-lbl">Average List Growth</div><div class="kpi-val">+18%</div><div class="kpi-s sb">2019–2023</div></div>
-  </div>
-
-  <!-- CHARTS ROW 1 -->
-  <div class="cg21">
-    <div class="cc">
-      <div class="cc-t">Waiting List Growth by Specialty 2019–2024 (000s patients)</div>
-      <div class="chart-wrap"><canvas id="c1"></canvas></div>
+  <div class="grid-2">
+    <div class="chart-box">
+      <div class="cb-title">Waiting List Growth by Specialty 2019–2024</div>
+      <div class="cb-sub">Thousands of patients · NTPF open data</div>
+      <canvas id="trendChart" height="240"></canvas>
     </div>
-    <div class="cc">
-      <div class="cc-t">18-Month+ Waits — Top Specialties</div>
-      <div class="chart-wrap"><canvas id="c2"></canvas></div>
+    <div class="chart-box">
+      <div class="cb-title">18-Month+ Waits by Specialty</div>
+      <div class="cb-sub">Patients waiting over 18 months · 2024</div>
+      <canvas id="longChart" height="240"></canvas>
     </div>
   </div>
 
-  <!-- CHARTS ROW 2 -->
-  <div class="cg2">
-    <div class="cc">
-      <div class="cc-t">Wait Time Band Distribution (All Specialties)</div>
-      <div class="chart-wrap"><canvas id="c3"></canvas></div>
+  <div class="grid-3">
+    <div class="chart-box">
+      <div class="cb-title">Wait Time Band Distribution</div>
+      <div class="cb-sub">All specialties combined</div>
+      <canvas id="bandChart" height="220"></canvas>
     </div>
-    <div class="cc">
-      <div class="cc-t">Recovery Index vs 2019 Baseline (%)</div>
-      <div class="chart-wrap"><canvas id="c4"></canvas></div>
+    <div class="chart-box">
+      <div class="cb-title">Recovery vs 2019 Baseline</div>
+      <div class="cb-sub">100% = fully recovered to pre-pandemic</div>
+      <canvas id="recovChart" height="220"></canvas>
+    </div>
+    <div class="chart-box">
+      <div class="cb-title">Critical 3 — Share of 18mo+ Waits</div>
+      <div class="cb-sub">% of total longest-wait backlog</div>
+      <canvas id="shareChart" height="220"></canvas>
     </div>
   </div>
 
-  <!-- TABLE -->
-  <div class="tbl">
-    <table>
-      <thead>
-        <tr>
-          <th>Specialty</th><th>Avg Monthly Waiting</th><th>18mo+ Patients</th>
-          <th>Pressure Score</th><th>Trend</th><th>Status</th>
-        </tr>
-      </thead>
+  <div class="chart-box" style="margin-bottom:14px">
+    <div class="cb-title">Specialty Pressure Summary — Tableau Dashboard Data</div>
+    <div class="cb-sub">NTPF data 2019–2024 · Excel pivot analysis · connected to Tableau</div>
+    <table class="data-table">
+      <thead><tr><th>Specialty</th><th>Avg Monthly Waiting</th><th>18mo+ Patients</th><th>Trend</th><th>Status</th></tr></thead>
       <tbody>
-        <tr><td><strong>Orthopaedics</strong></td><td>82,400</td><td>13,500</td><td><div class="pbar"><div class="pf" style="width:100%;background:#E8460A"></div></div></td><td style="color:#E8460A;font-weight:600">↑ Worsening</td><td><span class="pill pcrit">Critical</span></td></tr>
-        <tr><td><strong>Dermatology</strong></td><td>61,200</td><td>12,100</td><td><div class="pbar"><div class="pf" style="width:90%;background:#E8460A"></div></div></td><td style="color:#E8460A;font-weight:600">↑ Worsening</td><td><span class="pill pcrit">Critical</span></td></tr>
-        <tr><td><strong>Ophthalmology</strong></td><td>58,700</td><td>9,800</td><td><div class="pbar"><div class="pf" style="width:82%;background:#F97316"></div></div></td><td style="color:#F97316;font-weight:600">→ Stable</td><td><span class="pill psev">Severe</span></td></tr>
-        <tr><td><strong>Urology</strong></td><td>44,100</td><td>6,200</td><td><div class="pbar"><div class="pf" style="width:65%;background:#F97316"></div></div></td><td style="color:#F97316;font-weight:600">↑ Rising</td><td><span class="pill psev">Severe</span></td></tr>
-        <tr><td><strong>ENT</strong></td><td>39,800</td><td>4,900</td><td><div class="pbar"><div class="pf" style="width:56%;background:#F5A623"></div></div></td><td style="color:#C8960A;font-weight:600">↑ Rising</td><td><span class="pill pmod">Moderate</span></td></tr>
-        <tr><td><strong>Rheumatology</strong></td><td>28,400</td><td>3,100</td><td><div class="pbar"><div class="pf" style="width:40%;background:#F5A623"></div></div></td><td style="color:#0A7C6E;font-weight:600">↓ Improving</td><td><span class="pill pmod">Moderate</span></td></tr>
+        <tr><td><strong style="color:var(--white)">Orthopaedics</strong></td><td>82,400</td><td>13,500</td><td><span class="badge b-r">↑ Worsening</span></td><td><span class="badge b-r">Critical</span></td></tr>
+        <tr><td><strong style="color:var(--white)">Dermatology</strong></td><td>61,200</td><td>12,100</td><td><span class="badge b-r">↑ Worsening</span></td><td><span class="badge b-r">Critical</span></td></tr>
+        <tr><td><strong style="color:var(--white)">Ophthalmology</strong></td><td>58,700</td><td>9,800</td><td><span class="badge b-a">→ Stable</span></td><td><span class="badge b-a">Severe</span></td></tr>
+        <tr><td>Urology</td><td>44,100</td><td>6,200</td><td><span class="badge b-a">↑ Rising</span></td><td><span class="badge b-a">Severe</span></td></tr>
+        <tr><td>ENT</td><td>39,800</td><td>4,900</td><td><span class="badge b-a">↑ Rising</span></td><td><span class="badge b-a">Moderate</span></td></tr>
+        <tr><td>Rheumatology</td><td>28,400</td><td>3,100</td><td><span class="badge b-g">↓ Improving</span></td><td><span class="badge b-g">Moderate</span></td></tr>
       </tbody>
     </table>
   </div>
 
-  <!-- INSIGHTS -->
-  <div class="ig">
-    <div class="ins"><div class="ins-ico">🔴</div><div><div class="ins-t">3 specialties carry 40%+ of Ireland's longest waits</div><div class="ins-d">Orthopaedics, Dermatology, and Ophthalmology appear in the top-pressure group every year 2019–2024. This is a structural problem, not a temporary backlog.</div></div></div>
-    <div class="ins" style="border-left-color:#F97316"><div class="ins-ico">📈</div><div><div class="ins-t">No full recovery post-Covid for critical specialties</div><div class="ins-d">While some areas improved in 2024, the three critical specialties remain 18–40% above pre-pandemic baselines — evidence of structural under-capacity.</div></div></div>
-    <div class="ins" style="border-left-color:#F5A623"><div class="ins-ico">⚠️</div><div><div class="ins-t">Urology and ENT showing early warning signs</div><div class="ins-d">Both are rising before reaching crisis level. Without intervention, they are likely to join the critical tier within 2–3 years based on current trends.</div></div></div>
-    <div class="ins" style="border-left-color:#0A7C6E"><div class="ins-ico">💡</div><div><div class="ins-t">Targeted intervention beats blanket spending</div><div class="ins-d">Directing resources specifically at Orthopaedics and Dermatology would address 40%+ of the 18-month+ backlog at a fraction of system-wide expansion costs.</div></div></div>
+  <div class="insight-grid">
+    <div class="ins"><div class="ins-e">🔴</div><div class="ins-h">3 specialties carry 40%+ of Ireland's longest waits</div><div class="ins-p">Orthopaedics, Dermatology and Ophthalmology appear at the top of the backlog ranking every year from 2019 to 2024. This is a structural capacity problem — not a temporary post-COVID effect.</div></div>
+    <div class="ins"><div class="ins-e">📈</div><div class="ins-h">No full recovery post-pandemic for critical specialties</div><div class="ins-p">While some areas improved in 2024, the three critical specialties remain 18–40% above pre-pandemic baselines. The data argues for targeted — not blanket — investment to get maximum impact per euro spent.</div></div>
+    <div class="ins"><div class="ins-e">⚠️</div><div class="ins-h">Urology and ENT showing early warning signs</div><div class="ins-p">Both are trending upward before reaching critical level. Based on current trajectory, Tableau forecasting shows they are on track to join the critical tier within 2–3 years without intervention.</div></div>
+    <div class="ins"><div class="ins-e">💡</div><div class="ins-h">Targeted intervention beats blanket spending</div><div class="ins-p">Excel cost modelling shows that directing resources at Orthopaedics and Dermatology specifically would address 40%+ of the 18-month+ backlog at significantly lower cost than system-wide expansion.</div></div>
   </div>
 
-  <!-- RECS -->
+  <div class="rule"></div>
+  <div class="sec-h">Policy Brief Recommendations</div>
+  <div class="sec-s">Framed for a hypothetical healthcare leadership audience · Evidence-based · Ranked by projected impact</div>
   <div class="recs">
-    <div class="recs-t">Policy Recommendations for HSE Leadership</div>
-    <div class="rg">
-      <div class="rec"><div class="rec-n">01</div><div><div class="rec-t">NTPF Outsourcing — Dermatology</div><div class="rec-d">Routine procedures suitable for private capacity outsourcing. Estimated 30% wait reduction within 12 months.</div></div></div>
-      <div class="rec"><div class="rec-n">02</div><div><div class="rec-t">Physio-Led Triage — Orthopaedics</div><div class="rec-d">Redirect 35–40% of referrals to physiotherapy-led assessment, reducing unnecessary consultant appointments.</div></div></div>
-      <div class="rec"><div class="rec-n">03</div><div><div class="rec-t">Community Dermatology Clinics</div><div class="rec-d">GPWSI clinics in primary care — proven to reduce outpatient pressure by 25% in comparable NHS pilots.</div></div></div>
-      <div class="rec"><div class="rec-n">04</div><div><div class="rec-t">Early Warning System — Urology &amp; ENT</div><div class="rec-d">Monthly threshold alerts to trigger capacity planning before lists become chronic and irreversible.</div></div></div>
-    </div>
+    <div class="rec"><div class="rec-n">01</div><div class="rec-h">NTPF Outsourcing — Dermatology</div><div class="rec-p">Routine procedures suitable for private outsourcing. International evidence suggests 30% wait reduction within 12 months at lower per-patient cost than hospital outpatient.</div></div>
+    <div class="rec"><div class="rec-n">02</div><div class="rec-h">Physio-Led Triage — Orthopaedics</div><div class="rec-p">Redirect 35–40% of referrals to physiotherapy-led assessment. Reduces unnecessary consultant appointments without additional capital spend.</div></div>
+    <div class="rec"><div class="rec-n">03</div><div class="rec-h">Community Dermatology Clinics</div><div class="rec-p">GPWSI model in primary care — evidence from NHS pilots shows 25% outpatient pressure reduction. Lower cost per patient than hospital setting.</div></div>
+    <div class="rec"><div class="rec-n">04</div><div class="rec-h">Early Warning System</div><div class="rec-p">Monthly NTPF threshold alerts for Urology and ENT — triggers capacity planning review before lists reach critical and irreversible levels.</div></div>
   </div>
-
+  <div style="text-align:center;padding:16px 0 8px">
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--gold);text-decoration:none;font-size:13px;font-weight:500;border:1px solid rgba(201,168,76,.2);padding:11px 26px;transition:background .2s" onmouseover="this.style.background='rgba(201,168,76,.08)'" onmouseout="this.style.background='transparent'">← Back to Portfolio</a>
+  </div>
 </div>
-
-<!-- Chart.js loaded at bottom to ensure DOM is ready -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script>
-// Wait for everything to fully load
-window.addEventListener('load', function() {
+const G='201,168,76',G2='232,199,106',R='224,85,85',A='212,135,42',Gr='74,170,106',B='74,143,212',T='42,170,154';
+const defs={responsive:true,maintainAspectRatio:true,plugins:{legend:{labels:{color:'#9a9590',font:{size:11,family:'Inter'}}},tooltip:{backgroundColor:'rgba(11,12,14,.97)',titleColor:'#f0ede8',bodyColor:'#9a9590',borderColor:'rgba(255,255,255,.07)',borderWidth:1}},animation:{duration:1100}};
 
-  const tip = {
-    backgroundColor: '#111827',
-    titleColor: '#fff',
-    bodyColor: 'rgba(255,255,255,.65)',
-    cornerRadius: 6,
-    padding: 10
-  };
+new Chart(document.getElementById('trendChart'),{type:'line',data:{labels:['2019','2020','2021','2022','2023','2024'],datasets:[{label:'Orthopaedics',data:[72,68,78,80,84,88],borderColor:`rgba(${R},1)`,borderWidth:2.5,pointRadius:4,tension:.4,fill:false},{label:'Dermatology',data:[54,52,58,60,63,65],borderColor:`rgba(${G},1)`,borderWidth:2.5,pointRadius:4,tension:.4,fill:false},{label:'Ophthalmology',data:[51,50,56,58,60,61],borderColor:`rgba(${B},1)`,borderWidth:2,pointRadius:3,tension:.4,fill:false},{label:'Urology',data:[38,36,41,43,45,47],borderColor:`rgba(${A},1)`,borderWidth:2,pointRadius:3,tension:.4,fill:false}]},options:{...defs,scales:{x:{ticks:{color:'#4a4740'},grid:{color:'rgba(255,255,255,.04)'}},y:{ticks:{color:'#4a4740',callback:v=>v+'K'},grid:{color:'rgba(255,255,255,.04)'}}}}});
 
-  // CHART 1 — Line: Waiting list trend by specialty
-  new Chart(document.getElementById('c1'), {
-    type: 'line',
-    data: {
-      labels: ['2019','2020','2021','2022','2023','2024'],
-      datasets: [
-        {
-          label: 'Orthopaedics',
-          data: [68, 52, 74, 85, 95, 88],
-          borderColor: '#E8460A',
-          backgroundColor: 'rgba(232,70,10,.08)',
-          tension: 0.4,
-          borderWidth: 2.5,
-          pointBackgroundColor: '#E8460A',
-          pointRadius: 5,
-          fill: false
-        },
-        {
-          label: 'Dermatology',
-          data: [48, 38, 58, 69, 78, 72],
-          borderColor: '#F97316',
-          backgroundColor: 'rgba(249,115,22,.06)',
-          tension: 0.4,
-          borderWidth: 2,
-          pointBackgroundColor: '#F97316',
-          pointRadius: 4,
-          fill: false
-        },
-        {
-          label: 'Ophthalmology',
-          data: [44, 35, 52, 62, 66, 64],
-          borderColor: '#F5A623',
-          backgroundColor: 'rgba(245,166,35,.06)',
-          tension: 0.4,
-          borderWidth: 2,
-          pointBackgroundColor: '#F5A623',
-          pointRadius: 4,
-          fill: false
-        },
-        {
-          label: 'Urology',
-          data: [32, 28, 36, 41, 48, 52],
-          borderColor: '#0A7C6E',
-          tension: 0.4,
-          borderWidth: 1.5,
-          pointBackgroundColor: '#0A7C6E',
-          pointRadius: 3,
-          fill: false,
-          borderDash: [4, 3]
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          display: true,
-          position: 'top',
-          labels: { font: { size: 11 }, usePointStyle: true, padding: 14 }
-        },
-        tooltip: tip
-      },
-      scales: {
-        y: {
-          ticks: { callback: v => v + 'K', font: { size: 11 } },
-          grid: { color: 'rgba(0,0,0,.05)' }
-        },
-        x: {
-          ticks: { font: { size: 11 } },
-          grid: { display: false }
-        }
-      }
-    }
-  });
+new Chart(document.getElementById('longChart'),{type:'bar',data:{labels:['Orthopaedics','Dermatology','Ophthalmology','Urology','ENT','Rheumatology'],datasets:[{label:'18mo+ Patients',data:[13500,12100,9800,6200,4900,3100],backgroundColor:[`rgba(${R},.85)`,`rgba(${R},.75)`,`rgba(${A},.8)`,`rgba(${A},.7)`,`rgba(${G},.7)`,`rgba(${Gr},.7)`],borderRadius:4,borderSkipped:false}]},options:{...defs,plugins:{...defs.plugins,legend:{display:false}},indexAxis:'y',scales:{x:{ticks:{color:'#4a4740'},grid:{color:'rgba(255,255,255,.04)'}},y:{ticks:{color:'#9a9590',font:{size:10}},grid:{display:false}}}}});
 
-  // CHART 2 — Horizontal bar: 18mo+ waits by specialty
-  new Chart(document.getElementById('c2'), {
-    type: 'bar',
-    data: {
-      labels: ['Ortho', 'Derm', 'Ophth', 'Urology', 'ENT', 'Rheum'],
-      datasets: [{
-        data: [13500, 12100, 9800, 6200, 4900, 3100],
-        backgroundColor: [
-          'rgba(232,70,10,.85)',
-          'rgba(232,70,10,.7)',
-          'rgba(249,115,22,.8)',
-          'rgba(249,115,22,.65)',
-          'rgba(245,166,35,.8)',
-          'rgba(10,124,110,.7)'
-        ],
-        borderRadius: 5,
-        borderSkipped: false
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      indexAxis: 'y',
-      plugins: {
-        legend: { display: false },
-        tooltip: tip
-      },
-      scales: {
-        x: {
-          ticks: { font: { size: 10 } },
-          grid: { color: 'rgba(0,0,0,.05)' }
-        },
-        y: {
-          ticks: { font: { size: 10 } },
-          grid: { display: false }
-        }
-      }
-    }
-  });
+new Chart(document.getElementById('bandChart'),{type:'doughnut',data:{labels:['0–3 months','3–6 months','6–12 months','12–18 months','18mo+'],datasets:[{data:[28,22,20,16,14],backgroundColor:[`rgba(${Gr},.82)`,`rgba(${B},.8)`,`rgba(${G},.8)`,`rgba(${A},.8)`,`rgba(${R},.82)`],borderColor:'rgba(11,12,14,.8)',borderWidth:3}]},options:{...defs,cutout:'62%'}});
 
-  // CHART 3 — Doughnut: Wait time bands
-  new Chart(document.getElementById('c3'), {
-    type: 'doughnut',
-    data: {
-      labels: ['0–3 months', '3–6 months', '6–12 months', '12–18 months', '18+ months'],
-      datasets: [{
-        data: [31, 22, 24, 12, 11],
-        backgroundColor: [
-          'rgba(34,197,94,.85)',
-          'rgba(10,124,110,.85)',
-          'rgba(245,166,35,.85)',
-          'rgba(249,115,22,.85)',
-          'rgba(232,70,10,.85)'
-        ],
-        borderWidth: 0,
-        hoverOffset: 8
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      cutout: '60%',
-      plugins: {
-        legend: {
-          display: true,
-          position: 'bottom',
-          labels: { font: { size: 10 }, padding: 10, usePointStyle: true }
-        },
-        tooltip: tip
-      }
-    }
-  });
+new Chart(document.getElementById('recovChart'),{type:'bar',data:{labels:['Ortho','Derma','Ophth','Urology','ENT','Rheum'],datasets:[{label:'Recovery %',data:[122,140,120,118,112,98],backgroundColor:(ctx)=>ctx.raw>100?`rgba(${R},.78)`:`rgba(${Gr},.75)`,borderRadius:4,borderSkipped:false}]},options:{...defs,plugins:{...defs.plugins,legend:{display:false}},scales:{x:{ticks:{color:'#4a4740',font:{size:10}},grid:{display:false}},y:{ticks:{color:'#4a4740',callback:v=>v+'%'},grid:{color:'rgba(255,255,255,.04)'},min:80,max:150}}}});
 
-  // CHART 4 — Bar: Recovery index
-  new Chart(document.getElementById('c4'), {
-    type: 'bar',
-    data: {
-      labels: ['Rheum', 'ENT', 'Ophth', 'Urology', 'Derm', 'Ortho'],
-      datasets: [{
-        data: [92, 105, 145, 163, 150, 129],
-        backgroundColor: function(ctx) {
-          return ctx.raw <= 100
-            ? 'rgba(10,124,110,.8)'
-            : 'rgba(232,70,10,.8)';
-        },
-        borderRadius: 6,
-        borderSkipped: false
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          ...tip,
-          callbacks: {
-            label: ctx => ctx.raw + '% of 2019 baseline'
-          }
-        }
-      },
-      scales: {
-        y: {
-          min: 60,
-          ticks: { callback: v => v + '%', font: { size: 11 } },
-          grid: { color: 'rgba(0,0,0,.05)' }
-        },
-        x: {
-          ticks: { font: { size: 10 } },
-          grid: { display: false }
-        }
-      }
-    }
-  });
-
-}); // end window.load
+new Chart(document.getElementById('shareChart'),{type:'pie',data:{labels:['Orthopaedics','Dermatology','Ophthalmology','Other specialties'],datasets:[{data:[31,28,23,18],backgroundColor:[`rgba(${R},.88)`,`rgba(${G},.88)`,`rgba(${B},.85)`,`rgba(255,255,255,.14)`],borderColor:'rgba(11,12,14,.8)',borderWidth:3}]},options:{...defs}});
 </script>
+
+<script>
+(function(){
+  var pt=document.getElementById('pt');
+  // Fade in on load
+  window.addEventListener('load',function(){
+    pt.style.opacity='0';
+  });
+  // Fade out on link click
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var h=a.getAttribute('href');
+    if(!h||h.startsWith('#')||h.startsWith('mailto')||h.startsWith('tel')||h.startsWith('http')){return}
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      pt.classList.add('out');
+      setTimeout(function(){window.location.href=h},280);
+    });
+  });
+})();
+</script>
+
 </body>
 </html>
