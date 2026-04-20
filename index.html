@@ -4,346 +4,198 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Apurva Jadhav — Business & Data Analyst, Dublin</title>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #0b0c0e;
-  --bg2: #111318;
-  --bg3: #16181f;
-  --gold: #c9a84c;
-  --gold2: #e8c76a;
-  --goldfade: rgba(201,168,76,0.12);
-  --white: #f0ede8;
-  --white2: #9a9590;
-  --white3: #4a4740;
-  --border: rgba(201,168,76,0.14);
-  --border2: rgba(255,255,255,0.07);
-  --red: #e05555;
-  --amber: #d4872a;
-  --green: #4aaa6a;
-  --blue: #4a8fd4;
-  --teal: #2aaa9a;
-  --purple: #9a6ad4;
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#0b0c0f;--bg2:#12141a;--bg3:#181b24;
+  --gold:#c9a84c;--goldf:rgba(201,168,76,.1);
+  --white:#f0ede8;--w2:#9a9590;--w3:#4a4740;
+  --b2:rgba(255,255,255,.07);--b3:rgba(255,255,255,.04);
+  --blue:#4a8fd4;--teal:#2aaa9a;--purple:#9a6ad4;--red:#e05555;--green:#4aaa6a;
 }
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg);
-  color: var(--white);
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  line-height: 1.6;
-  overflow-x: hidden;
-}
+body{background:var(--bg);color:var(--white);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;overflow-x:hidden}
 
-/* ── TYPOGRAPHY ── */
-.serif { font-family: 'Instrument Serif', Georgia, serif; }
-.mono  { font-family: 'JetBrains Mono', monospace; }
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 52px;background:rgba(11,12,15,.92);border-bottom:1px solid var(--b2)}
+.logo{font-size:17px;font-weight:700;color:var(--white);letter-spacing:-.3px}
+.logo span{color:var(--gold)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:13px;color:var(--w2);text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:var(--white)}
+.nav-cta{font-size:12px;font-weight:600;color:var(--gold);border:1px solid rgba(201,168,76,.35);padding:8px 18px;text-decoration:none;transition:background .15s}
+.nav-cta:hover{background:var(--goldf)}
 
-/* ── CURSOR ── */
-.cursor { position: fixed; width: 8px; height: 8px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .25s, height .25s; }
-.cursor-ring { position: fixed; width: 32px; height: 32px; border: 1px solid rgba(201,168,76,.4); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); }
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding:80px 52px 60px;gap:48px}
+.hero-left{flex:1;max-width:640px}
+.hero-pill{display:inline-flex;align-items:center;gap:7px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);padding:5px 13px;border-radius:100px;font-size:12px;color:var(--gold);margin-bottom:26px}
+.pill-dot{width:6px;height:6px;border-radius:50%;background:#4aaa6a}
+.hero-h1{font-size:clamp(52px,6.5vw,82px);font-weight:800;line-height:.95;letter-spacing:-2px;margin-bottom:18px}
+.hero-h1 em{font-style:italic;color:var(--gold)}
+.hero-role{font-size:16px;color:var(--w2);margin-bottom:20px}
+.hero-role strong{color:var(--white);font-weight:600}
+.hero-desc{font-size:15px;line-height:1.8;color:var(--w3);max-width:520px;margin-bottom:36px}
+.hero-btns{display:flex;gap:12px}
+.btn-g{background:var(--gold);color:var(--bg);font-size:13px;font-weight:700;padding:13px 28px;text-decoration:none;transition:opacity .15s}
+.btn-g:hover{opacity:.88}
+.btn-o{background:transparent;border:1px solid var(--b2);color:var(--w2);font-size:13px;padding:13px 28px;text-decoration:none;transition:border-color .15s,color .15s}
+.btn-o:hover{border-color:var(--w2);color:var(--white)}
+.hero-right{display:flex;flex-direction:column;gap:10px;min-width:280px}
+.hcard{background:var(--bg2);border:1px solid var(--b2);padding:18px 20px;transition:border-color .2s}
+.hcard:hover{border-color:rgba(201,168,76,.25)}
+.hcard-val{font-size:36px;font-weight:800;color:var(--gold);line-height:1;letter-spacing:-1px}
+.hcard-lbl{font-size:11px;color:var(--w3);margin-top:4px}
+.avail-card{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.18);padding:14px 20px}
+.avail-top{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.avail-name{font-size:14px;font-weight:600;color:var(--white)}
+.avail-sub{font-size:12px;color:var(--w3)}
 
-/* ── NAV ── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 0 56px; height: 64px;
-  background: rgba(11,12,14,0.85);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border2);
-  transition: border-color .3s;
-}
-nav.solid { border-color: var(--border); }
-.nav-logo { font-family: 'Instrument Serif', serif; font-size: 19px; color: var(--white); letter-spacing: -0.2px; }
-.nav-logo span { color: var(--gold); }
-.nav-links { display: flex; gap: 32px; list-style: none; }
-.nav-links a { font-size: 13px; font-weight: 500; color: var(--white2); text-decoration: none; letter-spacing: 0.2px; transition: color .2s; }
-.nav-links a:hover { color: var(--white); }
-.nav-hire { font-size: 12px; font-weight: 600; letter-spacing: 0.5px; color: var(--gold); border: 1px solid var(--border); padding: 9px 20px; text-decoration: none; transition: all .2s; }
-.nav-hire:hover { background: var(--goldfade); }
+/* TICKER */
+.ticker-wrap{overflow:hidden;padding:11px 0;background:var(--bg2);border-top:1px solid var(--b2);border-bottom:1px solid var(--b2)}
+.ticker{display:flex;animation:tick 28s linear infinite;white-space:nowrap}
+.ti{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--w3);padding:0 22px;display:flex;align-items:center;gap:22px;font-family:monospace}
+.td{width:3px;height:3px;border-radius:50%;background:var(--gold);flex-shrink:0}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* ── HERO ── */
-.hero {
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 340px;
-  gap: 60px;
-  align-items: center;
-  padding: 100px 56px 60px;
-  max-width: 1280px;
-  margin: 0 auto;
-}
-.hero-pill {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(201,168,76,0.08); border: 1px solid var(--border);
-  padding: 6px 14px; border-radius: 100px;
-  font-size: 12px; font-weight: 500; color: var(--gold);
-  letter-spacing: 0.3px; margin-bottom: 28px;
-}
-.hero-pill-dot { width: 6px; height: 6px; border-radius: 50%; background: #4aaa6a; box-shadow: 0 0 6px #4aaa6a; animation: blink 2s infinite; }
-@keyframes blink { 0%,100%{opacity:1}50%{opacity:.4} }
-.hero-h1 {
-  font-family: 'Instrument Serif', serif;
-  font-size: clamp(54px, 7vw, 88px);
-  line-height: 0.97;
-  letter-spacing: -1px;
-  color: var(--white);
-  margin-bottom: 20px;
-}
-.hero-h1 em { font-style: italic; color: var(--gold); }
-.hero-role { font-size: 15px; font-weight: 400; color: var(--white2); margin-bottom: 22px; letter-spacing: 0.2px; }
-.hero-desc { font-size: 15px; line-height: 1.8; color: var(--white3); max-width: 520px; margin-bottom: 40px; }
-.hero-desc strong { color: var(--white2); font-weight: 500; }
-.hero-actions { display: flex; gap: 12px; }
-.btn-primary {
-  background: var(--gold); color: var(--bg);
-  font-size: 13px; font-weight: 600; letter-spacing: 0.3px;
-  padding: 13px 28px; text-decoration: none;
-  transition: all .2s;
-}
-.btn-primary:hover { background: var(--gold2); }
-.btn-secondary {
-  background: transparent; border: 1px solid var(--border2);
-  color: var(--white2); font-size: 13px; font-weight: 500;
-  padding: 13px 28px; text-decoration: none; transition: all .2s;
-}
-.btn-secondary:hover { border-color: var(--white2); color: var(--white); }
+/* SECTIONS */
+.sec{padding:88px 52px;max-width:1240px;margin:0 auto}
+.sec-full{padding:88px 52px}
+.rule{height:1px;background:var(--b2)}
+.ey{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px;margin-bottom:13px;font-family:monospace}
+.ey::before{content:'';width:18px;height:1px;background:var(--gold)}
+.sh{font-size:clamp(36px,4vw,52px);font-weight:800;letter-spacing:-1.5px;line-height:1.05;color:var(--white);margin-bottom:14px}
+.sh em{font-style:italic;color:var(--gold)}
+.ss{font-size:15px;color:var(--w3);line-height:1.75;max-width:540px}
 
-/* HERO STATS */
-.hero-stats { display: flex; flex-direction: column; gap: 12px; }
-.hstat {
-  background: var(--bg2); border: 1px solid var(--border2);
-  padding: 20px 22px;
-  transition: border-color .25s;
-}
-.hstat:hover { border-color: var(--border); }
-.hstat-val {
-  font-family: 'Instrument Serif', serif;
-  font-size: 38px; font-weight: 400; color: var(--gold);
-  line-height: 1; letter-spacing: -1px;
-}
-.hstat-lbl { font-size: 11px; color: var(--white3); margin-top: 5px; letter-spacing: 0.3px; }
-.avail-stat {
-  background: rgba(201,168,76,0.07); border: 1px solid var(--border);
-  padding: 16px 22px;
-}
-.avail-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
-.avail-name { font-size: 14px; font-weight: 600; color: var(--white); }
-.avail-sub { font-size: 12px; color: var(--white3); }
+/* ABOUT */
+.about-g{display:grid;grid-template-columns:1fr 360px;gap:64px;margin-top:52px;align-items:start}
+.ap{font-size:15px;line-height:1.85;color:var(--w2);margin-bottom:16px}
+.ap strong{color:var(--white);font-weight:600}
+.pcard{background:var(--bg2);border:1px solid var(--b2)}
+.pcard-top{padding:18px 20px;border-bottom:1px solid var(--b2);display:flex;align-items:center;gap:12px}
+.pav{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#e8c76a);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:var(--bg)}
+.pname{font-size:14px;font-weight:600;color:var(--white)}
+.prole{font-size:12px;color:var(--gold);margin-top:1px}
+.prow{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;border-bottom:1px solid var(--b2)}
+.prow:last-child{border-bottom:none}
+.pk{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--w3);font-family:monospace}
+.pv{font-size:13px;font-weight:500;color:var(--white)}
+.pv.gold{color:var(--gold)}
 
-/* ── TICKER ── */
-.ticker-wrap { border-top: 1px solid var(--border2); border-bottom: 1px solid var(--border2); overflow: hidden; padding: 12px 0; background: var(--bg2); }
-.ticker { display: flex; animation: tick 32s linear infinite; white-space: nowrap; }
-.tick-item { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--white3); padding: 0 24px; display: flex; align-items: center; gap: 24px; }
-.tick-sep { width: 3px; height: 3px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
-@keyframes tick { from{transform:translateX(0)}to{transform:translateX(-50%)} }
+/* PROJECTS */
+.proj-bg{background:var(--bg2)}
+.skill-proof{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;margin-bottom:44px}
+.sp{font-size:11px;font-weight:500;padding:6px 13px;border:1px solid var(--b2);color:var(--w2);display:flex;align-items:center;gap:6px;font-family:monospace;letter-spacing:.3px;transition:border-color .15s}
+.sp:hover{border-color:rgba(201,168,76,.3);color:var(--gold)}
+.sp-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--b2)}
+.pc{background:var(--bg2);padding:36px 32px;text-decoration:none;display:block;position:relative;overflow:hidden;transition:background .2s}
+.pc:hover{background:var(--bg3)}
+.pc-bar{position:absolute;top:0;left:0;right:0;height:2px;transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.pc:hover .pc-bar{transform:scaleX(1)}
+.pc-tag{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-family:monospace;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.pc-h{font-size:clamp(20px,2vw,26px);font-weight:700;color:var(--white);line-height:1.2;margin-bottom:10px;letter-spacing:-.3px}
+.pc-tools{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.pt{font-size:10px;border:1px solid var(--b2);color:var(--w3);padding:3px 8px;font-family:monospace}
+.pc-desc{font-size:13px;color:var(--w3);line-height:1.7;margin-bottom:18px}
+.pc-nums{display:flex;gap:18px;padding-top:14px;border-top:1px solid var(--b2);margin-bottom:18px}
+.pnv{font-size:26px;font-weight:800;line-height:1;letter-spacing:-.5px}
+.pnl{font-size:10px;color:var(--w3);margin-top:3px}
+.pc-cta{font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;display:inline-flex;align-items:center;gap:7px;font-family:monospace;transition:gap .2s}
+.pc:hover .pc-cta{gap:13px}
+.feat{position:absolute;top:14px;right:14px;font-size:9px;letter-spacing:1px;text-transform:uppercase;font-family:monospace;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.25);color:var(--gold);padding:3px 9px}
 
-/* ── SHARED SECTION ── */
-.section { padding: 100px 56px; max-width: 1280px; margin: 0 auto; }
-.section-full { padding: 100px 56px; }
-.eyebrow {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 14px;
-  display: flex; align-items: center; gap: 12px;
-}
-.eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--gold); }
-.sec-title {
-  font-family: 'Instrument Serif', serif;
-  font-size: clamp(38px, 4.5vw, 56px);
-  line-height: 1.05; letter-spacing: -0.5px;
-  color: var(--white); margin-bottom: 14px;
-}
-.sec-title em { font-style: italic; color: var(--gold); }
-.sec-sub { font-size: 15px; color: var(--white3); line-height: 1.75; max-width: 540px; }
-.rule { height: 1px; background: var(--border2); }
+/* SKILLS */
+.sk-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-top:48px}
+.sk{background:var(--bg2);border:1px solid var(--b2);padding:22px 18px;transition:all .2s}
+.sk:hover{border-color:rgba(201,168,76,.25);transform:translateY(-2px)}
+.sk-icon{font-size:19px;margin-bottom:11px}
+.sk-name{font-size:14px;font-weight:700;color:var(--white);margin-bottom:3px}
+.sk-lv{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;font-family:monospace}
+.sk-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px}
+.skt{font-size:10px;padding:2px 7px;background:var(--b3);border:1px solid var(--b2);color:var(--w3)}
+.sk-bar{height:2px;background:rgba(255,255,255,.07)}
+.sk-fill{height:100%;background:linear-gradient(90deg,var(--gold),#e8c76a);transition:width 1.2s ease}
+.sk-proof{font-size:11px;color:var(--w3);margin-top:7px;font-style:italic}
 
-/* ── ABOUT ── */
-.about-grid { display: grid; grid-template-columns: 1fr 380px; gap: 72px; margin-top: 56px; align-items: start; }
-.about-p { font-size: 15px; line-height: 1.85; color: var(--white2); margin-bottom: 18px; }
-.about-p strong { color: var(--white); font-weight: 500; }
-.profile-card { background: var(--bg2); border: 1px solid var(--border2); }
-.pc-top { padding: 20px 22px; border-bottom: 1px solid var(--border2); display: flex; align-items: center; gap: 14px; }
-.pc-av { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--gold2)); display: flex; align-items: center; justify-content: center; font-family: 'Instrument Serif', serif; font-size: 17px; color: var(--bg); }
-.pc-name { font-size: 14px; font-weight: 600; color: var(--white); }
-.pc-role { font-size: 12px; color: var(--gold); margin-top: 1px; }
-.pc-row { display: flex; justify-content: space-between; align-items: center; padding: 13px 22px; border-bottom: 1px solid var(--border2); }
-.pc-row:last-child { border-bottom: none; }
-.pc-key { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--white3); }
-.pc-val { font-size: 13px; font-weight: 500; color: var(--white); }
-.pc-val.gold { color: var(--gold); }
+/* EXPERIENCE */
+.exp-list{display:flex;flex-direction:column;gap:1px;background:var(--b2);margin-top:48px}
+.exp{background:var(--bg);display:grid;grid-template-columns:190px 1fr;transition:background .15s}
+.exp:hover{background:var(--bg2)}
+.el{padding:24px 20px;border-right:1px solid var(--b2)}
+.ep{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:7px;font-family:monospace}
+.eco{font-size:14px;font-weight:600;color:var(--white);margin-bottom:2px}
+.eloc{font-size:11px;color:var(--w3)}
+.ebadge{display:inline-block;margin-top:9px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);color:var(--gold);font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;font-family:monospace}
+.er{padding:24px 28px}
+.erole{font-size:17px;font-weight:700;color:var(--white);margin-bottom:12px}
+.ebuls{list-style:none}
+.ebuls li{font-size:13px;color:var(--w3);line-height:1.65;padding-left:14px;margin-bottom:6px;position:relative}
+.ebuls li::before{content:'—';position:absolute;left:0;color:var(--gold);font-size:11px}
+.edu-g{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.edu{background:var(--bg2);border:1px solid var(--b2);padding:20px 22px;transition:border-color .2s}
+.edu:hover{border-color:rgba(201,168,76,.2)}
+.edu-y{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:7px;font-family:monospace}
+.edu-d{font-size:16px;font-weight:700;color:var(--white);margin-bottom:3px}
+.edu-u{font-size:13px;color:var(--w2)}
+.edu-m{font-size:11px;color:var(--w3);margin-top:6px;line-height:1.6}
 
-/* ── PROJECTS ── */
-.proj-bg { background: var(--bg2); }
-.skill-map { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; margin-bottom: 52px; }
-.sm-tag {
-  font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.5px;
-  padding: 6px 14px; border: 1px solid var(--border2);
-  color: var(--white3); transition: all .2s;
-  display: flex; align-items: center; gap: 7px;
-}
-.sm-tag:hover { border-color: var(--border); color: var(--white2); }
-.sm-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+/* WHY ME */
+.wm-bg{background:var(--bg2)}
+.wm-g{display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-top:48px;align-items:start}
+.wm-q{font-size:20px;font-style:italic;line-height:1.65;color:rgba(240,237,232,.8);border-left:2px solid var(--gold);padding-left:20px;margin-bottom:24px}
+.wm-p{font-size:15px;line-height:1.85;color:var(--w3)}
+.wm-p strong{color:var(--w2);font-weight:600}
+.traits{display:flex;flex-direction:column;gap:9px}
+.trait{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border:1px solid var(--b2);background:var(--bg);transition:all .2s}
+.trait:hover{border-color:rgba(201,168,76,.2);background:var(--bg2)}
+.tdot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:5px}
+.tname{font-size:13px;font-weight:600;color:var(--white);margin-bottom:2px}
+.tdesc{font-size:12px;color:var(--w3);line-height:1.5}
 
-/* PROJECT CARDS - clean grid */
-.proj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border2); }
-.pcard {
-  background: var(--bg2); padding: 40px 36px;
-  text-decoration: none; display: block;
-  transition: background .2s; position: relative; overflow: hidden;
-}
-.pcard:hover { background: var(--bg3); }
-.pcard-accent {
-  position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  transform: scaleX(0); transform-origin: left;
-  transition: transform .35s ease;
-}
-.pcard:hover .pcard-accent { transform: scaleX(1); }
-.pc-tag {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
-  margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between;
-}
-.pc-h {
-  font-family: 'Instrument Serif', serif;
-  font-size: 26px; line-height: 1.15;
-  color: var(--white); margin-bottom: 10px; letter-spacing: -0.2px;
-}
-.pc-tools { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
-.pc-tool { font-family: 'JetBrains Mono', monospace; font-size: 10px; border: 1px solid var(--border2); color: var(--white3); padding: 3px 9px; }
-.pc-desc { font-size: 13px; color: var(--white3); line-height: 1.7; margin-bottom: 20px; }
-.pc-nums { display: flex; gap: 20px; padding-top: 16px; border-top: 1px solid var(--border2); margin-bottom: 20px; }
-.pc-num-val { font-family: 'Instrument Serif', serif; font-size: 28px; line-height: 1; letter-spacing: -0.5px; }
-.pc-num-lbl { font-size: 10px; color: var(--white3); margin-top: 3px; letter-spacing: 0.3px; }
-.pc-cta { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px; transition: gap .2s; }
-.pcard:hover .pc-cta { gap: 14px; }
-.feat-pill {
-  position: absolute; top: 16px; right: 16px;
-  font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
-  background: rgba(201,168,76,0.1); border: 1px solid var(--border);
-  color: var(--gold); padding: 4px 10px;
-}
+/* CONTACT */
+.ct-g{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:48px}
+.ct-p{font-size:15px;line-height:1.85;color:var(--w3);margin-bottom:22px}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{font-size:11px;font-weight:500;padding:5px 12px;border:1px solid var(--b2);color:var(--w3);font-family:monospace;letter-spacing:.3px;transition:all .15s}
+.chip:hover{border-color:rgba(201,168,76,.3);color:var(--gold)}
+.clinks{display:flex;flex-direction:column}
+.clink{display:flex;align-items:center;justify-content:space-between;padding:17px 0;border-bottom:1px solid var(--b2);text-decoration:none;transition:padding-left .2s}
+.clink:first-child{border-top:1px solid var(--b2)}
+.clink:hover{padding-left:8px}
+.cl-l{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--w3);margin-bottom:2px;font-family:monospace}
+.cl-v{font-size:14px;font-weight:500;color:var(--white)}
+.cl-a{color:var(--gold);font-size:16px;transition:transform .2s}
+.clink:hover .cl-a{transform:translateX(5px)}
 
-/* ── SKILLS ── */
-.skills-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-top: 52px; }
-.sk-card {
-  background: var(--bg2); border: 1px solid var(--border2);
-  padding: 24px 20px; transition: all .25s;
-}
-.sk-card:hover { border-color: var(--border); background: var(--bg3); transform: translateY(-3px); }
-.sk-icon { font-size: 20px; margin-bottom: 12px; }
-.sk-name { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 3px; }
-.sk-level { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
-.sk-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 14px; }
-.sk-tag { font-size: 10px; padding: 2px 8px; background: rgba(255,255,255,0.04); border: 1px solid var(--border2); color: var(--white3); }
-.sk-bar-bg { height: 2px; background: rgba(255,255,255,0.07); }
-.sk-bar { height: 100%; background: linear-gradient(90deg,var(--gold),var(--gold2)); transition: width 1.4s cubic-bezier(.4,0,.2,1); }
-.sk-proof { font-size: 11px; color: var(--white3); margin-top: 8px; font-style: italic; }
+/* FOOTER */
+footer{border-top:1px solid var(--b2);padding:20px 52px;display:flex;justify-content:space-between;align-items:center;background:var(--bg)}
+.fl{font-size:15px;font-weight:700;color:var(--white)}
+.fl span{color:var(--gold)}
+.fc{font-size:12px;color:var(--w3)}
 
-/* ── EXPERIENCE ── */
-.exp-list { display: flex; flex-direction: column; gap: 1px; background: var(--border2); margin-top: 52px; }
-.exp-item { background: var(--bg); display: grid; grid-template-columns: 200px 1fr; transition: background .2s; }
-.exp-item:hover { background: var(--bg2); }
-.exp-left { padding: 28px 24px; border-right: 1px solid var(--border2); }
-.exp-period { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
-.exp-co { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 3px; }
-.exp-loc { font-size: 11px; color: var(--white3); }
-.exp-badge { display: inline-block; margin-top: 10px; background: rgba(201,168,76,0.08); border: 1px solid var(--border); color: var(--gold); font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; padding: 3px 8px; }
-.exp-right { padding: 28px 32px; }
-.exp-role { font-family: 'Instrument Serif', serif; font-size: 20px; color: var(--white); margin-bottom: 14px; letter-spacing: -0.2px; }
-.exp-buls { list-style: none; }
-.exp-buls li { font-size: 13px; color: var(--white3); line-height: 1.7; padding-left: 16px; margin-bottom: 7px; position: relative; }
-.exp-buls li::before { content: '—'; position: absolute; left: 0; color: var(--gold); font-size: 12px; }
-.edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
-.edu-card { background: var(--bg2); border: 1px solid var(--border2); padding: 22px 24px; transition: border-color .2s; }
-.edu-card:hover { border-color: var(--border); }
-.edu-yr { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
-.edu-deg { font-family: 'Instrument Serif', serif; font-size: 18px; color: var(--white); margin-bottom: 4px; line-height: 1.2; }
-.edu-uni { font-size: 13px; color: var(--white2); }
-.edu-mods { font-size: 11px; color: var(--white3); margin-top: 8px; line-height: 1.65; }
+/* REVEAL */
+.rv{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
 
-/* ── WHY ME ── */
-.wm-bg { background: var(--bg2); }
-.wm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-top: 52px; align-items: start; }
-.wm-quote { font-family: 'Instrument Serif', serif; font-size: 21px; font-style: italic; line-height: 1.65; color: rgba(240,237,232,0.8); border-left: 2px solid var(--gold); padding-left: 22px; margin-bottom: 28px; }
-.wm-body { font-size: 15px; line-height: 1.85; color: var(--white3); }
-.wm-body strong { color: var(--white2); font-weight: 500; }
-.traits { display: flex; flex-direction: column; gap: 10px; }
-.trait { display: flex; align-items: flex-start; gap: 16px; padding: 16px 20px; border: 1px solid var(--border2); background: var(--bg); transition: all .25s; }
-.trait:hover { border-color: var(--border); background: var(--bg3); }
-.trait-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; margin-top: 5px; }
-.trait-name { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 2px; }
-.trait-desc { font-size: 12px; color: var(--white3); line-height: 1.5; }
-
-/* ── CONTACT ── */
-.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-top: 52px; }
-.contact-body { font-size: 15px; line-height: 1.85; color: var(--white3); margin-bottom: 24px; }
-.role-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 0; }
-.role-chip { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.5px; padding: 6px 13px; border: 1px solid var(--border2); color: var(--white3); transition: all .2s; }
-.role-chip:hover { border-color: var(--border); color: var(--gold); }
-.clinks { display: flex; flex-direction: column; }
-.clink { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--border2); text-decoration: none; transition: padding-left .2s; }
-.clink:first-child { border-top: 1px solid var(--border2); }
-.clink:hover { padding-left: 8px; }
-.cl-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--white3); margin-bottom: 3px; }
-.cl-val { font-size: 14px; font-weight: 500; color: var(--white); }
-.cl-arrow { color: var(--gold); font-size: 16px; transition: transform .2s; }
-.clink:hover .cl-arrow { transform: translateX(5px); }
-
-/* ── FOOTER ── */
-footer { border-top: 1px solid var(--border2); padding: 22px 56px; display: flex; justify-content: space-between; align-items: center; background: var(--bg); }
-.f-name { font-family: 'Instrument Serif', serif; font-size: 16px; color: var(--white); }
-.f-name span { color: var(--gold); }
-.f-copy { font-size: 12px; color: var(--white3); }
-
-/* ── REVEAL ── */
-.rv { opacity: 0; transform: translateY(24px); transition: opacity .65s ease, transform .65s ease; }
-.rv.in { opacity: 1; transform: none; }
-.rv-l { opacity: 0; transform: translateX(-20px); transition: opacity .65s ease, transform .65s ease; }
-.rv-l.in { opacity: 1; transform: none; }
-.rv-r { opacity: 0; transform: translateX(20px); transition: opacity .65s ease, transform .65s ease; }
-.rv-r.in { opacity: 1; transform: none; }
-
-/* ── PARTICLE CANVAS ── */
-#bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-
-/* ── HERO ANIMATION ── */
-@keyframes up { from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none} }
-.hero-pill{opacity:0;animation:up .7s ease .15s forwards}
-.hero-h1{opacity:0;animation:up .8s ease .3s forwards}
-.hero-role{opacity:0;animation:up .8s ease .4s forwards}
-.hero-desc{opacity:0;animation:up .8s ease .5s forwards}
-.hero-actions{opacity:0;animation:up .8s ease .6s forwards}
-.hero-stats{opacity:0;animation:up .8s ease .7s forwards}
-
-@media(max-width:960px){
-  nav{padding:0 24px} .nav-links,.nav-hire{display:none}
-  .hero{grid-template-columns:1fr;padding:90px 24px 60px} .hero-stats{display:none}
-  .section,.section-full{padding-left:24px;padding-right:24px}
-  footer{padding:20px 24px}
-  .about-grid,.proj-grid,.wm-grid,.contact-grid{grid-template-columns:1fr}
-  .skills-grid{grid-template-columns:1fr 1fr}
-  .exp-item{grid-template-columns:1fr} .exp-left{border-right:none;border-bottom:1px solid var(--border2)}
-  .edu-grid{grid-template-columns:1fr}
+@media(max-width:900px){
+  nav{padding:0 20px}.nav-links,.nav-cta{display:none}
+  .hero{flex-direction:column;padding:80px 20px 48px}.hero-right{display:none}
+  .sec,.sec-full{padding:64px 20px}
+  footer{padding:18px 20px}
+  .about-g,.proj-grid,.wm-g,.ct-g{grid-template-columns:1fr}
+  .sk-grid{grid-template-columns:1fr 1fr}
+  .exp{grid-template-columns:1fr}.el{border-right:none;border-bottom:1px solid var(--b2)}
+  .edu-g{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
-<style>
-.page-transition{position:fixed;inset:0;background:#0b0c0e;z-index:9999;opacity:0;pointer-events:none;transition:opacity .3s ease}
-.page-transition.out{opacity:1;pointer-events:all}
-</style>
-<div class="page-transition" id="pt"></div>
-
-<canvas id="bg"></canvas>
-<div class="cursor" id="cur"></div>
-<div class="cursor-ring" id="ring"></div>
-
 <!-- NAV -->
-<nav id="nav">
-  <div class="nav-logo">Apurva <span>Jadhav</span></div>
+<nav>
+  <div class="logo">Apurva <span>Jadhav</span></div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#projects">Projects</a></li>
@@ -351,477 +203,278 @@ footer { border-top: 1px solid var(--border2); padding: 22px 56px; display: flex
     <li><a href="#experience">Experience</a></li>
     <li><a href="#whyme">Why Me</a></li>
   </ul>
-  <a href="mailto:apurvajadhav6660@gmail.com" class="nav-hire">Hire Me</a>
+  <a href="mailto:apurvajadhav6660@gmail.com" class="nav-cta">Hire Me</a>
 </nav>
 
 <!-- HERO -->
-<div style="position:relative;z-index:1">
-  <div class="hero">
-    <div>
-      <div class="hero-pill"><span class="hero-pill-dot"></span> Available for graduate roles · Dublin 2026</div>
-      <h1 class="hero-h1">Business &amp;<br><em>Data Analyst.</em></h1>
-      <p class="hero-role">Apurva Jadhav — MSc Business Analytics · NCI Dublin · KPMG Alumni</p>
-      <p class="hero-desc">From forensic compliance work at KPMG to live analytics projects covering Ireland's rental crisis, NHS-style healthcare data and people analytics. I turn data into decisions — and I can prove every skill on this page.</p>
-      <div class="hero-actions">
-        <a href="#projects" class="btn-primary">View Projects →</a>
-        <a href="mailto:apurvajadhav6660@gmail.com" class="btn-secondary">Get in Touch</a>
-      </div>
-    </div>
-    <div class="hero-stats">
-      <div class="hstat"><div class="hstat-val" id="c1">0</div><div class="hstat-lbl">K+ rows analysed at KPMG</div></div>
-      <div class="hstat"><div class="hstat-val" id="c2">0</div><div class="hstat-lbl">Live interactive projects</div></div>
-      <div class="hstat"><div class="hstat-val" id="c3">0</div><div class="hstat-lbl">Core tools proven</div></div>
-      <div class="avail-stat">
-        <div class="avail-row"><div class="hero-pill-dot"></div><div class="avail-name">Open to Work</div></div>
-        <div class="avail-sub">Stamp 2 · Intern · Graduate · Part-time</div>
-      </div>
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-pill"><span class="pill-dot"></span> Available for graduate roles · Dublin 2026</div>
+    <h1 class="hero-h1">Business &amp;<br><em>Data Analyst.</em></h1>
+    <p class="hero-role"><strong>Apurva Jadhav</strong> — MSc Business Analytics · NCI Dublin · KPMG Alumni</p>
+    <p class="hero-desc">From forensic compliance work at KPMG to live analytics projects covering Ireland's rental crisis, retail operations, healthcare policy and people analytics. Every skill on this page has a live project proving it.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-g">View Projects →</a>
+      <a href="mailto:apurvajadhav6660@gmail.com" class="btn-o">Get in Touch</a>
     </div>
   </div>
-</div>
+  <div class="hero-right">
+    <div class="hcard"><div class="hcard-val">10K+</div><div class="hcard-lbl">Rows analysed at KPMG</div></div>
+    <div class="hcard"><div class="hcard-val">4</div><div class="hcard-lbl">Live interactive projects</div></div>
+    <div class="hcard"><div class="hcard-val">5+</div><div class="hcard-lbl">Core tools proven</div></div>
+    <div class="avail-card">
+      <div class="avail-top"><span class="pill-dot"></span><span class="avail-name">Open to Work</span></div>
+      <div class="avail-sub">Stamp 2 · Intern · Graduate · Part-time</div>
+    </div>
+  </div>
+</section>
 
 <!-- TICKER -->
-<div class="ticker-wrap" style="position:relative;z-index:1">
+<div class="ticker-wrap">
   <div class="ticker">
-    <span class="tick-item">Excel <span class="tick-sep"></span></span>
-    <span class="tick-item">Tableau <span class="tick-sep"></span></span>
-    <span class="tick-item">Power BI <span class="tick-sep"></span></span>
-    <span class="tick-item">SQL <span class="tick-sep"></span></span>
-    <span class="tick-item">Business Analysis <span class="tick-sep"></span></span>
-    <span class="tick-item">BRD Documentation <span class="tick-sep"></span></span>
-    <span class="tick-item">Requirements Gathering <span class="tick-sep"></span></span>
-    <span class="tick-item">Stakeholder Management <span class="tick-sep"></span></span>
-    <span class="tick-item">KPI Dashboards <span class="tick-sep"></span></span>
-    <span class="tick-item">Data Visualisation <span class="tick-sep"></span></span>
-    <span class="tick-item">Excel <span class="tick-sep"></span></span>
-    <span class="tick-item">Tableau <span class="tick-sep"></span></span>
-    <span class="tick-item">Power BI <span class="tick-sep"></span></span>
-    <span class="tick-item">SQL <span class="tick-sep"></span></span>
-    <span class="tick-item">Business Analysis <span class="tick-sep"></span></span>
-    <span class="tick-item">BRD Documentation <span class="tick-sep"></span></span>
-    <span class="tick-item">Requirements Gathering <span class="tick-sep"></span></span>
-    <span class="tick-item">Stakeholder Management <span class="tick-sep"></span></span>
-    <span class="tick-item">KPI Dashboards <span class="tick-sep"></span></span>
-    <span class="tick-item">Data Visualisation <span class="tick-sep"></span></span>
+    <span class="ti">Excel<span class="td"></span></span><span class="ti">Tableau<span class="td"></span></span><span class="ti">Power BI<span class="td"></span></span><span class="ti">SQL<span class="td"></span></span><span class="ti">Business Analysis<span class="td"></span></span><span class="ti">BRD Documentation<span class="td"></span></span><span class="ti">Stakeholder Management<span class="td"></span></span><span class="ti">KPI Dashboards<span class="td"></span></span><span class="ti">Requirements Gathering<span class="td"></span></span><span class="ti">Data Visualisation<span class="td"></span></span><span class="ti">Excel<span class="td"></span></span><span class="ti">Tableau<span class="td"></span></span><span class="ti">Power BI<span class="td"></span></span><span class="ti">SQL<span class="td"></span></span><span class="ti">Business Analysis<span class="td"></span></span><span class="ti">BRD Documentation<span class="td"></span></span><span class="ti">Stakeholder Management<span class="td"></span></span><span class="ti">KPI Dashboards<span class="td"></span></span><span class="ti">Requirements Gathering<span class="td"></span></span><span class="ti">Data Visualisation<span class="td"></span></span>
   </div>
 </div>
-
 <div class="rule"></div>
 
 <!-- ABOUT -->
-<div id="about" style="position:relative;z-index:1">
-  <div class="section">
-    <div class="eyebrow rv">About</div>
-    <h2 class="sec-title rv">Hello, I'm Apurva.<br><em>Analyst. Problem Solver.</em></h2>
-    <div class="about-grid">
-      <div class="rv-l">
-        <p class="about-p">I'm fascinated by what data <strong>reveals</strong>. The insight hiding inside 10,000 rows, the business decision waiting inside a pivot table — that gap between "here's a number" and "here's what it means" is exactly where I work.</p>
-        <p class="about-p">My path was deliberate: <strong>BBA Finance → Analyst at KPMG India (Big 4) → BA Intern at Ai Variant → MSc Business Analytics, NCI Dublin.</strong> Every step built real skills on real problems.</p>
-        <p class="about-p">I'm actively looking for graduate Business Analyst and Data Analyst roles across Ireland. Every project below is live, interactive and clickable — not screenshots.</p>
+<div id="about">
+  <div class="sec">
+    <div class="ey rv">About</div>
+    <h2 class="sh rv">Hello, I'm Apurva.<br><em>Analyst. Problem Solver.</em></h2>
+    <div class="about-g">
+      <div class="rv">
+        <p class="ap">I'm fascinated by what data <strong>reveals</strong>. The insight hiding inside 10,000 rows, the business decision waiting inside a pivot table — that gap between "here's a number" and "here's what it means" is exactly where I work.</p>
+        <p class="ap">My path was deliberate: <strong>BBA Finance → Analyst at KPMG India (Big 4) → BA Intern at Ai Variant → MSc Business Analytics, NCI Dublin.</strong> Every step built real skills on real problems.</p>
+        <p class="ap">Every project below is live, interactive and clickable — not screenshots. Four different tools. Four different Irish business contexts.</p>
       </div>
-      <div class="profile-card rv-r">
-        <div class="pc-top">
-          <div class="pc-av">AJ</div>
-          <div><div class="pc-name">Apurva Jadhav</div><div class="pc-role">Business & Data Analyst · Dublin</div></div>
-        </div>
-        <div class="pc-row"><span class="pc-key">MSc</span><span class="pc-val">Business Analytics, NCI</span></div>
-        <div class="pc-row"><span class="pc-key">Prev</span><span class="pc-val gold">KPMG India · Big 4</span></div>
-        <div class="pc-row"><span class="pc-key">Intern</span><span class="pc-val">BA Intern · Ai Variant</span></div>
-        <div class="pc-row"><span class="pc-key">Cert</span><span class="pc-val">BA Professional · EXCLER8</span></div>
-        <div class="pc-row"><span class="pc-key">Location</span><span class="pc-val">Dublin, Ireland</span></div>
-        <div class="pc-row"><span class="pc-key">Status</span><span class="pc-val gold">Available 2026</span></div>
+      <div class="pcard rv">
+        <div class="pcard-top"><div class="pav">AJ</div><div><div class="pname">Apurva Jadhav</div><div class="prole">Business &amp; Data Analyst · Dublin</div></div></div>
+        <div class="prow"><span class="pk">MSc</span><span class="pv">Business Analytics, NCI</span></div>
+        <div class="prow"><span class="pk">Prev</span><span class="pv gold">KPMG India · Big 4</span></div>
+        <div class="prow"><span class="pk">Intern</span><span class="pv">BA Intern · Ai Variant</span></div>
+        <div class="prow"><span class="pk">Cert</span><span class="pv">BA Professional · EXCLER8</span></div>
+        <div class="prow"><span class="pk">Location</span><span class="pv">Dublin, Ireland</span></div>
+        <div class="prow"><span class="pk">Status</span><span class="pv gold">Available 2026</span></div>
       </div>
     </div>
   </div>
 </div>
-
 <div class="rule"></div>
 
 <!-- PROJECTS -->
-<div id="projects" class="section-full proj-bg" style="position:relative;z-index:1">
-  <div style="max-width:1280px;margin:0 auto">
-    <div class="section" style="padding-bottom:36px;padding-left:0;padding-right:0">
-      <div class="eyebrow rv">Projects</div>
-      <h2 class="sec-title rv">Four projects.<br><em>Every skill. Proven.</em></h2>
-      <p class="sec-sub rv">Each project uses different tools and targets a different Irish sector. Click any card to open the full interactive dashboard with real charts, data tables and business recommendations.</p>
-      <div class="skill-map rv">
-        <div class="sm-tag"><span class="sm-dot" style="background:var(--blue)"></span>SQL + Power BI → Project 01</div>
-        <div class="sm-tag"><span class="sm-dot" style="background:var(--teal)"></span>Excel + Tableau → Projects 02 & 03</div>
-        <div class="sm-tag"><span class="sm-dot" style="background:var(--purple)"></span>Full BA Lifecycle → Project 04</div>
-        <div class="sm-tag"><span class="sm-dot" style="background:var(--gold)"></span>Irish Open Data → Projects 01 & 03</div>
+<div id="projects" class="sec-full proj-bg">
+  <div style="max-width:1240px;margin:0 auto">
+    <div class="sec" style="padding-bottom:28px;padding-left:0;padding-right:0">
+      <div class="ey rv">Projects</div>
+      <h2 class="sh rv">Four projects.<br><em>Every skill. Proven.</em></h2>
+      <p class="ss rv">Each project uses different tools and targets a different Irish sector. Click any card to open the full interactive dashboard.</p>
+      <div class="skill-proof rv">
+        <div class="sp"><span class="sp-dot" style="background:var(--blue)"></span>SQL + Power BI → Project 01</div>
+        <div class="sp"><span class="sp-dot" style="background:var(--teal)"></span>Excel + Tableau → Projects 02 &amp; 03</div>
+        <div class="sp"><span class="sp-dot" style="background:var(--purple)"></span>Full BA Lifecycle → Project 04</div>
+        <div class="sp"><span class="sp-dot" style="background:var(--gold)"></span>Irish Open Data → Projects 01 &amp; 03</div>
       </div>
     </div>
-
     <div class="proj-grid rv">
 
-      <!-- PROJECT 01 — Rental Market — SQL + Power BI -->
-      <a href="project-rental.html" class="pcard">
-        <div class="pcard-accent" style="background:linear-gradient(90deg,var(--blue),#6aafee)"></div>
-        <div class="pc-tag" style="color:var(--blue)">
-          <span>01 · Irish Housing · SQL + Power BI</span><span>→</span>
-        </div>
+      <!-- P1 -->
+      <a href="project-rental.html" class="pc">
+        <div class="pc-bar" style="background:linear-gradient(90deg,var(--blue),#6aafee)"></div>
+        <div class="pc-tag" style="color:var(--blue)"><span>01 · Irish Housing · SQL + Power BI</span><span>→</span></div>
         <h3 class="pc-h">Ireland's Rental Market Crisis — A Data-Led Investigation</h3>
-        <div class="pc-tools">
-          <span class="pc-tool">SQL</span><span class="pc-tool">Power BI</span><span class="pc-tool">DAX</span><span class="pc-tool">RTB Open Data</span>
-        </div>
-        <p class="pc-desc">Analysed 5 years of Residential Tenancies Board (RTB) data using SQL to track rent inflation by county, bedroom type and property category. Power BI dashboard with county-level filtering and YoY trend analysis delivered as an investment briefing.</p>
+        <div class="pc-tools"><span class="pt">SQL</span><span class="pt">Power BI</span><span class="pt">DAX</span><span class="pt">RTB Open Data</span></div>
+        <p class="pc-desc">5 years of RTB data analysed using SQL. Power BI dashboard with county-level filtering. Dublin rents up 47% since 2019. Kildare identified as fastest-rising commuter county at +52%.</p>
         <div class="pc-nums">
-          <div><div class="pc-num-val" style="color:var(--blue)">+47%</div><div class="pc-num-lbl">Dublin rent rise 2019–2024</div></div>
-          <div><div class="pc-num-val" style="color:var(--blue)">26</div><div class="pc-num-lbl">Counties analysed</div></div>
-          <div><div class="pc-num-val" style="color:var(--blue)">€2,100</div><div class="pc-num-lbl">Avg Dublin monthly rent</div></div>
+          <div><div class="pnv" style="color:var(--blue)">+47%</div><div class="pnl">Dublin rent rise</div></div>
+          <div><div class="pnv" style="color:var(--blue)">26</div><div class="pnl">Counties analysed</div></div>
+          <div><div class="pnv" style="color:var(--blue)">€2,100</div><div class="pnl">Avg Dublin rent</div></div>
         </div>
         <div class="pc-cta" style="color:var(--blue)">Open Dashboard <span>→</span></div>
       </a>
 
-      <!-- PROJECT 02 — Supply Chain Waste — Excel + Tableau -->
-      <a href="project-supplychain.html" class="pcard">
-        <div class="pcard-accent" style="background:linear-gradient(90deg,var(--teal),#4addc8)"></div>
-        <div class="pc-tag" style="color:var(--teal)">
-          <span>02 · Retail Ops · Excel + Tableau</span><span>→</span>
-        </div>
-        <h3 class="pc-h">Supermarket Supply Chain Waste & Shrinkage Analysis</h3>
-        <div class="pc-tools">
-          <span class="pc-tool">Excel</span><span class="pc-tool">Tableau</span><span class="pc-tool">Pivot Tables</span><span class="pc-tool">VLOOKUP</span>
-        </div>
-        <p class="pc-desc">Analysed waste, shrinkage and supplier delivery data across 8 product categories for a hypothetical Irish supermarket chain. Excel model with Power Query for data cleaning. Tableau dashboard with category and store-level drill-down. Identified €420K in recoverable annual waste cost.</p>
+      <!-- P2 -->
+      <a href="project-supplychain.html" class="pc">
+        <div class="pc-bar" style="background:linear-gradient(90deg,var(--teal),#4addc8)"></div>
+        <div class="pc-tag" style="color:var(--teal)"><span>02 · Retail Ops · Excel + Tableau</span><span>→</span></div>
+        <h3 class="pc-h">Supermarket Supply Chain Waste &amp; Shrinkage Analysis</h3>
+        <div class="pc-tools"><span class="pt">Excel</span><span class="pt">Tableau</span><span class="pt">Power Query</span><span class="pt">VLOOKUP</span></div>
+        <p class="pc-desc">Waste and shrinkage across 8 product categories for a hypothetical Irish supermarket. €420K in recoverable waste identified. Fresh Produce and Bakery account for 34% of total waste cost.</p>
         <div class="pc-nums">
-          <div><div class="pc-num-val" style="color:var(--teal)">€420K</div><div class="pc-num-lbl">Recoverable waste found</div></div>
-          <div><div class="pc-num-val" style="color:var(--teal)">8</div><div class="pc-num-lbl">Product categories</div></div>
-          <div><div class="pc-num-val" style="color:var(--teal)">34%</div><div class="pc-num-lbl">Waste from top 2 categories</div></div>
+          <div><div class="pnv" style="color:var(--teal)">€420K</div><div class="pnl">Recoverable waste</div></div>
+          <div><div class="pnv" style="color:var(--teal)">8</div><div class="pnl">Categories</div></div>
+          <div><div class="pnv" style="color:var(--teal)">18%</div><div class="pnl">Late deliveries</div></div>
         </div>
         <div class="pc-cta" style="color:var(--teal)">Open Dashboard <span>→</span></div>
       </a>
 
-      <!-- PROJECT 03 — Hospital — Excel + Tableau -->
-      <a href="project-hospital.html" class="pcard">
-        <div class="pcard-accent" style="background:linear-gradient(90deg,var(--gold),var(--gold2))"></div>
-        <div class="feat-pill">⭐ Featured</div>
-        <div class="pc-tag" style="color:var(--gold)">
-          <span>03 · Healthcare · Excel + Tableau</span><span>→</span>
-        </div>
+      <!-- P3 -->
+      <a href="project-hospital.html" class="pc">
+        <div class="pc-bar" style="background:linear-gradient(90deg,var(--gold),#e8c76a)"></div>
+        <div class="feat">⭐ Featured</div>
+        <div class="pc-tag" style="color:var(--gold)"><span>03 · Healthcare · Excel + Tableau</span><span>→</span></div>
         <h3 class="pc-h">Hidden Bottlenecks in Ireland's Hospital Waiting Lists</h3>
-        <div class="pc-tools">
-          <span class="pc-tool">Excel</span><span class="pc-tool">Tableau</span><span class="pc-tool">NTPF Open Data</span><span class="pc-tool">Policy Brief</span>
-        </div>
-        <p class="pc-desc">5-year NTPF outpatient waiting list analysis identifying which specialties carry Ireland's most persistent backlog. Findings structured as an evidence-based policy brief with 4 targeted recommendations — framed for a healthcare leadership audience.</p>
+        <div class="pc-tools"><span class="pt">Excel</span><span class="pt">Tableau</span><span class="pt">NTPF Open Data</span><span class="pt">Policy Brief</span></div>
+        <p class="pc-desc">5-year NTPF outpatient analysis. 3 specialties account for 40%+ of all 18-month+ waits nationally. Evidence-based policy brief with 4 targeted recommendations.</p>
         <div class="pc-nums">
-          <div><div class="pc-num-val" style="color:var(--gold)">615K</div><div class="pc-num-lbl">Patients waiting nationally</div></div>
-          <div><div class="pc-num-val" style="color:var(--gold)">43K+</div><div class="pc-num-lbl">Waiting 18+ months</div></div>
-          <div><div class="pc-num-val" style="color:var(--gold)">+18%</div><div class="pc-num-lbl">Growth since 2019</div></div>
+          <div><div class="pnv" style="color:var(--gold)">615K</div><div class="pnl">Patients waiting</div></div>
+          <div><div class="pnv" style="color:var(--gold)">43K+</div><div class="pnl">Waiting 18+ months</div></div>
+          <div><div class="pnv" style="color:var(--gold)">+18%</div><div class="pnl">Growth since 2019</div></div>
         </div>
         <div class="pc-cta" style="color:var(--gold)">Open Dashboard <span>→</span></div>
       </a>
 
-      <!-- PROJECT 04 — HR Attrition — BA Lifecycle -->
-      <a href="project-hr.html" class="pcard">
-        <div class="pcard-accent" style="background:linear-gradient(90deg,var(--purple),#c09aee)"></div>
-        <div class="pc-tag" style="color:var(--purple)">
-          <span>04 · People Analytics · Full BA Lifecycle</span><span>→</span>
-        </div>
-        <h3 class="pc-h">Employee Attrition Analysis & Retention Strategy</h3>
-        <div class="pc-tools">
-          <span class="pc-tool">Excel</span><span class="pc-tool">Tableau</span><span class="pc-tool">BRD</span><span class="pc-tool">Stakeholder Report</span>
-        </div>
-        <p class="pc-desc">Complete BA engagement — requirements elicited from a hypothetical HR Director, BRD documented, root cause analysis performed in Excel, Tableau dashboard built for the HR team, and findings delivered as a 2-page executive summary with ROI-ranked recommendations.</p>
+      <!-- P4 -->
+      <a href="project-hr.html" class="pc">
+        <div class="pc-bar" style="background:linear-gradient(90deg,var(--purple),#c09aee)"></div>
+        <div class="pc-tag" style="color:var(--purple)"><span>04 · People Analytics · Full BA Lifecycle</span><span>→</span></div>
+        <h3 class="pc-h">Employee Attrition Analysis &amp; Retention Strategy</h3>
+        <div class="pc-tools"><span class="pt">Excel</span><span class="pt">Tableau</span><span class="pt">BRD</span><span class="pt">Stakeholder Report</span></div>
+        <p class="pc-desc">Complete BA engagement — requirements elicited, BRD documented, root cause analysis performed, Tableau dashboard built, 2-page executive summary delivered with ROI-ranked recommendations.</p>
         <div class="pc-nums">
-          <div><div class="pc-num-val" style="color:var(--purple)">16.1%</div><div class="pc-num-lbl">Attrition rate found</div></div>
-          <div><div class="pc-num-val" style="color:var(--purple)">€4.3M</div><div class="pc-num-lbl">Annual cost identified</div></div>
-          <div><div class="pc-num-val" style="color:var(--purple)">€1.8M</div><div class="pc-num-lbl">Savings projected</div></div>
+          <div><div class="pnv" style="color:var(--purple)">16.1%</div><div class="pnl">Attrition rate</div></div>
+          <div><div class="pnv" style="color:var(--purple)">€4.3M</div><div class="pnl">Annual cost found</div></div>
+          <div><div class="pnv" style="color:var(--purple)">€1.8M</div><div class="pnl">Savings projected</div></div>
         </div>
         <div class="pc-cta" style="color:var(--purple)">Open Dashboard <span>→</span></div>
       </a>
+
     </div>
   </div>
 </div>
-
 <div class="rule"></div>
 
 <!-- SKILLS -->
-<div id="skills" style="position:relative;z-index:1">
-  <div class="section">
-    <div class="eyebrow rv">Skills</div>
-    <h2 class="sec-title rv">Tools I use.<br><em>Levels I can defend.</em></h2>
-    <p class="sec-sub rv">Every skill has a live project backing it. No overclaiming — these are the honest levels I can demonstrate in an interview.</p>
-    <div class="skills-grid">
-      <div class="sk-card rv">
-        <div class="sk-icon">📊</div><div class="sk-name">Microsoft Excel</div><div class="sk-level">Expert</div>
-        <div class="sk-tags"><span class="sk-tag">Pivot Tables</span><span class="sk-tag">Power Query</span><span class="sk-tag">VLOOKUP</span><span class="sk-tag">Cond. Formatting</span></div>
-        <div class="sk-bar-bg"><div class="sk-bar" data-w="90" style="width:0"></div></div>
-        <div class="sk-proof">Proven in Projects 02, 03 & 04</div>
-      </div>
-      <div class="sk-card rv">
-        <div class="sk-icon">📈</div><div class="sk-name">Tableau</div><div class="sk-level">Advanced</div>
-        <div class="sk-tags"><span class="sk-tag">Dashboards</span><span class="sk-tag">Calc Fields</span><span class="sk-tag">Filters</span><span class="sk-tag">Infographics</span></div>
-        <div class="sk-bar-bg"><div class="sk-bar" data-w="82" style="width:0"></div></div>
-        <div class="sk-proof">Proven in Projects 02, 03 & 04</div>
-      </div>
-      <div class="sk-card rv">
-        <div class="sk-icon">⚡</div><div class="sk-name">Power BI</div><div class="sk-level">Intermediate</div>
-        <div class="sk-tags"><span class="sk-tag">Reports</span><span class="sk-tag">KPI Cards</span><span class="sk-tag">Basic DAX</span></div>
-        <div class="sk-bar-bg"><div class="sk-bar" data-w="65" style="width:0"></div></div>
-        <div class="sk-proof">Proven in Project 01</div>
-      </div>
-      <div class="sk-card rv">
-        <div class="sk-icon">🗄️</div><div class="sk-name">SQL</div><div class="sk-level">Working Knowledge</div>
-        <div class="sk-tags"><span class="sk-tag">SELECT / JOINs</span><span class="sk-tag">GROUP BY</span><span class="sk-tag">CTEs</span><span class="sk-tag">CASE WHEN</span></div>
-        <div class="sk-bar-bg"><div class="sk-bar" data-w="65" style="width:0"></div></div>
-        <div class="sk-proof">Proven in Project 01</div>
-      </div>
-      <div class="sk-card rv">
-        <div class="sk-icon">📋</div><div class="sk-name">Business Analysis</div><div class="sk-level">Practised</div>
-        <div class="sk-tags"><span class="sk-tag">BRD</span><span class="sk-tag">User Stories</span><span class="sk-tag">Gap Analysis</span><span class="sk-tag">UAT</span></div>
-        <div class="sk-bar-bg"><div class="sk-bar" data-w="80" style="width:0"></div></div>
-        <div class="sk-proof">Proven in Project 04 + Ai Variant internship</div>
-      </div>
-      <div class="sk-card rv">
-        <div class="sk-icon">🤝</div><div class="sk-name">Stakeholder Mgmt</div><div class="sk-level">Practised</div>
-        <div class="sk-tags"><span class="sk-tag">Requirements</span><span class="sk-tag">Exec Summaries</span><span class="sk-tag">Presentations</span></div>
-        <div class="sk-bar-bg"><div class="sk-bar" data-w="80" style="width:0"></div></div>
-        <div class="sk-proof">KPMG · Ai Variant · Projects</div>
-      </div>
-      <div class="sk-card rv">
-        <div class="sk-icon">🔄</div><div class="sk-name">Agile / Scrum</div><div class="sk-level">Awareness</div>
-        <div class="sk-tags"><span class="sk-tag">Scrum Framework</span><span class="sk-tag">Sprint Cycles</span><span class="sk-tag">Stand-ups</span></div>
-        <div class="sk-bar-bg"><div class="sk-bar" data-w="55" style="width:0"></div></div>
-        <div class="sk-proof">Exposure at Ai Variant internship</div>
-      </div>
-      <div class="sk-card rv">
-        <div class="sk-icon">🐍</div><div class="sk-name">Python</div><div class="sk-level">Familiar</div>
-        <div class="sk-tags"><span class="sk-tag">pandas</span><span class="sk-tag">Basic Analysis</span></div>
-        <div class="sk-bar-bg"><div class="sk-bar" data-w="40" style="width:0"></div></div>
-        <div class="sk-proof">Learning — not claimed on CV</div>
-      </div>
+<div id="skills">
+  <div class="sec">
+    <div class="ey rv">Skills</div>
+    <h2 class="sh rv">Tools I use.<br><em>Levels I can defend.</em></h2>
+    <p class="ss rv">Every tool has a live project proving it. Honest levels — nothing overclaimed.</p>
+    <div class="sk-grid">
+      <div class="sk rv"><div class="sk-icon">📊</div><div class="sk-name">Microsoft Excel</div><div class="sk-lv">Expert</div><div class="sk-tags"><span class="skt">Pivot Tables</span><span class="skt">Power Query</span><span class="skt">VLOOKUP</span><span class="skt">Cond. Formatting</span></div><div class="sk-bar"><div class="sk-fill" data-w="90" style="width:0"></div></div><div class="sk-proof">Proven: Projects 02, 03 &amp; 04</div></div>
+      <div class="sk rv"><div class="sk-icon">📈</div><div class="sk-name">Tableau</div><div class="sk-lv">Advanced</div><div class="sk-tags"><span class="skt">Dashboards</span><span class="skt">Calc Fields</span><span class="skt">Filters</span></div><div class="sk-bar"><div class="sk-fill" data-w="82" style="width:0"></div></div><div class="sk-proof">Proven: Projects 02, 03 &amp; 04</div></div>
+      <div class="sk rv"><div class="sk-icon">⚡</div><div class="sk-name">Power BI</div><div class="sk-lv">Intermediate</div><div class="sk-tags"><span class="skt">Reports</span><span class="skt">KPI Cards</span><span class="skt">Basic DAX</span></div><div class="sk-bar"><div class="sk-fill" data-w="65" style="width:0"></div></div><div class="sk-proof">Proven: Project 01</div></div>
+      <div class="sk rv"><div class="sk-icon">🗄️</div><div class="sk-name">SQL</div><div class="sk-lv">Working Knowledge</div><div class="sk-tags"><span class="skt">JOINs</span><span class="skt">GROUP BY</span><span class="skt">CTEs</span></div><div class="sk-bar"><div class="sk-fill" data-w="65" style="width:0"></div></div><div class="sk-proof">Proven: Project 01</div></div>
+      <div class="sk rv"><div class="sk-icon">📋</div><div class="sk-name">Business Analysis</div><div class="sk-lv">Practised</div><div class="sk-tags"><span class="skt">BRD</span><span class="skt">User Stories</span><span class="skt">Gap Analysis</span></div><div class="sk-bar"><div class="sk-fill" data-w="80" style="width:0"></div></div><div class="sk-proof">Proven: Project 04 + Ai Variant</div></div>
+      <div class="sk rv"><div class="sk-icon">🤝</div><div class="sk-name">Stakeholder Mgmt</div><div class="sk-lv">Practised</div><div class="sk-tags"><span class="skt">Requirements</span><span class="skt">Exec Summaries</span></div><div class="sk-bar"><div class="sk-fill" data-w="80" style="width:0"></div></div><div class="sk-proof">KPMG · Ai Variant · Projects</div></div>
+      <div class="sk rv"><div class="sk-icon">🔄</div><div class="sk-name">Agile / Scrum</div><div class="sk-lv">Awareness</div><div class="sk-tags"><span class="skt">Scrum</span><span class="skt">Sprints</span><span class="skt">Stand-ups</span></div><div class="sk-bar"><div class="sk-fill" data-w="55" style="width:0"></div></div><div class="sk-proof">Ai Variant internship</div></div>
+      <div class="sk rv"><div class="sk-icon">🐍</div><div class="sk-name">Python</div><div class="sk-lv">Familiar</div><div class="sk-tags"><span class="skt">pandas</span><span class="skt">Basic Analysis</span></div><div class="sk-bar"><div class="sk-fill" data-w="40" style="width:0"></div></div><div class="sk-proof">Learning — not claimed on CV</div></div>
     </div>
   </div>
 </div>
-
 <div class="rule"></div>
 
 <!-- EXPERIENCE -->
-<div id="experience" style="position:relative;z-index:1;background:var(--bg2)">
-  <div class="section">
-    <div class="eyebrow rv">Experience</div>
-    <h2 class="sec-title rv">Where I've worked<br><em>& what I delivered.</em></h2>
+<div id="experience" style="background:var(--bg2)">
+  <div class="sec">
+    <div class="ey rv">Experience</div>
+    <h2 class="sh rv">Where I've worked<br><em>&amp; what I delivered.</em></h2>
     <div class="exp-list">
-      <div class="exp-item rv">
-        <div class="exp-left">
-          <div class="exp-period">Dec 2024 – May 2025</div>
-          <div class="exp-co">KPMG India</div>
-          <div class="exp-loc">Big 4 · Pune · Full Time</div>
-          <span class="exp-badge">Big 4</span>
-        </div>
-        <div class="exp-right">
-          <div class="exp-role">Analyst — Forensic & Compliance</div>
-          <ul class="exp-buls">
-            <li>Produced forensic and compliance reports in Excel across datasets exceeding 10,000 rows — in an environment where analytical accuracy had direct legal consequences.</li>
-            <li>Designed a structured data validation process that reduced reporting errors before every submission deadline.</li>
-            <li>Tracked and reported KPIs against regulatory benchmarks, ensuring complete audit-readiness across all deliverables.</li>
-            <li>Translated complex, multi-source findings into concise management-ready summaries for senior leaders.</li>
-          </ul>
-        </div>
+      <div class="exp rv">
+        <div class="el"><div class="ep">Dec 2024 – May 2025</div><div class="eco">KPMG India</div><div class="eloc">Big 4 · Pune · Full Time</div><span class="ebadge">Big 4</span></div>
+        <div class="er"><div class="erole">Analyst — Forensic &amp; Compliance</div><ul class="ebuls"><li>Produced compliance reports in Excel across 10,000+ row datasets in an environment where accuracy had direct legal consequences.</li><li>Built a structured data validation process that reduced errors before every submission deadline.</li><li>Translated complex findings into concise executive summaries for senior leadership decisions.</li></ul></div>
       </div>
-      <div class="exp-item rv">
-        <div class="exp-left">
-          <div class="exp-period">Apr – Jul 2025</div>
-          <div class="exp-co">Ai Variant</div>
-          <div class="exp-loc">BA Intern · Online</div>
-        </div>
-        <div class="exp-right">
-          <div class="exp-role">Business Analyst Intern</div>
-          <ul class="exp-buls">
-            <li>Elicited and documented stakeholder requirements into structured BRDs, signed off before development commenced.</li>
-            <li>Analysed datasets using Excel, SQL and Power BI — surfacing actionable trends for decision-making.</li>
-            <li>Authored user stories and acceptance criteria, translating requirements into developer-ready specifications.</li>
-            <li>Participated in Agile sprint planning, daily stand-ups and retrospectives throughout the delivery lifecycle.</li>
-          </ul>
-        </div>
+      <div class="exp rv">
+        <div class="el"><div class="ep">May – Jul 2025</div><div class="eco">Ai Variant</div><div class="eloc">BA Intern · Online</div></div>
+        <div class="er"><div class="erole">Business Analyst Intern — Banking Project</div><ul class="ebuls"><li>Gathered and documented stakeholder requirements into structured BRDs on a live banking analytics project.</li><li>Wrote SQL queries using window functions and views; built Tableau and Power BI dashboards tracking transaction volumes and branch performance.</li><li>Participated in Agile sprint planning, daily stand-ups and retrospectives throughout the delivery lifecycle.</li></ul></div>
       </div>
-      <div class="exp-item rv">
-        <div class="exp-left">
-          <div class="exp-period">2025 – Present</div>
-          <div class="exp-co">Applegreen</div>
-          <div class="exp-loc">Dublin, Ireland</div>
-        </div>
-        <div class="exp-right">
-          <div class="exp-role">Customer Assistant</div>
-          <ul class="exp-buls">
-            <li>Delivering consistent service in a high-traffic Irish retail environment while completing a full-time MSc — demonstrating time management and resilience under dual pressure.</li>
-            <li>Managing stock rotation using FIFO methodology — operational discipline applied in practice.</li>
-          </ul>
-        </div>
+      <div class="exp rv">
+        <div class="el"><div class="ep">2025 – Present</div><div class="eco">Applegreen</div><div class="eloc">Dublin, Ireland</div></div>
+        <div class="er"><div class="erole">Customer Assistant</div><ul class="ebuls"><li>Delivering consistent service in a high-traffic Irish environment while completing a full-time MSc — demonstrating time management and resilience under dual pressure.</li></ul></div>
       </div>
     </div>
-    <div class="edu-grid rv" style="margin-top:14px">
-      <div class="edu-card">
-        <div class="edu-yr">Expected 2026</div>
-        <div class="edu-deg">MSc Business Analytics for Decision Makers</div>
-        <div class="edu-uni">National College of Ireland · Dublin</div>
-        <div class="edu-mods">Data Visualisation · Applied Analytics · SQL for BI · Research Methods · Decision Science</div>
-      </div>
-      <div class="edu-card">
-        <div class="edu-yr">2024</div>
-        <div class="edu-deg">BBA in Finance</div>
-        <div class="edu-uni">DY Patil University · Mumbai</div>
-        <div class="edu-mods">Financial Analysis · Business Strategy · Economics · Corporate Finance · Accounting</div>
-      </div>
+    <div class="edu-g rv">
+      <div class="edu"><div class="edu-y">Expected 2026</div><div class="edu-d">MSc Business Analytics for Decision Makers</div><div class="edu-u">National College of Ireland · Dublin</div><div class="edu-m">Data Visualisation · Applied Analytics · SQL for BI · Research Methods</div></div>
+      <div class="edu"><div class="edu-y">2024</div><div class="edu-d">BBA in Finance</div><div class="edu-u">DY Patil University · Mumbai</div><div class="edu-m">Financial Analysis · Business Strategy · Economics · Corporate Finance</div></div>
     </div>
   </div>
 </div>
-
 <div class="rule"></div>
 
 <!-- WHY ME -->
-<div id="whyme" style="position:relative;z-index:1">
-  <div class="section">
-    <div class="eyebrow rv">Why Me</div>
-    <h2 class="sec-title rv">Why hire <em>me?</em><br>Honestly.</h2>
-    <div class="wm-grid">
-      <div class="rv-l">
-        <div class="wm-quote">"I didn't choose Business Analysis because it was trending. I chose it because of what I felt the first time my analysis changed how a room full of people made a decision."</div>
-        <p class="wm-body">At <strong>KPMG</strong>, I watched a compliance report I built get used to make a call that affected how an entire department operated. That feeling — insight becoming action — is what I want every single day.</p>
+<div id="whyme">
+  <div class="sec">
+    <div class="ey rv">Why Me</div>
+    <h2 class="sh rv">Why hire <em>me?</em><br>Honestly.</h2>
+    <div class="wm-g">
+      <div class="rv">
+        <div class="wm-q">"I didn't choose Business Analysis because it was trending. I chose it because of what I felt the first time my analysis changed how a room full of people made a decision."</div>
+        <p class="wm-p">At <strong>KPMG</strong>, I watched a compliance report I built get used to make a call that affected how an entire department operated. That feeling — insight becoming action — is what I want every single day.</p>
         <br><br>
-        <p class="wm-body">I can <strong>sit with stakeholders</strong>, understand what they actually need, translate it into requirements, build the analysis, and come back with something they can act on. My four projects are the proof — each one shows a different skill, a different tool, a different business context.</p>
+        <p class="wm-p">I can <strong>sit with stakeholders</strong>, understand what they actually need, translate it into requirements, build the analysis, and come back with something they can act on. My four projects are the proof.</p>
       </div>
-      <div class="traits rv-r">
-        <div class="trait"><div class="trait-dot"></div><div><div class="trait-name">Stakeholder-first</div><div class="trait-desc">I understand what people need — not just what they ask for</div></div></div>
-        <div class="trait"><div class="trait-dot"></div><div><div class="trait-name">Detail-obsessed</div><div class="trait-desc">Big 4 standards — one error has legal consequences</div></div></div>
-        <div class="trait"><div class="trait-dot"></div><div><div class="trait-name">Every skill proven</div><div class="trait-desc">4 live dashboards — different tool, different sector, different context</div></div></div>
-        <div class="trait"><div class="trait-dot"></div><div><div class="trait-name">Business-aware</div><div class="trait-desc">I don't just analyse — I frame findings as decisions</div></div></div>
-        <div class="trait"><div class="trait-dot"></div><div><div class="trait-name">Dublin-based</div><div class="trait-desc">Here now, available immediately, no relocation needed</div></div></div>
-        <div class="trait"><div class="trait-dot"></div><div><div class="trait-name">Available 2026</div><div class="trait-desc">Graduate roles, internships, part-time — all open</div></div></div>
+      <div class="traits rv">
+        <div class="trait"><div class="tdot"></div><div><div class="tname">Stakeholder-first</div><div class="tdesc">I understand what people need — not just what they ask for</div></div></div>
+        <div class="trait"><div class="tdot"></div><div><div class="tname">Detail-obsessed</div><div class="tdesc">Big 4 standards — one error has legal consequences</div></div></div>
+        <div class="trait"><div class="tdot"></div><div><div class="tname">Every skill proven</div><div class="tdesc">4 live dashboards — different tool, sector and context each time</div></div></div>
+        <div class="trait"><div class="tdot"></div><div><div class="tname">Business-aware</div><div class="tdesc">I frame data findings as business decisions — not just charts</div></div></div>
+        <div class="trait"><div class="tdot"></div><div><div class="tname">Dublin-based now</div><div class="tdesc">Available immediately — no relocation needed</div></div></div>
+        <div class="trait"><div class="tdot"></div><div><div class="tname">Open to all formats</div><div class="tdesc">Graduate roles · Internships · Part-time — all considered</div></div></div>
       </div>
     </div>
   </div>
 </div>
-
 <div class="rule"></div>
 
 <!-- CONTACT -->
-<div style="position:relative;z-index:1;background:var(--bg2)">
-  <div class="section">
-    <div class="eyebrow rv">Contact</div>
-    <h2 class="sec-title rv">Let's make something<br><em>happen.</em></h2>
-    <div class="contact-grid">
-      <div class="rv-l">
-        <p class="contact-body">Actively seeking Business Analyst, Data Analyst and Operations Analyst roles across Ireland. Based in Dublin. Available immediately. If you need someone who can understand a business problem and come back with a clear data-driven answer — let's talk.</p>
-        <div class="role-chips">
-          <span class="role-chip">Business Analyst</span>
-          <span class="role-chip">Data Analyst</span>
-          <span class="role-chip">Operations Analyst</span>
-          <span class="role-chip">FinTech</span>
-          <span class="role-chip">Consulting</span>
-          <span class="role-chip">Healthcare</span>
-          <span class="role-chip">Retail</span>
+<div style="background:var(--bg2)">
+  <div class="sec">
+    <div class="ey rv">Contact</div>
+    <h2 class="sh rv">Let's make something<br><em>happen.</em></h2>
+    <div class="ct-g">
+      <div class="rv">
+        <p class="ct-p">Actively seeking Business Analyst, Data Analyst and Operations Analyst roles across Ireland. Based in Dublin, available immediately. If you need someone who can understand a business problem and come back with a clear, data-driven answer — let's talk.</p>
+        <div class="chips">
+          <span class="chip">Business Analyst</span><span class="chip">Data Analyst</span><span class="chip">Operations Analyst</span><span class="chip">FinTech</span><span class="chip">Consulting</span><span class="chip">Healthcare</span><span class="chip">Retail</span>
         </div>
       </div>
-      <div class="clinks rv-r">
-        <a href="mailto:apurvajadhav6660@gmail.com" class="clink">
-          <div><div class="cl-label">Email</div><div class="cl-val">apurvajadhav6660@gmail.com</div></div>
-          <div class="cl-arrow">→</div>
-        </a>
-        <a href="https://linkedin.com/in/apurva-jadhav0006" target="_blank" class="clink">
-          <div><div class="cl-label">LinkedIn</div><div class="cl-val">apurva-jadhav0006</div></div>
-          <div class="cl-arrow">→</div>
-        </a>
-        <a href="https://github.com/Apurva006" target="_blank" class="clink">
-          <div><div class="cl-label">GitHub</div><div class="cl-val">github.com/Apurva006</div></div>
-          <div class="cl-arrow">→</div>
-        </a>
-        <a href="tel:+353892034029" class="clink">
-          <div><div class="cl-label">Phone</div><div class="cl-val">+353 892 034 029</div></div>
-          <div class="cl-arrow">→</div>
-        </a>
+      <div class="clinks rv">
+        <a href="mailto:apurvajadhav6660@gmail.com" class="clink"><div><div class="cl-l">Email</div><div class="cl-v">apurvajadhav6660@gmail.com</div></div><div class="cl-a">→</div></a>
+        <a href="https://linkedin.com/in/apurva-jadhav0006" target="_blank" class="clink"><div><div class="cl-l">LinkedIn</div><div class="cl-v">apurva-jadhav0006</div></div><div class="cl-a">→</div></a>
+        <a href="https://github.com/Apurva006" target="_blank" class="clink"><div><div class="cl-l">GitHub</div><div class="cl-v">github.com/Apurva006</div></div><div class="cl-a">→</div></a>
+        <a href="tel:+353892034029" class="clink"><div><div class="cl-l">Phone</div><div class="cl-v">+353 892 034 029</div></div><div class="cl-a">→</div></a>
       </div>
     </div>
   </div>
 </div>
 
 <footer>
-  <div class="f-name">Apurva <span>Jadhav</span></div>
-  <div class="f-copy">Business & Data Analyst · Dublin, Ireland · 2026</div>
+  <div class="fl">Apurva <span>Jadhav</span></div>
+  <div class="fc">Business &amp; Data Analyst · Dublin · 2026</div>
 </footer>
 
 <script>
-// Cursor
-const cur=document.getElementById('cur'),ring=document.getElementById('ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
-(function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop)})();
-document.querySelectorAll('a,button,.sk-card,.trait,.exp-item,.pcard').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cur.style.width='14px';cur.style.height='14px';ring.style.width='44px';ring.style.height='44px'});
-  el.addEventListener('mouseleave',()=>{cur.style.width='8px';cur.style.height='8px';ring.style.width='32px';ring.style.height='32px'});
-});
-
-// Subtle particle background
-const canvas=document.getElementById('bg'),ctx=canvas.getContext('2d');
-let W,H,pts=[];
-function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
-resize();window.addEventListener('resize',resize);
-for(let i=0;i<80;i++)pts.push({x:Math.random()*9999,y:Math.random()*9999,vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.18,r:Math.random()*.7+.15,a:Math.random()*.3+.05,g:Math.random()>.7});
-(function anim(){
-  ctx.clearRect(0,0,W,H);
-  pts.forEach(p=>{
-    p.x+=p.vx;p.y+=p.vy;
-    if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
-    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle=p.g?`rgba(201,168,76,${p.a})`:`rgba(255,255,255,${p.a*.3})`;ctx.fill();
-  });
-  requestAnimationFrame(anim);
-})();
-
-// Nav scroll
-window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('solid',scrollY>40));
-
-// Reveal
-const rvEl=document.querySelectorAll('.rv,.rv-l,.rv-r');
-rvEl.forEach(el=>el.classList.add('in'));
+// Reveal on scroll
+var els=document.querySelectorAll('.rv');
+els.forEach(function(el){el.classList.add('in')});
 if('IntersectionObserver' in window){
-  rvEl.forEach(el=>el.classList.remove('in'));
-  const io=new IntersectionObserver(entries=>{
-    entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*60);io.unobserve(e.target)}});
-  },{threshold:.07,rootMargin:'0px 0px -20px 0px'});
-  rvEl.forEach(el=>io.observe(el));
+  els.forEach(function(el){el.classList.remove('in')});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e,i){
+      if(e.isIntersecting){
+        setTimeout(function(){e.target.classList.add('in')},i*55);
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:.08,rootMargin:'0px 0px -20px 0px'});
+  els.forEach(function(el){io.observe(el)});
 }
 
 // Skill bars
-document.querySelectorAll('.sk-bar').forEach(b=>{
-  new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){setTimeout(()=>{e.target.style.width=e.target.dataset.w+'%'},250);io2.unobserve&&io2.unobserve(e.target)}})},{threshold:.5}).observe(b);
-});
-
-// Count up
-[{el:'c1',t:10},{el:'c2',t:4},{el:'c3',t:5}].forEach(({el,t})=>{
-  new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){let c=0;const iv=setInterval(()=>{c+=t/30;document.getElementById(el).textContent=c>=t?t:Math.floor(c);if(c>=t)clearInterval(iv)},25)}})},{threshold:.8}).observe(document.getElementById(el));
-});
-
-// 3D tilt on project cards
-document.querySelectorAll('.pcard').forEach(card=>{
-  card.addEventListener('mousemove',e=>{
-    const r=card.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
-    card.style.transform=`perspective(800px) rotateX(${(y-r.height/2)/r.height*5}deg) rotateY(${(r.width/2-x)/r.width*5}deg) translateZ(4px)`;
-    card.style.transition='none';
-  });
-  card.addEventListener('mouseleave',()=>{card.style.transform='';card.style.transition='transform .5s ease'});
-});
-</script>
-
-<script>
-(function(){
-  var pt=document.getElementById('pt');
-  // Fade in on load
-  window.addEventListener('load',function(){
-    pt.style.opacity='0';
-  });
-  // Fade out on link click
-  document.querySelectorAll('a[href]').forEach(function(a){
-    var h=a.getAttribute('href');
-    if(!h||h.startsWith('#')||h.startsWith('mailto')||h.startsWith('tel')||h.startsWith('http')){return}
-    a.addEventListener('click',function(e){
-      e.preventDefault();
-      pt.classList.add('out');
-      setTimeout(function(){window.location.href=h},280);
+document.querySelectorAll('.sk-fill').forEach(function(b){
+  new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        setTimeout(function(){b.style.width=b.dataset.w+'%'},200);
+      }
     });
-  });
-})();
-</script>
+  },{threshold:.5}).observe(b);
+});
 
+// Nav scroll style
+window.addEventListener('scroll',function(){
+  document.querySelector('nav').style.borderColor=window.scrollY>40?'rgba(201,168,76,.2)':'rgba(255,255,255,.07)';
+},{ passive:true });
+</script>
 </body>
 </html>
