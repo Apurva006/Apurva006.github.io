@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supply Chain Waste Analysis — Apurva Jadhav</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{--bg:#0b0c0e;--bg2:#111318;--teal:#2aaa9a;--gold:#c9a84c;--gold2:#e8c76a;--white:#f0ede8;--white2:#9a9590;--white3:#4a4740;--border:rgba(42,170,154,.14);--border2:rgba(255,255,255,.07);--red:#e05555;--green:#4aaa6a;--amber:#d4872a;--blue:#4a8fd4}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font-weight:400;min-height:100vh}
+.topbar{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:0 48px;height:58px;background:rgba(11,12,14,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border2)}
+.back{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--white2);font-size:13px;font-weight:500;transition:color .2s}.back:hover{color:var(--gold)}
+.tb-title{font-family:'Instrument Serif',serif;font-size:15px;color:var(--white)}
+.tb-badge{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;background:rgba(42,170,154,.12);border:1px solid rgba(42,170,154,.25);color:var(--teal);padding:4px 12px}
+.page{max-width:1140px;margin:0 auto;padding:52px 48px}
+.proj-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.proj-tag::before{content:'';width:20px;height:1px;background:var(--teal)}
+.tools{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:22px}
+.tool{font-family:'JetBrains Mono',monospace;font-size:10px;border:1px solid rgba(42,170,154,.25);color:var(--teal);padding:4px 10px;background:rgba(42,170,154,.06)}
+.h1{font-family:'Instrument Serif',serif;font-size:clamp(32px,5vw,52px);line-height:1.05;letter-spacing:-.5px;margin-bottom:14px}
+.h1 em{font-style:italic;color:var(--teal)}
+.intro{font-size:15px;line-height:1.8;color:var(--white2);max-width:720px;margin-bottom:12px}
+.bq{border-left:2px solid var(--teal);padding:12px 18px;background:rgba(42,170,154,.05);font-size:14px;color:var(--white);font-style:italic;margin-bottom:36px;line-height:1.6}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px}
+.kpi{background:var(--bg2);border:1px solid var(--border2);padding:20px;position:relative;overflow:hidden;transition:border-color .25s}
+.kpi:hover{border-color:rgba(42,170,154,.3)}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),#4addc8)}
+.kpi-lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--white3);margin-bottom:8px}
+.kpi-val{font-family:'Instrument Serif',serif;font-size:34px;color:var(--teal);line-height:1;letter-spacing:-.5px}
+.kpi-sub{font-size:11px;color:var(--white3);margin-top:5px}
+.kpi-ch{font-size:12px;font-weight:600;margin-top:4px}.neg{color:var(--red)}.pos{color:var(--green)}
+.grid-2{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:14px}
+.grid-2b{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.chart-box{background:var(--bg2);border:1px solid var(--border2);padding:26px;transition:border-color .25s}
+.chart-box:hover{border-color:rgba(42,170,154,.2)}
+.cb-title{font-family:'Instrument Serif',serif;font-size:17px;color:var(--white);margin-bottom:4px}
+.cb-sub{font-size:12px;color:var(--white3);margin-bottom:20px}
+.excel-section{background:rgba(42,170,154,.04);border:1px solid rgba(42,170,154,.15);padding:28px;margin-bottom:14px}
+.excel-title{font-family:'Instrument Serif',serif;font-size:18px;color:var(--teal);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.excel-badge{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;background:rgba(42,170,154,.12);border:1px solid rgba(42,170,154,.25);color:var(--teal);padding:3px 9px}
+.excel-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.excel-block{background:rgba(255,255,255,.03);border:1px solid var(--border2);padding:16px 18px}
+.excel-block-title{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--white3);margin-bottom:10px}
+.excel-list{list-style:none}
+.excel-list li{font-size:13px;color:var(--white2);padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);display:flex;gap:10px;align-items:flex-start;line-height:1.5}
+.excel-list li::before{content:'—';color:var(--teal);font-size:11px;flex-shrink:0;margin-top:1px}
+.excel-list li:last-child{border-bottom:none}
+.data-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:14px}
+.data-table th{text-align:left;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--white3);border-bottom:1px solid var(--border2)}
+.data-table td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--white2)}
+.data-table tr:hover td{background:rgba(255,255,255,.02)}
+.badge{font-size:11px;font-weight:600;padding:3px 9px}
+.b-r{background:rgba(224,85,85,.12);color:var(--red)}.b-a{background:rgba(212,135,42,.12);color:var(--amber)}.b-g{background:rgba(74,170,106,.12);color:var(--green)}.b-t{background:rgba(42,170,154,.12);color:var(--teal)}
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.ins{background:rgba(42,170,154,.05);border:1px solid rgba(42,170,154,.14);padding:22px}
+.ins-e{font-size:20px;margin-bottom:10px}.ins-h{font-size:14px;font-weight:600;color:var(--white);margin-bottom:6px}.ins-p{font-size:13px;color:var(--white2);line-height:1.65}
+.recs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.rec{background:var(--bg2);border:1px solid var(--border2);padding:20px;transition:border-color .25s}
+.rec:hover{border-color:rgba(42,170,154,.3)}
+.rec-n{font-family:'Instrument Serif',serif;font-size:32px;color:rgba(42,170,154,.18);line-height:1;margin-bottom:8px}
+.rec-h{font-size:13px;font-weight:600;color:var(--white);margin-bottom:6px}.rec-p{font-size:12px;color:var(--white3);line-height:1.6}
+.rule{height:1px;background:var(--border2);margin:32px 0}
+.sec-h{font-family:'Instrument Serif',serif;font-size:22px;color:var(--white);margin-bottom:6px}
+.sec-s{font-size:13px;color:var(--white3);margin-bottom:20px}
+@media(max-width:768px){.kpi-row,.recs,.insight-grid,.excel-grid{grid-template-columns:1fr 1fr}.grid-2,.grid-2b{grid-template-columns:1fr}.page{padding:24px}.topbar{padding:0 24px}}
+</style>
+</head>
+<body>
+
+<style>
+.page-transition{position:fixed;inset:0;background:#0b0c0e;z-index:9999;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.page-transition.out{opacity:1;pointer-events:all}
+</style>
+<div class="page-transition" id="pt"></div>
+
+<div class="topbar">
+  <a href="index.html" class="back">← Back to Portfolio</a>
+  <div class="tb-title">Supermarket Supply Chain Waste Analysis</div>
+  <div class="tb-badge">Project 02 · Excel + Tableau</div>
+</div>
+<div class="page">
+  <div class="proj-tag">Project 02 · Retail Operations · Excel + Tableau</div>
+  <h1 class="h1">Supermarket Supply Chain<br><em>Waste & Shrinkage Analysis</em></h1>
+  <div class="tools"><span class="tool">Excel</span><span class="tool">Tableau</span><span class="tool">Pivot Tables</span><span class="tool">Power Query</span><span class="tool">VLOOKUP</span><span class="tool">Supplier Data</span></div>
+  <p class="intro">Analysed waste, shrinkage and supplier delivery performance data across 8 product categories for a hypothetical Irish supermarket chain. Excel used for all data cleaning, pivot analysis and cost modelling. Tableau dashboard built for category managers to monitor waste by store, category and supplier in real time.</p>
+  <div class="bq">"We know food waste is a problem — but which categories, which suppliers and which stores are driving it? And exactly how much is recoverable?"</div>
+
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi-lbl">Total Annual Waste Cost</div><div class="kpi-val">€1.24M</div><div class="kpi-ch neg">Across 8 categories</div></div>
+    <div class="kpi"><div class="kpi-lbl">Recoverable Waste Found</div><div class="kpi-val">€420K</div><div class="kpi-sub">Via 4 targeted actions</div></div>
+    <div class="kpi"><div class="kpi-lbl">Top 2 Waste Categories</div><div class="kpi-val">34%</div><div class="kpi-sub">Fresh Produce + Bakery</div></div>
+    <div class="kpi"><div class="kpi-lbl">Supplier Late Deliveries</div><div class="kpi-val">18%</div><div class="kpi-sub">Linked to 42% of spoilage</div></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="chart-box">
+      <div class="cb-title">Waste Cost by Category — Monthly Trend</div>
+      <div class="cb-sub">Pivot table analysis in Excel · 12-month view</div>
+      <canvas id="wasteChart" height="240"></canvas>
+    </div>
+    <div class="chart-box">
+      <div class="cb-title">Waste % of Category Revenue</div>
+      <div class="cb-sub">Waste cost as % of total category sales</div>
+      <canvas id="pctChart" height="240"></canvas>
+    </div>
+  </div>
+
+  <div class="grid-2b">
+    <div class="chart-box">
+      <div class="cb-title">Shrinkage by Store</div>
+      <div class="cb-sub">Theft + damage + admin error · 12 stores</div>
+      <canvas id="storeChart" height="230"></canvas>
+    </div>
+    <div class="chart-box">
+      <div class="cb-title">Supplier Delivery Performance vs Spoilage</div>
+      <div class="cb-sub">Late deliveries correlated with increased spoilage</div>
+      <canvas id="supplierChart" height="230"></canvas>
+    </div>
+  </div>
+
+  <!-- EXCEL METHODOLOGY -->
+  <div class="excel-section">
+    <div class="excel-title">Excel & Tableau Methodology <span class="excel-badge">Tools Applied</span></div>
+    <div class="excel-grid">
+      <div class="excel-block">
+        <div class="excel-block-title">Excel — Data Cleaning & Analysis</div>
+        <ul class="excel-list">
+          <li>Power Query used to consolidate 12 monthly supplier delivery files into one structured table</li>
+          <li>VLOOKUP to cross-reference supplier IDs with product category master data</li>
+          <li>Pivot tables to aggregate waste cost by store, category, week and supplier</li>
+          <li>Conditional formatting to flag stores with waste > 5% of revenue (red threshold)</li>
+          <li>SUMIF and COUNTIF formulas to calculate spoilage rates per delivery delay band</li>
+        </ul>
+      </div>
+      <div class="excel-block">
+        <div class="excel-block-title">Tableau — Dashboard Delivery</div>
+        <ul class="excel-list">
+          <li>Connected Tableau directly to the cleaned Excel model as live data source</li>
+          <li>Built 4 interactive dashboard views: by category, by store, by supplier, by month</li>
+          <li>Calculated fields for waste % of revenue and YoY change per category</li>
+          <li>Colour-coded threshold indicators — green/amber/red — for category manager use</li>
+          <li>Dashboard filter actions allowing drill-down from national to individual store level</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-box" style="margin-bottom:14px">
+    <div class="cb-title">Category Waste Summary — Excel Pivot Output</div>
+    <div class="cb-sub">Annual waste cost and % of revenue · Ranked by total waste value</div>
+    <table class="data-table">
+      <thead><tr><th>Category</th><th>Annual Waste Cost</th><th>Waste % of Revenue</th><th>Primary Driver</th><th>Recovery Potential</th><th>Priority</th></tr></thead>
+      <tbody>
+        <tr><td><strong style="color:var(--white)">Fresh Produce</strong></td><td>€284K</td><td>8.4%</td><td>Over-ordering</td><td>€98K</td><td><span class="badge b-r">Critical</span></td></tr>
+        <tr><td><strong style="color:var(--white)">Bakery</strong></td><td>€196K</td><td>11.2%</td><td>End-of-day surplus</td><td>€82K</td><td><span class="badge b-r">Critical</span></td></tr>
+        <tr><td>Dairy</td><td>€148K</td><td>4.8%</td><td>Late deliveries</td><td>€64K</td><td><span class="badge b-a">High</span></td></tr>
+        <tr><td>Meat & Fish</td><td>€192K</td><td>5.1%</td><td>Display life</td><td>€74K</td><td><span class="badge b-a">High</span></td></tr>
+        <tr><td>Chilled Ready Meals</td><td>€124K</td><td>6.2%</td><td>Forecast error</td><td>€52K</td><td><span class="badge b-a">High</span></td></tr>
+        <tr><td>Ambient Grocery</td><td>€68K</td><td>1.4%</td><td>Shrinkage</td><td>€28K</td><td><span class="badge b-t">Monitor</span></td></tr>
+        <tr><td>Drinks & Beverages</td><td>€42K</td><td>0.9%</td><td>Shrinkage</td><td>€14K</td><td><span class="badge b-g">Low</span></td></tr>
+        <tr><td>Frozen</td><td>€28K</td><td>0.7%</td><td>Packaging damage</td><td>€8K</td><td><span class="badge b-g">Low</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="insight-grid">
+    <div class="ins"><div class="ins-e">🥦</div><div class="ins-h">Fresh Produce + Bakery = 34% of all waste cost</div><div class="ins-p">Excel pivot analysis shows these two categories account for €480K of the €1.24M total. Both are driven by over-ordering — the ordering model needs recalibrating against actual sell-through rates.</div></div>
+    <div class="ins"><div class="ins-e">🚚</div><div class="ins-h">Late deliveries cause 42% of all Dairy spoilage</div><div class="ins-p">VLOOKUP cross-referencing supplier delivery times with spoilage records revealed a clear pattern: when deliveries arrive more than 4 hours late, spoilage in Dairy rises by 42%. 3 suppliers account for 78% of late deliveries.</div></div>
+    <div class="ins"><div class="ins-e">🏪</div><div class="ins-h">3 stores generate 51% of total shrinkage</div><div class="ins-p">Store-level Tableau analysis identified 3 outlets with shrinkage rates more than double the chain average. Common factor: all 3 have the oldest CCTV systems and highest footfall. Security investment ROI is strong.</div></div>
+    <div class="ins"><div class="ins-e">🕐</div><div class="ins-h">Bakery markdown timing recovers €82K</div><div class="ins-p">Simulating a 3pm markdown on same-day bakery items (vs current 5pm) in the Excel model showed a projected sell-through increase from 62% to 88% — recovering an estimated €82K annually in end-of-day waste.</div></div>
+  </div>
+
+  <div class="rule"></div>
+  <div class="sec-h">Business Recommendations</div>
+  <div class="sec-s">Delivered as a Tableau dashboard + Excel cost model for operations management</div>
+  <div class="recs">
+    <div class="rec"><div class="rec-n">01</div><div class="rec-h">Dynamic Ordering Model — Produce</div><div class="rec-p">Replace fixed weekly order volumes with sell-through-based dynamic forecasting. Projected waste reduction: 35% in Fresh Produce. Recovers €98K.</div></div>
+    <div class="rec"><div class="rec-n">02</div><div class="rec-h">3pm Bakery Markdown Rule</div><div class="rec-p">Implement same-day markdown at 3pm. Excel model shows sell-through improves from 62% → 88%. Recovers €82K annually in end-of-day waste.</div></div>
+    <div class="rec"><div class="rec-n">03</div><div class="rec-h">Supplier SLA Enforcement</div><div class="rec-p">3 suppliers account for 78% of late deliveries. Introduce delivery SLA with penalty clauses. Projected Dairy spoilage reduction: 42%. Recovers €64K.</div></div>
+    <div class="rec"><div class="rec-n">04</div><div class="rec-h">Security Upgrade — 3 Stores</div><div class="rec-p">CCTV and staffing investment in 3 high-shrinkage stores. Estimated cost €48K. Projected shrinkage reduction: 60%. Payback period: 8 months.</div></div>
+  </div>
+  <div style="text-align:center;padding:16px 0 8px">
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--gold);text-decoration:none;font-size:13px;font-weight:500;border:1px solid rgba(201,168,76,.2);padding:11px 26px;transition:background .2s" onmouseover="this.style.background='rgba(201,168,76,.08)'" onmouseout="this.style.background='transparent'">← Back to Portfolio</a>
+  </div>
+</div>
+<script>
+const T='42,170,154',G='201,168,76',R='224,85,85',A='212,135,42',Gr='74,170,106',B='74,143,212';
+const defs={responsive:true,maintainAspectRatio:true,plugins:{legend:{labels:{color:'#9a9590',font:{size:11,family:'Inter'}}},tooltip:{backgroundColor:'rgba(11,12,14,.97)',titleColor:'#f0ede8',bodyColor:'#9a9590',borderColor:'rgba(255,255,255,.07)',borderWidth:1}},animation:{duration:1100}};
+
+new Chart(document.getElementById('wasteChart'),{type:'line',data:{labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],datasets:[{label:'Fresh Produce',data:[22,24,26,28,32,34,36,34,30,28,24,26],borderColor:`rgba(${R},1)`,backgroundColor:`rgba(${R},.08)`,borderWidth:2.5,pointRadius:3,tension:.4,fill:false},{label:'Bakery',data:[15,14,16,18,20,22,24,22,18,17,16,14],borderColor:`rgba(${G},1)`,backgroundColor:`rgba(${G},.08)`,borderWidth:2.5,pointRadius:3,tension:.4,fill:false},{label:'Dairy',data:[11,12,10,13,14,15,16,14,12,11,10,12],borderColor:`rgba(${T},1)`,borderWidth:2,pointRadius:3,tension:.4,fill:false},{label:'Meat & Fish',data:[14,16,15,17,18,20,22,19,16,15,14,16],borderColor:`rgba(${A},1)`,borderWidth:2,pointRadius:3,tension:.4,fill:false}]},options:{...defs,scales:{x:{ticks:{color:'#4a4740',font:{size:10}},grid:{color:'rgba(255,255,255,.04)'}},y:{ticks:{color:'#4a4740',callback:v=>'€'+v+'K'},grid:{color:'rgba(255,255,255,.04)'}}}}});
+
+new Chart(document.getElementById('pctChart'),{type:'bar',data:{labels:['Bakery','Fresh Produce','Ready Meals','Meat & Fish','Dairy','Ambient','Drinks','Frozen'],datasets:[{label:'Waste % of Revenue',data:[11.2,8.4,6.2,5.1,4.8,1.4,0.9,0.7],backgroundColor:(ctx)=>ctx.raw>8?`rgba(${R},.82)`:ctx.raw>4?`rgba(${A},.78)`:`rgba(${Gr},.72)`,borderRadius:4,borderSkipped:false}]},options:{...defs,plugins:{...defs.plugins,legend:{display:false}},indexAxis:'y',scales:{x:{ticks:{color:'#4a4740',callback:v=>v+'%'},grid:{color:'rgba(255,255,255,.04)'}},y:{ticks:{color:'#9a9590',font:{size:10}},grid:{display:false}}}}});
+
+new Chart(document.getElementById('storeChart'),{type:'bar',data:{labels:['Store 3','Store 7','Store 11','Store 1','Store 9','Store 5','Store 2','Store 8','Store 4','Store 6','Store 10','Store 12'],datasets:[{label:'Shrinkage €K',data:[38,34,29,22,18,16,14,13,11,10,9,8],backgroundColor:(ctx)=>ctx.raw>30?`rgba(${R},.8)`:ctx.raw>18?`rgba(${A},.75)`:`rgba(${Gr},.7)`,borderRadius:4,borderSkipped:false}]},options:{...defs,plugins:{...defs.plugins,legend:{display:false}},scales:{x:{ticks:{color:'#9a9590',font:{size:9}},grid:{display:false}},y:{ticks:{color:'#4a4740',callback:v=>'€'+v+'K'},grid:{color:'rgba(255,255,255,.04)'}}}}});
+
+new Chart(document.getElementById('supplierChart'),{type:'scatter',data:{datasets:[{label:'On-time Suppliers',data:[{x:2,y:3.2},{x:1,y:2.8},{x:3,y:3.6},{x:4,y:4.1}],backgroundColor:`rgba(${Gr},.8)`,pointRadius:8},{label:'Moderate Delays',data:[{x:12,y:7.4},{x:15,y:8.2},{x:18,y:9.1}],backgroundColor:`rgba(${A},.8)`,pointRadius:8},{label:'Frequent Late (3 suppliers)',data:[{x:28,y:14.2},{x:34,y,y:16.8},{x:41,y:19.4}],backgroundColor:`rgba(${R},.85)`,pointRadius:10}]},options:{...defs,scales:{x:{title:{display:true,text:'Late Delivery Rate %',color:'#4a4740'},ticks:{color:'#4a4740',callback:v=>v+'%'},grid:{color:'rgba(255,255,255,.04)'}},y:{title:{display:true,text:'Spoilage Rate %',color:'#4a4740'},ticks:{color:'#4a4740',callback:v=>v+'%'},grid:{color:'rgba(255,255,255,.04)'}}}}});
+</script>
+
+<script>
+(function(){
+  var pt=document.getElementById('pt');
+  // Fade in on load
+  window.addEventListener('load',function(){
+    pt.style.opacity='0';
+  });
+  // Fade out on link click
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var h=a.getAttribute('href');
+    if(!h||h.startsWith('#')||h.startsWith('mailto')||h.startsWith('tel')||h.startsWith('http')){return}
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      pt.classList.add('out');
+      setTimeout(function(){window.location.href=h},280);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
