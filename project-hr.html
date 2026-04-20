@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employee Attrition Analysis — Apurva Jadhav</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{--bg:#0b0c0e;--bg2:#111318;--purple:#9a6ad4;--gold:#c9a84c;--gold2:#e8c76a;--white:#f0ede8;--white2:#9a9590;--white3:#4a4740;--border:rgba(154,106,212,.14);--border2:rgba(255,255,255,.07);--red:#e05555;--green:#4aaa6a;--amber:#d4872a;--blue:#4a8fd4;--teal:#2aaa9a}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font-weight:400;min-height:100vh}
+.topbar{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:0 48px;height:58px;background:rgba(11,12,14,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border2)}
+.back{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--white2);font-size:13px;font-weight:500;transition:color .2s}.back:hover{color:var(--gold)}
+.tb-title{font-family:'Instrument Serif',serif;font-size:15px;color:var(--white)}
+.tb-badge{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;background:rgba(154,106,212,.12);border:1px solid rgba(154,106,212,.25);color:var(--purple);padding:4px 12px}
+.page{max-width:1140px;margin:0 auto;padding:52px 48px}
+.proj-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--purple);display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.proj-tag::before{content:'';width:20px;height:1px;background:var(--purple)}
+.tools{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:22px}
+.tool{font-family:'JetBrains Mono',monospace;font-size:10px;border:1px solid rgba(154,106,212,.25);color:var(--purple);padding:4px 10px;background:rgba(154,106,212,.06)}
+.h1{font-family:'Instrument Serif',serif;font-size:clamp(32px,5vw,52px);line-height:1.05;letter-spacing:-.5px;margin-bottom:14px}
+.h1 em{font-style:italic;color:var(--purple)}
+.intro{font-size:15px;line-height:1.8;color:var(--white2);max-width:720px;margin-bottom:12px}
+.bq{border-left:2px solid var(--purple);padding:12px 18px;background:rgba(154,106,212,.05);font-size:14px;color:var(--white);font-style:italic;margin-bottom:36px;line-height:1.6}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px}
+.kpi{background:var(--bg2);border:1px solid var(--border2);padding:20px;position:relative;overflow:hidden;transition:border-color .25s}
+.kpi:hover{border-color:rgba(154,106,212,.3)}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--purple),#c09aee)}
+.kpi-lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--white3);margin-bottom:8px}
+.kpi-val{font-family:'Instrument Serif',serif;font-size:34px;color:var(--purple);line-height:1;letter-spacing:-.5px}
+.kpi-sub{font-size:11px;color:var(--white3);margin-top:5px}
+.kpi-ch{font-size:12px;font-weight:600;margin-top:4px}.neg{color:var(--red)}.pos{color:var(--green)}
+.ba-section{background:rgba(154,106,212,.04);border:1px solid rgba(154,106,212,.15);padding:28px;margin-bottom:14px}
+.ba-title{font-family:'Instrument Serif',serif;font-size:18px;color:var(--purple);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.ba-badge{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;background:rgba(154,106,212,.12);border:1px solid rgba(154,106,212,.25);color:var(--purple);padding:3px 9px}
+.ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ba-block{background:rgba(255,255,255,.03);border:1px solid var(--border2);padding:16px 18px}
+.ba-block-h{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--white3);margin-bottom:10px}
+.ba-list{list-style:none}
+.ba-list li{font-size:13px;color:var(--white2);padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);display:flex;gap:10px;align-items:flex-start;line-height:1.5}
+.ba-list li::before{content:'—';color:var(--purple);font-size:11px;flex-shrink:0;margin-top:2px}
+.ba-list li:last-child{border-bottom:none}
+.grid-2{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:14px}
+.grid-2b{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.chart-box{background:var(--bg2);border:1px solid var(--border2);padding:26px;transition:border-color .25s}
+.chart-box:hover{border-color:rgba(154,106,212,.2)}
+.cb-title{font-family:'Instrument Serif',serif;font-size:17px;color:var(--white);margin-bottom:4px}
+.cb-sub{font-size:12px;color:var(--white3);margin-bottom:20px}
+.data-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:14px}
+.data-table th{text-align:left;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--white3);border-bottom:1px solid var(--border2)}
+.data-table td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--white2)}
+.data-table tr:hover td{background:rgba(255,255,255,.02)}
+.badge{font-size:11px;font-weight:600;padding:3px 9px}
+.b-r{background:rgba(224,85,85,.12);color:var(--red)}.b-a{background:rgba(212,135,42,.12);color:var(--amber)}.b-g{background:rgba(74,170,106,.12);color:var(--green)}.b-p{background:rgba(154,106,212,.12);color:var(--purple)}
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.ins{background:rgba(154,106,212,.05);border:1px solid rgba(154,106,212,.14);padding:22px}
+.ins-e{font-size:20px;margin-bottom:10px}.ins-h{font-size:14px;font-weight:600;color:var(--white);margin-bottom:6px}.ins-p{font-size:13px;color:var(--white2);line-height:1.65}
+.recs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.rec{background:var(--bg2);border:1px solid var(--border2);padding:20px;transition:border-color .25s}
+.rec:hover{border-color:rgba(154,106,212,.3)}
+.rec-n{font-family:'Instrument Serif',serif;font-size:32px;color:rgba(154,106,212,.18);line-height:1;margin-bottom:8px}
+.rec-h{font-size:13px;font-weight:600;color:var(--white);margin-bottom:6px}.rec-p{font-size:12px;color:var(--white3);line-height:1.6}
+.rule{height:1px;background:var(--border2);margin:32px 0}
+.sec-h{font-family:'Instrument Serif',serif;font-size:22px;color:var(--white);margin-bottom:6px}
+.sec-s{font-size:13px;color:var(--white3);margin-bottom:20px}
+@media(max-width:768px){.kpi-row,.recs,.insight-grid,.ba-grid{grid-template-columns:1fr 1fr}.grid-2,.grid-2b{grid-template-columns:1fr}.page{padding:24px}.topbar{padding:0 24px}}
+</style>
+</head>
+<body>
+
+<style>
+.page-transition{position:fixed;inset:0;background:#0b0c0e;z-index:9999;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.page-transition.out{opacity:1;pointer-events:all}
+</style>
+<div class="page-transition" id="pt"></div>
+
+<div class="topbar">
+  <a href="index.html" class="back">← Back to Portfolio</a>
+  <div class="tb-title">Employee Attrition Analysis</div>
+  <div class="tb-badge">Project 04 · Full BA Lifecycle</div>
+</div>
+<div class="page">
+  <div class="proj-tag">Project 04 · People Analytics · Business Analysis</div>
+  <h1 class="h1">Employee Attrition Analysis<br>&amp; <em>Retention Strategy</em></h1>
+  <div class="tools"><span class="tool">Excel</span><span class="tool">Tableau</span><span class="tool">Business Analysis</span><span class="tool">BRD</span><span class="tool">Stakeholder Report</span></div>
+  <p class="intro">A complete Business Analysis engagement — from requirements elicitation with a hypothetical HR Director through to a Tableau dashboard and 2-page executive summary. This project demonstrates the full BA lifecycle, not just data analysis. 1,470 employee records analysed. Every recommendation comes with a projected ROI.</p>
+  <div class="bq">"We're losing good people and we don't know why. What is actually driving attrition — and what do we change first to have the most impact at the lowest cost?"</div>
+
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi-lbl">Employee Attrition Rate</div><div class="kpi-val">16.1%</div><div class="kpi-ch neg">237 employees left</div></div>
+    <div class="kpi"><div class="kpi-lbl">Est. Cost per Leaver</div><div class="kpi-val">€18K</div><div class="kpi-sub">Recruitment + onboarding cost</div></div>
+    <div class="kpi"><div class="kpi-lbl">Total Annual Cost</div><div class="kpi-val">€4.3M</div><div class="kpi-sub">Current attrition cost</div></div>
+    <div class="kpi"><div class="kpi-lbl">Projected Savings</div><div class="kpi-val">€1.8M</div><div class="kpi-sub">With 3 targeted actions</div></div>
+  </div>
+
+  <!-- BA LIFECYCLE -->
+  <div class="ba-section">
+    <div class="ba-title">The Full Business Analysis Lifecycle <span class="ba-badge">What BAs actually do</span></div>
+    <div class="ba-grid">
+      <div class="ba-block">
+        <div class="ba-block-h">1. Requirements Elicited (from HR Director)</div>
+        <ul class="ba-list">
+          <li>Identify which departments and roles have the highest attrition</li>
+          <li>Determine whether compensation, workload or management is the primary driver</li>
+          <li>Segment findings by tenure, age and job level to find actionable patterns</li>
+          <li>Deliver recommendations the HR Director can present to the board with ROI evidence</li>
+        </ul>
+      </div>
+      <div class="ba-block">
+        <div class="ba-block-h">2. BRD Documented</div>
+        <ul class="ba-list">
+          <li>Business Objective: Reduce attrition from 16.1% to under 11% within 12 months</li>
+          <li>Success Metric: Attrition rate below 11% by Q4 · Cost saving target: €1.8M</li>
+          <li>Stakeholders: HR Director · Finance (cost model) · Line Managers (operational impact)</li>
+          <li>Constraints: Analysis in Excel + Tableau only. No new systems. Low implementation cost.</li>
+        </ul>
+      </div>
+      <div class="ba-block">
+        <div class="ba-block-h">3. Analysis Performed</div>
+        <ul class="ba-list">
+          <li>Excel pivot tables by department, tenure band, pay grade and overtime hours</li>
+          <li>VLOOKUP to cross-reference manager satisfaction scores with team attrition rates</li>
+          <li>Tableau dashboard with manager-level drill-down and department filtering</li>
+          <li>Root cause analysis: overtime hours vs attrition — strongest correlation found</li>
+        </ul>
+      </div>
+      <div class="ba-block">
+        <div class="ba-block-h">4. Stakeholder Output Delivered</div>
+        <ul class="ba-list">
+          <li>2-page executive summary for HR Director in non-technical language</li>
+          <li>Tableau dashboard for HR team day-to-day operational monitoring</li>
+          <li>Excel cost model for Finance to run scenario analysis on each recommendation</li>
+          <li>4 recommendations ranked by projected ROI — ready for board presentation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="chart-box">
+      <div class="cb-title">Attrition Rate by Department</div>
+      <div class="cb-sub">Excel pivot table analysis · 9 departments ranked</div>
+      <canvas id="deptChart" height="240"></canvas>
+    </div>
+    <div class="chart-box">
+      <div class="cb-title">Attrition Rate by Tenure</div>
+      <div class="cb-sub">Years at company vs likelihood of leaving</div>
+      <canvas id="tenureChart" height="240"></canvas>
+    </div>
+  </div>
+
+  <div class="grid-2b">
+    <div class="chart-box">
+      <div class="cb-title">Overtime vs Attrition — Strongest Driver</div>
+      <div class="cb-sub">Tableau correlation view · Overtime is the #1 predictor</div>
+      <canvas id="overtimeChart" height="230"></canvas>
+    </div>
+    <div class="chart-box">
+      <div class="cb-title">Attrition by Job Level</div>
+      <div class="cb-sub">Entry-level leaving at 3× the rate of senior staff</div>
+      <canvas id="levelChart" height="230"></canvas>
+    </div>
+  </div>
+
+  <div class="chart-box" style="margin-bottom:14px">
+    <div class="cb-title">Department Attrition Summary — Excel Pivot Output</div>
+    <div class="cb-sub">Ranked by attrition rate · Cost modelling applied</div>
+    <table class="data-table">
+      <thead><tr><th>Department</th><th>Headcount</th><th>Leavers</th><th>Attrition Rate</th><th>Est. Annual Cost</th><th>Priority</th></tr></thead>
+      <tbody>
+        <tr><td><strong style="color:var(--white)">Sales</strong></td><td>180</td><td>46</td><td><span class="badge b-r">25.6%</span></td><td>€828K</td><td><span class="badge b-r">Critical</span></td></tr>
+        <tr><td><strong style="color:var(--white)">HR</strong></td><td>63</td><td>14</td><td><span class="badge b-r">22.2%</span></td><td>€252K</td><td><span class="badge b-r">Critical</span></td></tr>
+        <tr><td>Technical</td><td>292</td><td>50</td><td><span class="badge b-a">17.1%</span></td><td>€900K</td><td><span class="badge b-a">High</span></td></tr>
+        <tr><td>Marketing</td><td>159</td><td>22</td><td><span class="badge b-a">13.8%</span></td><td>€396K</td><td><span class="badge b-a">High</span></td></tr>
+        <tr><td>Finance</td><td>87</td><td>9</td><td><span class="badge b-g">10.3%</span></td><td>€162K</td><td><span class="badge b-g">Monitor</span></td></tr>
+        <tr><td>Research</td><td>292</td><td>27</td><td><span class="badge b-g">9.2%</span></td><td>€486K</td><td><span class="badge b-g">Monitor</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="insight-grid">
+    <div class="ins"><div class="ins-e">🚨</div><div class="ins-h">Overtime is the #1 attrition predictor</div><div class="ins-p">Employees doing frequent overtime churn at 30.5% vs 10.4% for those who don't. This single variable predicts attrition better than pay, age or department — and it's actionable immediately through workload redistribution.</div></div>
+    <div class="ins"><div class="ins-e">👶</div><div class="ins-h">Entry-level staff leave at 3× the rate of seniors</div><div class="ins-p">Level 1–2 employees show 28% attrition vs 9% at Level 4–5. Excel tenure analysis shows the highest risk window is months 6–18 — when initial enthusiasm fades but before the employee feels invested. A structured development programme in this window has high ROI.</div></div>
+    <div class="ins"><div class="ins-e">💼</div><div class="ins-h">Sales attrition costs €828K annually</div><div class="ins-p">Sales has the highest cost impact of any department. Tableau drill-down shows Sales employees averaging 14+ overtime hours per week — nearly double the company average. Workload redistribution and 2 additional headcount would cost ~€120K but recover an estimated €480K in reduced attrition.</div></div>
+    <div class="ins"><div class="ins-e">📋</div><div class="ins-h">Manager scores predict team attrition</div><div class="ins-p">VLOOKUP cross-referencing manager satisfaction scores with team attrition revealed a clear pattern: all 5 teams with attrition above 20% had manager scores below 6/10. Manager effectiveness is a leading indicator — not a lagging one.</div></div>
+  </div>
+
+  <div class="rule"></div>
+  <div class="sec-h">Strategic Recommendations — Board-Ready</div>
+  <div class="sec-s">Ranked by projected ROI · Delivered with Excel cost model for Finance team</div>
+  <div class="recs">
+    <div class="rec"><div class="rec-n">01</div><div class="rec-h">Sales Workload Cap + 2 FTE</div><div class="rec-p">Cap overtime at 10hrs/month. Add 2 FTE to redistribute load. Cost: €120K. Projected saving: €480K. Payback: 3 months.</div></div>
+    <div class="rec"><div class="rec-n">02</div><div class="rec-h">Junior Development Programme</div><div class="rec-p">12-month structured learning + mentorship for Level 1–2 staff. Targets attrition 28% → 15%. Projected saving: €720K annually at current headcount.</div></div>
+    <div class="rec"><div class="rec-n">03</div><div class="rec-h">Manager Effectiveness Reviews</div><div class="rec-p">Quarterly 360-degree feedback. Managers scoring below 6/10 receive coaching. All 5 high-attrition teams have low manager scores — this is the fastest win.</div></div>
+    <div class="rec"><div class="rec-n">04</div><div class="rec-h">Structured Exit Interview Process</div><div class="rec-p">Standardised exit interviews feeding into a quarterly HR dashboard. Currently no systematic capture. This is a data blind spot that prevents future analysis from being this accurate.</div></div>
+  </div>
+  <div style="text-align:center;padding:16px 0 8px">
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--gold);text-decoration:none;font-size:13px;font-weight:500;border:1px solid rgba(201,168,76,.2);padding:11px 26px;transition:background .2s" onmouseover="this.style.background='rgba(201,168,76,.08)'" onmouseout="this.style.background='transparent'">← Back to Portfolio</a>
+  </div>
+</div>
+<script>
+const P='154,106,212',G='201,168,76',R='224,85,85',A='212,135,42',Gr='74,170,106',B='74,143,212',T='42,170,154';
+const defs={responsive:true,maintainAspectRatio:true,plugins:{legend:{labels:{color:'#9a9590',font:{size:11,family:'Inter'}}},tooltip:{backgroundColor:'rgba(11,12,14,.97)',titleColor:'#f0ede8',bodyColor:'#9a9590',borderColor:'rgba(255,255,255,.07)',borderWidth:1}},animation:{duration:1100}};
+
+new Chart(document.getElementById('deptChart'),{type:'bar',data:{labels:['Sales','HR','Technical','Marketing','Finance','Research','Mfg','Legal','R&D'],datasets:[{label:'Attrition Rate %',data:[25.6,22.2,17.1,13.8,10.3,9.2,8.4,7.1,6.8],backgroundColor:(ctx)=>ctx.raw>20?`rgba(${R},.82)`:ctx.raw>12?`rgba(${A},.78)`:`rgba(${Gr},.74)`,borderRadius:4,borderSkipped:false}]},options:{...defs,plugins:{...defs.plugins,legend:{display:false}},indexAxis:'y',scales:{x:{ticks:{color:'#4a4740',callback:v=>v+'%'},grid:{color:'rgba(255,255,255,.04)'}},y:{ticks:{color:'#9a9590',font:{size:10}},grid:{display:false}}}}});
+
+new Chart(document.getElementById('tenureChart'),{type:'line',data:{labels:['<1yr','1–2yr','2–3yr','3–5yr','5–7yr','7–10yr','10yr+'],datasets:[{label:'Attrition Rate %',data:[38,32,24,16,11,8,5],borderColor:`rgba(${P},1)`,backgroundColor:`rgba(${P},.1)`,borderWidth:2.5,pointRadius:5,pointBackgroundColor:`rgba(${P},1)`,tension:.4,fill:true}]},options:{...defs,scales:{x:{ticks:{color:'#4a4740',font:{size:10}},grid:{color:'rgba(255,255,255,.04)'}},y:{ticks:{color:'#4a4740',callback:v=>v+'%'},grid:{color:'rgba(255,255,255,.04)'}}}}});
+
+new Chart(document.getElementById('overtimeChart'),{type:'bar',data:{labels:['No overtime','Occasional','Regular 5–10h','Frequent 10–20h','Excessive 20h+'],datasets:[{label:'Attrition Rate %',data:[10.4,13.2,18.6,26.4,30.5],backgroundColor:[`rgba(${Gr},.8)`,`rgba(${Gr},.7)`,`rgba(${A},.75)`,`rgba(${R},.75)`,`rgba(${R},.88)`],borderRadius:5,borderSkipped:false}]},options:{...defs,plugins:{...defs.plugins,legend:{display:false}},scales:{x:{ticks:{color:'#9a9590',font:{size:9}},grid:{display:false}},y:{ticks:{color:'#4a4740',callback:v=>v+'%'},grid:{color:'rgba(255,255,255,.04)'}}}}});
+
+new Chart(document.getElementById('levelChart'),{type:'doughnut',data:{labels:['Level 1 — Entry','Level 2','Level 3','Level 4','Level 5 — Senior'],datasets:[{data:[28,24,16,10,9],backgroundColor:[`rgba(${R},.88)`,`rgba(${R},.75)`,`rgba(${A},.8)`,`rgba(${Gr},.75)`,`rgba(${Gr},.85)`],borderColor:'rgba(11,12,14,.8)',borderWidth:3}]},options:{...defs,cutout:'55%'}});
+</script>
+
+<script>
+(function(){
+  var pt=document.getElementById('pt');
+  // Fade in on load
+  window.addEventListener('load',function(){
+    pt.style.opacity='0';
+  });
+  // Fade out on link click
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var h=a.getAttribute('href');
+    if(!h||h.startsWith('#')||h.startsWith('mailto')||h.startsWith('tel')||h.startsWith('http')){return}
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      pt.classList.add('out');
+      setTimeout(function(){window.location.href=h},280);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
