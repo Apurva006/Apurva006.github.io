@@ -4,76 +4,136 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ireland Rental Market Crisis — Apurva Jadhav</title>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-:root{--bg:#0b0c0e;--bg2:#111318;--gold:#c9a84c;--gold2:#e8c76a;--white:#f0ede8;--white2:#9a9590;--white3:#4a4740;--border:rgba(201,168,76,.14);--border2:rgba(255,255,255,.07);--blue:#4a8fd4;--red:#e05555;--green:#4aaa6a;--amber:#d4872a}
+:root{
+  --paper:#F4F6F9;--surface:#FFFFFF;--ink:#101828;--muted:#566173;--line:#D8DEE7;
+  --green:#0B6E4F;--green-soft:#E2F1EB;--mint:#63D6A8;--panel:#0F1B2D;--panel-line:#27364D;--panel-muted:#A7B4C6;
+  --red:#C23B3B;--amber:#B45309;--blue:#2463B4;--teal:#0F8C8C;--purple:#6D4AC4;
+  --white:var(--ink);--white2:var(--muted);--white3:var(--muted);--gold:var(--green);--gold2:var(--green);--border:var(--line);--border2:var(--line);--bg:var(--paper);--bg2:var(--surface);
+  --display:"Bricolage Grotesque","Segoe UI",Helvetica,Arial,sans-serif;
+  --body:"Instrument Sans","Segoe UI",Helvetica,Arial,sans-serif;
+}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font-weight:400;min-height:100vh}
-.topbar{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:0 48px;height:58px;background:rgba(11,12,14,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border2)}
-.back{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--white2);font-size:13px;font-weight:500;transition:color .2s}.back:hover{color:var(--gold)}
-.tb-title{font-family:'Instrument Serif',serif;font-size:15px;color:var(--white)}
-.tb-badge{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;background:rgba(74,143,212,.12);border:1px solid rgba(74,143,212,.25);color:var(--blue);padding:4px 12px}
-.page{max-width:1140px;margin:0 auto;padding:52px 48px}
-.proj-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:12px;margin-bottom:18px}
-.proj-tag::before{content:'';width:20px;height:1px;background:var(--blue)}
-.tools{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:22px}
-.tool{font-family:'JetBrains Mono',monospace;font-size:10px;border:1px solid rgba(74,143,212,.25);color:var(--blue);padding:4px 10px;background:rgba(74,143,212,.06)}
-.h1{font-family:'Instrument Serif',serif;font-size:clamp(32px,5vw,52px);line-height:1.05;letter-spacing:-.5px;margin-bottom:14px}
-.h1 em{font-style:italic;color:var(--blue)}
-.intro{font-size:15px;line-height:1.8;color:var(--white2);max-width:720px;margin-bottom:12px}
-.bq{border-left:2px solid var(--blue);padding:12px 18px;background:rgba(74,143,212,.05);font-size:14px;color:var(--white);font-style:italic;margin-bottom:36px;line-height:1.6}
-.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px}
-.kpi{background:var(--bg2);border:1px solid var(--border2);padding:20px;position:relative;overflow:hidden;transition:border-color .25s}
-.kpi:hover{border-color:var(--border)}
-.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),#6aafee)}
-.kpi-lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--white3);margin-bottom:8px}
-.kpi-val{font-family:'Instrument Serif',serif;font-size:34px;color:var(--blue);line-height:1;letter-spacing:-.5px}
-.kpi-sub{font-size:11px;color:var(--white3);margin-top:5px}
-.kpi-ch{font-size:12px;font-weight:600;margin-top:4px}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
+a:focus-visible{outline:3px solid var(--green);outline-offset:3px;border-radius:4px}
+.page-transition{display:none}
+
+/* Top bar */
+.topbar{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:0 max(24px,calc((100vw - 1120px)/2 + 24px));height:60px;background:rgba(244,246,249,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.back{text-decoration:none;color:var(--surface);background:var(--ink);font-size:.9rem;font-weight:600;padding:8px 16px;border-radius:999px;white-space:nowrap}
+.back:hover{background:var(--green)}
+.tb-title{font-family:var(--display);font-weight:700;font-size:1rem;letter-spacing:-.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tb-badge{font-size:.85rem;color:var(--muted);font-weight:500;white-space:nowrap}
+
+/* Intro */
+.page{max-width:1120px;margin:0 auto;padding:56px 24px 72px}
+.proj-tag,.tag{font-weight:600;color:var(--green);font-size:.95rem;margin-bottom:14px}
+.h1{font-family:var(--display);font-weight:700;font-size:clamp(2.1rem,5vw,3.6rem);line-height:1.05;letter-spacing:-.02em;margin-bottom:20px;max-width:20ch}
+.h1 br{display:none}
+.h1 em{display:block;font-style:normal;font-weight:500;font-size:.5em;line-height:1.2;letter-spacing:-.01em;color:var(--muted);margin-top:12px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.tool{font-size:.85rem;font-weight:500;color:var(--green);background:var(--green-soft);padding:5px 12px;border-radius:999px}
+.intro{font-size:1.08rem;color:var(--muted);max-width:68ch;margin-bottom:22px}
+.bq{font-family:var(--display);font-weight:500;font-size:clamp(1.15rem,2.2vw,1.45rem);line-height:1.3;letter-spacing:-.01em;border-left:4px solid var(--green);padding:4px 0 4px 22px;max-width:46ch;margin:8px 0 44px}
+
+/* KPIs */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-bottom:28px;background:var(--panel);border-radius:18px;overflow:hidden}
+.kpi{padding:26px 24px;border-right:1px solid var(--panel-line);color:#fff}
+.kpi:last-child{border-right:0}
+.kpi-lbl{font-size:.88rem;color:var(--panel-muted);margin-bottom:10px;line-height:1.35}
+.kpi-val{font-family:var(--display);font-weight:700;font-size:clamp(1.7rem,3vw,2.4rem);line-height:1;letter-spacing:-.02em;color:var(--mint);font-variant-numeric:tabular-nums}
+.kpi-sub{font-size:.85rem;color:var(--panel-muted);margin-top:10px}
+.kpi-ch{font-size:.85rem;font-weight:600;margin-top:10px;color:#fff}
+.kpi .pos,.kpi .neg{color:#fff}
 .pos{color:var(--red)}.neg{color:var(--green)}
-.grid-2{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:14px}
-.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
-.chart-box{background:var(--bg2);border:1px solid var(--border2);padding:26px;transition:border-color .25s}
-.chart-box:hover{border-color:var(--border)}
-.cb-title{font-family:'Instrument Serif',serif;font-size:17px;color:var(--white);margin-bottom:4px}
-.cb-sub{font-size:12px;color:var(--white3);margin-bottom:20px}
-.sql-block{background:rgba(0,0,0,.5);border:1px solid var(--border2);padding:28px;margin-bottom:14px}
-.sql-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.sql-title{font-family:'Instrument Serif',serif;font-size:17px;color:var(--white)}
-.sql-badge{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;background:rgba(74,143,212,.12);border:1px solid rgba(74,143,212,.25);color:var(--blue);padding:3px 9px}
-pre{font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.8;color:#8a9ab0;overflow-x:auto}
-.kw{color:#4a8fd4;font-weight:600}.fn{color:#2aaa9a}.str{color:#c9a84c}.cm{color:#404550;font-style:italic}
-.data-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:14px}
-.data-table th{text-align:left;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--white3);border-bottom:1px solid var(--border2)}
-.data-table td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--white2)}
-.data-table tr:hover td{background:rgba(255,255,255,.02)}
-.badge{font-size:11px;font-weight:600;padding:3px 9px}
-.b-r{background:rgba(224,85,85,.12);color:var(--red)}.b-a{background:rgba(212,135,42,.12);color:var(--amber)}.b-g{background:rgba(74,170,106,.12);color:var(--green)}.b-b{background:rgba(74,143,212,.12);color:var(--blue)}
-.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
-.ins{background:rgba(74,143,212,.05);border:1px solid rgba(74,143,212,.14);padding:22px}
-.ins-e{font-size:20px;margin-bottom:10px}.ins-h{font-size:14px;font-weight:600;color:var(--white);margin-bottom:6px}.ins-p{font-size:13px;color:var(--white2);line-height:1.65}
-.recs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
-.rec{background:var(--bg2);border:1px solid var(--border2);padding:20px;transition:border-color .25s}
-.rec:hover{border-color:var(--border)}
-.rec-n{font-family:'Instrument Serif',serif;font-size:32px;color:rgba(74,143,212,.2);line-height:1;margin-bottom:8px}
-.rec-h{font-size:13px;font-weight:600;color:var(--white);margin-bottom:6px}.rec-p{font-size:12px;color:var(--white3);line-height:1.6}
-.rule{height:1px;background:var(--border2);margin:32px 0}
-.sec-h{font-family:'Instrument Serif',serif;font-size:22px;color:var(--white);margin-bottom:6px}
-.sec-s{font-size:13px;color:var(--white3);margin-bottom:20px}
-@media(max-width:768px){.kpi-row,.recs,.insight-grid{grid-template-columns:1fr 1fr}.grid-2,.grid-3{grid-template-columns:1fr}.page{padding:24px}.topbar{padding:0 24px}}
+
+/* Context bar (hospital) */
+.context-bar{display:flex;gap:14px 36px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 24px;margin-bottom:16px}
+.ctx{font-size:.95rem;color:var(--ink);font-weight:500}
+.ctx span{display:block;font-size:.82rem;color:var(--muted);font-weight:400;margin-bottom:2px}
+
+/* Charts */
+.grid-2,.g2{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
+.grid-2b,.g2b{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.chart-box,.cbox{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;min-width:0}
+.cb-title,.ct{font-family:var(--display);font-weight:700;font-size:1.1rem;letter-spacing:-.01em;margin-bottom:4px}
+.cb-sub,.cs{font-size:.85rem;color:var(--muted);margin-bottom:18px}
+canvas{max-width:100%}
+.chart-wrap{position:relative;width:100%}
+
+/* SQL */
+.sql-block{background:var(--panel);border-radius:18px;padding:30px 32px;margin-bottom:16px;color:#fff}
+.sql-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.sql-title{font-family:var(--display);font-weight:700;font-size:1.2rem}
+.sql-badge{font-size:.82rem;color:var(--panel-muted)}
+pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.82rem;line-height:1.75;color:#C9D4E3;overflow-x:auto}
+.kw{color:var(--mint);font-weight:600}.fn{color:#8FB8FF}.str{color:#F3C56B}.cm{color:#7587A0;font-style:italic}
+
+/* Method / BA blocks */
+.meth,.ba-section{background:var(--green-soft);border-radius:18px;padding:30px 32px;margin-bottom:16px}
+.meth-title,.ba-title{font-family:var(--display);font-weight:700;font-size:1.3rem;letter-spacing:-.01em;margin-bottom:18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.meth-badge,.ba-badge{font-family:var(--body);font-size:.82rem;font-weight:500;color:var(--green);background:var(--surface);padding:4px 12px;border-radius:999px;letter-spacing:0}
+.meth-grid,.ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.meth-block,.ba-block{background:var(--surface);border-radius:12px;padding:20px 22px}
+.meth-block-h,.ba-block-h{font-weight:600;font-size:.98rem;margin-bottom:10px}
+.mlist,.ba-list{list-style:none}
+.mlist li,.ba-list li{font-size:.92rem;color:var(--muted);padding:7px 0 7px 18px;border-bottom:1px solid var(--line);position:relative;line-height:1.5}
+.mlist li::before,.ba-list li::before{content:"";position:absolute;left:0;top:15px;width:7px;height:7px;border-radius:50%;background:var(--green)}
+.mlist li:last-child,.ba-list li:last-child{border-bottom:0}
+
+/* Tables */
+table,.data-table{width:100%;border-collapse:collapse;font-size:.92rem;margin-bottom:16px;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+th,.data-table th{text-align:left;padding:14px 18px;font-size:.84rem;font-weight:600;color:var(--muted);background:#FAFBFC;border-bottom:1px solid var(--line)}
+td,.data-table td{padding:14px 18px;border-bottom:1px solid var(--line);color:var(--ink)}
+tr:last-child td{border-bottom:0}
+.badge{font-size:.8rem;font-weight:600;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.b-r,.br{background:#FBE9E9;color:var(--red)}.b-a,.ba{background:#FCEFD9;color:var(--amber)}.b-g,.bg{background:var(--green-soft);color:var(--green)}.b-b{background:#E3EDFA;color:var(--blue)}.bt{background:#DDF1F1;color:var(--teal)}
+
+/* Sections */
+.rule{height:0;margin:40px 0 0}
+.sec-h,.sh{font-family:var(--display);font-weight:700;font-size:clamp(1.5rem,3vw,2rem);letter-spacing:-.02em;line-height:1.1;margin-bottom:6px}
+.sec-s,.ss{font-size:.98rem;color:var(--muted);margin-bottom:22px}
+
+/* Insights */
+.insight-grid,.ig{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+.ins,.ic{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--green);border-radius:12px;padding:22px 24px}
+.ins-e,.ie{display:none}
+.ins-h,.ih{font-family:var(--display);font-size:1.08rem;font-weight:700;letter-spacing:-.01em;margin-bottom:6px}
+.ins-p,.ip{font-size:.93rem;color:var(--muted);line-height:1.6}
+
+/* Recommendations */
+.recs{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-bottom:16px;border-top:2px solid var(--ink)}
+.rec{padding:20px 20px 0 0}
+.rec-n,.rn{font-family:var(--display);font-weight:700;font-size:1rem;color:var(--green);margin-bottom:6px}
+.rec-h,.rh{font-family:var(--display);font-size:1.05rem;font-weight:700;letter-spacing:-.01em;margin-bottom:6px;line-height:1.25}
+.rec-p,.rp{font-size:.9rem;color:var(--muted);line-height:1.55}
+
+/* Bottom back link (inline-styled in the page) */
+.page a[style],.back-btn{display:inline-block !important;color:var(--surface) !important;background:var(--ink);border:0 !important;border-radius:999px;padding:13px 26px !important;font-size:1rem !important;font-weight:600 !important;text-decoration:none}
+.page a[style]:hover,.back-btn:hover{background:var(--green)}
+
+@media(max-width:860px){
+  .topbar{padding:0 16px}.tb-badge{display:none}
+  .page{padding:36px 18px 56px}
+  .kpi-row{grid-template-columns:1fr 1fr}
+  .kpi{border-right:0;border-bottom:1px solid var(--panel-line)}
+  .grid-2,.g2,.grid-3,.grid-2b,.g2b,.insight-grid,.ig,.meth-grid,.ba-grid{grid-template-columns:1fr}
+  .recs{grid-template-columns:1fr 1fr}
+  .sql-block,.meth,.ba-section{padding:22px 18px}
+  table,.data-table{display:block;overflow-x:auto;white-space:nowrap}
+}
 </style>
 </head>
 <body>
 
-<style>
-.page-transition{position:fixed;inset:0;background:#0b0c0e;z-index:9999;opacity:0;pointer-events:none;transition:opacity .3s ease}
-.page-transition.out{opacity:1;pointer-events:all}
-</style>
+
 <div class="page-transition" id="pt"></div>
 
 <div class="topbar">
-  <a href="index.html" class="back">← Back to Portfolio</a>
+  <a href="index.html" class="back">Back to portfolio</a>
   <div class="tb-title">Ireland's Rental Market Crisis</div>
   <div class="tb-badge">Project 01 · SQL + Power BI</div>
 </div>
@@ -86,9 +146,9 @@ pre{font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.8;colo
 
   <div class="kpi-row">
     <div class="kpi"><div class="kpi-lbl">Dublin Rent Rise 2019–2024</div><div class="kpi-val">+47%</div><div class="kpi-sub">Standardised RTB data</div></div>
-    <div class="kpi"><div class="kpi-lbl">Avg Dublin Monthly Rent</div><div class="kpi-val">€2,100</div><div class="kpi-ch pos">↑ €680 since 2019</div></div>
-    <div class="kpi"><div class="kpi-lbl">Fastest Rising County</div><div class="kpi-val">Kildare</div><div class="kpi-ch pos">↑ 52% YoY (commuter belt)</div></div>
-    <div class="kpi"><div class="kpi-lbl">Best Value County</div><div class="kpi-val">Leitrim</div><div class="kpi-sub">€780/mo avg · 61% below Dublin</div></div>
+    <div class="kpi"><div class="kpi-lbl">Avg Dublin Monthly Rent</div><div class="kpi-val">€2,100</div><div class="kpi-ch pos">↑ €672 since 2019</div></div>
+    <div class="kpi"><div class="kpi-lbl">Fastest Rising County</div><div class="kpi-val">Wicklow</div><div class="kpi-ch pos">↑ 53% since 2019 (commuter belt)</div></div>
+    <div class="kpi"><div class="kpi-lbl">Best Value County</div><div class="kpi-val">Leitrim</div><div class="kpi-sub">€780/mo avg · 63% below Dublin</div></div>
   </div>
 
   <div class="grid-2">
@@ -107,12 +167,12 @@ pre{font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.8;colo
   <div class="grid-3">
     <div class="chart-box">
       <div class="cb-title">Rent by Bedroom Count</div>
-      <div class="cb-sub">National average 2024</div>
+      <div class="cb-sub">Dublin average 2024</div>
       <canvas id="bedroomChart" height="220"></canvas>
     </div>
     <div class="chart-box">
       <div class="cb-title">Dublin vs Rest of Ireland</div>
-      <div class="cb-sub">YoY growth comparison 2019–2024</div>
+      <div class="cb-sub">Cumulative growth since 2019</div>
       <canvas id="dubVsChart" height="220"></canvas>
     </div>
     <div class="chart-box">
@@ -194,48 +254,75 @@ current_yr <span class="kw">AS</span> (
   <div class="sec-s">Delivered as a Power BI report with county slicer and bedroom-type filter</div>
   <div class="recs">
     <div class="rec"><div class="rec-n">01</div><div class="rec-h">Target Commuter Belt</div><div class="rec-p">Kildare and Wicklow offer stronger yield growth than Dublin with lower entry price — highest 5-year capital appreciation.</div></div>
-    <div class="rec"><div class="rec-n">02</div><div class="rec-h">Focus on 2-Bed Supply Gap</div><div class="rec-p">2-bed apartments show the highest demand-to-supply ratio nationally. Fastest rental income stabilisation for new investors.</div></div>
+    <div class="rec"><div class="rec-n">02</div><div class="rec-h">Focus on 3-Bed Supply Gap</div><div class="rec-p">3-bed homes show the widest gap between demand and new supply. The strongest case for adding family-sized rental stock.</div></div>
     <div class="rec"><div class="rec-n">03</div><div class="rec-h">Monitor Q1 for Pricing Signals</div><div class="rec-p">RTB data consistently shows Q1 rent registration spikes. Lease strategies should align with this seasonal pattern.</div></div>
     <div class="rec"><div class="rec-n">04</div><div class="rec-h">Connacht for Long-Term Value</div><div class="rec-p">Remote work demand in Roscommon and Leitrim is nascent. Earliest movers will benefit from lowest entry rents and rising demand trajectory.</div></div>
   </div>
   <div style="text-align:center;padding:16px 0 8px">
-    <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--gold);text-decoration:none;font-size:13px;font-weight:500;border:1px solid var(--border);padding:11px 26px;transition:background .2s" onmouseover="this.style.background='rgba(201,168,76,.08)'" onmouseout="this.style.background='transparent'">← Back to Portfolio</a>
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--gold);text-decoration:none;font-size:13px;font-weight:500;border:1px solid var(--border);padding:11px 26px;transition:background .2s">Back to portfolio</a>
   </div>
 </div>
 <script>
-const B='74,143,212',G='201,168,76',R='224,85,85',A='212,135,42',Gr='74,170,106',T='42,170,154';
-const defs={responsive:true,maintainAspectRatio:true,plugins:{legend:{labels:{color:'#9a9590',font:{size:11,family:'Inter'}}},tooltip:{backgroundColor:'rgba(11,12,14,.97)',titleColor:'#f0ede8',bodyColor:'#9a9590',borderColor:'rgba(255,255,255,.07)',borderWidth:1}},animation:{duration:1100}};
-
-new Chart(document.getElementById('countyChart'),{type:'bar',data:{labels:['Kildare','Wicklow','Dublin','Galway','Cork','Meath','Limerick','Wexford','Roscommon','Leitrim'],datasets:[{label:'% Rent Increase 2019–2024',data:[52,53,47,41,39,44,36,32,36,39],backgroundColor:(ctx)=>ctx.raw>48?`rgba(${R},.8)`:ctx.raw>40?`rgba(${A},.75)`:`rgba(${Gr},.7)`,borderRadius:4,borderSkipped:false}]},options:{...defs,plugins:{...defs.plugins,legend:{display:false}},indexAxis:'y',scales:{x:{ticks:{color:'#4a4740',callback:v=>v+'%'},grid:{color:'rgba(255,255,255,.04)'}},y:{ticks:{color:'#9a9590',font:{size:10}},grid:{display:false}}}}});
-
-new Chart(document.getElementById('trendChart'),{type:'line',data:{labels:['Q1 19','Q3 19','Q1 20','Q3 20','Q1 21','Q3 21','Q1 22','Q3 22','Q1 23','Q3 23','Q1 24','Q3 24'],datasets:[{label:'National Avg Rent',data:[1080,1110,1090,1080,1120,1160,1230,1310,1390,1450,1520,1580],borderColor:`rgba(${B},1)`,backgroundColor:`rgba(${B},.1)`,borderWidth:2.5,pointRadius:3,tension:.4,fill:true},{label:'Dublin Only',data:[1428,1460,1440,1420,1480,1560,1680,1820,1940,2020,2080,2120],borderColor:`rgba(${G},1)`,backgroundColor:`rgba(${G},.08)`,borderWidth:2,pointRadius:3,tension:.4,fill:false}]},options:{...defs,scales:{x:{ticks:{color:'#4a4740',font:{size:9}},grid:{color:'rgba(255,255,255,.04)'}},y:{ticks:{color:'#4a4740',callback:v=>'€'+v.toLocaleString()},grid:{color:'rgba(255,255,255,.04)'}}}}});
-
-new Chart(document.getElementById('bedroomChart'),{type:'bar',data:{labels:['Studio','1 Bed','2 Bed','3 Bed','4 Bed+'],datasets:[{label:'Avg Monthly Rent',data:[1240,1640,2060,2680,3400],backgroundColor:[`rgba(${B},.6)`,`rgba(${B},.7)`,`rgba(${B},.8)`,`rgba(${G},.8)`,`rgba(${R},.75)`],borderRadius:5,borderSkipped:false}]},options:{...defs,plugins:{...defs.plugins,legend:{display:false}},scales:{x:{ticks:{color:'#9a9590'},grid:{display:false}},y:{ticks:{color:'#4a4740',callback:v=>'€'+v.toLocaleString()},grid:{color:'rgba(255,255,255,.04)'}}}}});
-
-new Chart(document.getElementById('dubVsChart'),{type:'line',data:{labels:['2019','2020','2021','2022','2023','2024'],datasets:[{label:'Dublin',data:[0,1.4,3.6,17.6,35.8,47.1],borderColor:`rgba(${R},1)`,borderWidth:2.5,pointRadius:4,tension:.4,fill:false},{label:'Rest of Ireland',data:[0,0.8,2.1,12.4,28.2,36.8],borderColor:`rgba(${B},1)`,borderWidth:2,pointRadius:4,tension:.4,fill:false}]},options:{...defs,scales:{x:{ticks:{color:'#4a4740'},grid:{color:'rgba(255,255,255,.04)'}},y:{ticks:{color:'#4a4740',callback:v=>v+'%'},grid:{color:'rgba(255,255,255,.04)'}}}}});
-
-new Chart(document.getElementById('typeChart'),{type:'doughnut',data:{labels:['Apartment','Semi-Detached','Terraced','Detached','Other'],datasets:[{data:[42,24,18,11,5],backgroundColor:[`rgba(${B},.85)`,`rgba(${G},.82)`,`rgba(${T},.8)`,`rgba(${A},.8)`,`rgba(255,255,255,.15)`],borderColor:'rgba(11,12,14,.8)',borderWidth:3}]},options:{...defs,cutout:'62%'}});
+/* ---------- Shared chart kit ---------- */
+const C={ink:'#0F1B2D',text:'#101828',muted:'#566173',grid:'rgba(16,24,40,.08)',red:'#C23B3B',amber:'#D98A0B',green:'#0B6E4F',blue:'#2463B4',slate:'#A9B4C2',steel:'#6F7E91'};
+const FONT='"Instrument Sans","Segoe UI",Helvetica,Arial,sans-serif';
+Chart.defaults.font.family=FONT;Chart.defaults.font.size=12;Chart.defaults.color=C.muted;
+Chart.defaults.responsive=true;Chart.defaults.maintainAspectRatio=false;Chart.defaults.animation.duration=700;
+Object.assign(Chart.defaults.plugins.legend,{position:'top',align:'start'});
+Object.assign(Chart.defaults.plugins.legend.labels,{usePointStyle:true,pointStyle:'circle',boxWidth:8,boxHeight:8,padding:14,color:C.text});
+Object.assign(Chart.defaults.plugins.tooltip,{backgroundColor:C.ink,titleColor:'#fff',bodyColor:'#D8DEE7',padding:10,cornerRadius:8,displayColors:true,boxPadding:4});
+const isDark=h=>{const n=parseInt(h.slice(1),16);return(0.299*(n>>16)+0.587*((n>>8)&255)+0.114*(n&255))<150};
+/* Dashed reference line with a label */
+Chart.register({id:'refline',afterDatasetsDraw(chart,_a,o){
+  if(!o||o.value==null)return;const s=chart.scales[o.axis],p=s.getPixelForValue(o.value),a=chart.chartArea,ctx=chart.ctx;
+  ctx.save();ctx.strokeStyle=C.ink;ctx.lineWidth=1.5;ctx.setLineDash([5,4]);ctx.beginPath();
+  if(o.axis==='y'){ctx.moveTo(a.left,p);ctx.lineTo(a.right,p);}else{ctx.moveTo(p,a.top);ctx.lineTo(p,a.bottom);}
+  ctx.stroke();ctx.setLineDash([]);ctx.fillStyle=C.ink;ctx.font='600 11px '+FONT;
+  if(o.axis==='y'){ctx.textAlign='right';ctx.textBaseline='bottom';ctx.fillText(o.label,a.right,p-4);}
+  else{ctx.textAlign='left';ctx.textBaseline='bottom';ctx.fillText(o.label,p+6,a.bottom-6);}
+  ctx.restore();}});
+/* Value labels drawn directly on bars, slices and line ends */
+Chart.register({id:'vlabels',afterDatasetsDraw(chart,_a,o){
+  if(!o||!o.fmt)return;const ctx=chart.ctx;ctx.save();ctx.font='600 12px '+FONT;ctx.lineJoin='round';ctx.lineWidth=4;ctx.strokeStyle='#fff';const put=(t,x,y)=>{ctx.strokeText(t,x,y);ctx.fillText(t,x,y);};
+  chart.data.datasets.forEach((ds,di)=>{const meta=chart.getDatasetMeta(di);if(!chart.isDatasetVisible(di))return;
+    meta.data.forEach((el,i)=>{const v=ds.data[i];
+      if(meta.type==='bar'){ctx.fillStyle=C.text;
+        if(chart.options.indexAxis==='y'){ctx.textAlign='left';ctx.textBaseline='middle';put(o.fmt(v,i),el.x+7,el.y);}
+        else{ctx.textAlign='center';ctx.textBaseline='bottom';put(o.fmt(v,i),el.x,el.y-6);}}
+      else if(meta.type==='line'){
+        if(o.points==='all'){ctx.fillStyle=C.text;ctx.textAlign='center';ctx.textBaseline='bottom';put(o.fmt(v,i),el.x,el.y-9);}
+        else if(i===ds.data.length-1){ctx.fillStyle=ds.borderColor;ctx.textAlign='left';ctx.textBaseline='middle';put(o.fmt(v,i),el.x+9,el.y);}}
+      else if(meta.type==='doughnut'||meta.type==='pie'){
+        const tot=ds.data.reduce((a,b)=>a+b,0),pct=v/tot*100;if(pct<5)return;const p=el.tooltipPosition();
+        const bg=Array.isArray(ds.backgroundColor)?ds.backgroundColor[i]:ds.backgroundColor;
+        ctx.fillStyle=isDark(bg)?'#fff':C.text;ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='700 13px '+FONT;ctx.fillText(Math.round(pct)+'%',p.x,p.y);}
+    });});
+  if(o.center){const a=chart.chartArea,cx=(a.left+a.right)/2,cy=(a.top+a.bottom)/2;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillStyle=C.text;ctx.font='700 26px "Bricolage Grotesque",'+FONT;ctx.fillText(o.center[0],cx,cy-8);
+    ctx.fillStyle=C.muted;ctx.font='500 12px '+FONT;ctx.fillText(o.center[1],cx,cy+14);}
+  ctx.restore();}});
+const num=(fmt,extra={},title)=>({grid:{color:C.grid},border:{display:false},ticks:{callback:fmt,color:C.muted},title:{display:!!title,text:title,color:C.muted,font:{size:12,weight:'500'}},...extra});
+const cat=(extra={},title)=>({grid:{display:false},border:{display:false},ticks:{color:C.text,maxRotation:0,autoSkip:false,font:{size:11}},title:{display:!!title,text:title,color:C.muted,font:{size:12,weight:'500'}},...extra});
+const key=items=>({onClick:()=>{},labels:{generateLabels:()=>items.map(([text,color])=>({text,fillStyle:color,strokeStyle:color,lineWidth:0,pointStyle:'circle',hidden:false,fontColor:C.text}))}});
+const off={display:false};
+const line=(label,data,color,w=2.5)=>({label,data,borderColor:color,backgroundColor:color,borderWidth:w,pointRadius:3,pointHoverRadius:5,pointBackgroundColor:'#fff',pointBorderColor:color,pointBorderWidth:2,tension:.35,fill:false});
+function mk(id,h,cfg){const c=document.getElementById(id),w=document.createElement('div');w.className='chart-wrap';w.style.height=h+'px';c.removeAttribute('height');c.parentNode.insertBefore(w,c);w.appendChild(c);return new Chart(c,cfg);}
+const bars=(data,colors)=>[{data,backgroundColor:colors,borderRadius:4,borderSkipped:false,maxBarThickness:46}];
+/* ---------- Rental market charts ---------- */
+const counties=['Wicklow','Kildare','Dublin','Meath','Galway','Cork','Leitrim','Limerick','Roscommon','Wexford'];
+mk('countyChart',350,{type:'bar',data:{labels:counties,datasets:bars([53,52,47,44,41,39,39,36,36,32],c=>counties[c.dataIndex]==='Dublin'?C.ink:c.raw>47?C.red:C.slate)},
+  options:{indexAxis:'y',layout:{padding:{right:46}},plugins:{legend:key([['Rising faster than Dublin',C.red],['Dublin',C.ink],['Other counties',C.slate]]),vlabels:{fmt:v=>'+'+v+'%'}},scales:{x:num(v=>v+'%',{max:60},'Rent increase, 2019 to 2024'),y:cat()}}});
+mk('trendChart',350,{type:'line',data:{labels:['Q1 19','Q3 19','Q1 20','Q3 20','Q1 21','Q3 21','Q1 22','Q3 22','Q1 23','Q3 23','Q1 24','Q3 24'],datasets:[line('Dublin',[1428,1460,1440,1420,1480,1560,1680,1820,1940,2020,2080,2120],C.red),line('National average',[1080,1110,1090,1080,1120,1160,1230,1310,1390,1450,1520,1580],C.blue)]},
+  options:{layout:{padding:{right:54}},plugins:{vlabels:{fmt:v=>'€'+v.toLocaleString()}},scales:{x:cat({ticks:{color:C.muted,maxRotation:0,autoSkip:false,font:{size:11},callback:function(v,i){const l=this.getLabelForValue(v);return l.startsWith('Q1')?'20'+l.slice(3):'';}}}),y:num(v=>'€'+v.toLocaleString(),{min:800},'Average monthly rent')}}});
+mk('bedroomChart',270,{type:'bar',data:{labels:['Studio','1 bed','2 bed','3 bed','4 bed+'],datasets:bars([1240,1640,2060,2680,3400],C.blue)},
+  options:{plugins:{legend:off,vlabels:{fmt:v=>'€'+v.toLocaleString()}},scales:{x:cat(),y:num(v=>'€'+v.toLocaleString(),{max:4000})}}});
+mk('dubVsChart',270,{type:'line',data:{labels:['2019','2020','2021','2022','2023','2024'],datasets:[line('Dublin',[0,1.4,3.6,17.6,35.8,47.1],C.red),line('Rest of Ireland',[0,0.8,2.1,12.4,28.2,36.8],C.blue)]},
+  options:{layout:{padding:{right:52}},plugins:{vlabels:{fmt:v=>'+'+v+'%'}},scales:{x:cat({ticks:{color:C.muted,maxRotation:0}}),y:num(v=>v+'%',{max:50,ticks:{stepSize:10,callback:v=>v+'%',color:C.muted}},'Growth since 2019')}}});
+mk('typeChart',270,{type:'doughnut',data:{labels:['Apartment','Semi-detached','Terraced','Detached','Other'],datasets:[{data:[42,24,18,11,5],backgroundColor:['#0F1B2D','#2463B4','#7FA8DC','#BCD0EC','#D5DBE3'],borderColor:'#fff',borderWidth:2}]},
+  options:{cutout:'58%',plugins:{legend:{position:'bottom',align:'center'},vlabels:{fmt:true,center:['42%','apartments']}}}});
 </script>
 
-<script>
-(function(){
-  var pt=document.getElementById('pt');
-  // Fade in on load
-  window.addEventListener('load',function(){
-    pt.style.opacity='0';
-  });
-  // Fade out on link click
-  document.querySelectorAll('a[href]').forEach(function(a){
-    var h=a.getAttribute('href');
-    if(!h||h.startsWith('#')||h.startsWith('mailto')||h.startsWith('tel')||h.startsWith('http')){return}
-    a.addEventListener('click',function(e){
-      e.preventDefault();
-      pt.classList.add('out');
-      setTimeout(function(){window.location.href=h},280);
-    });
-  });
-})();
-</script>
+
 
 </body>
 </html>
